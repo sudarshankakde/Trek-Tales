@@ -1,0 +1,223 @@
+{% extends 'Base.html' %}
+{% load static %}
+{% block link_css %}
+<link rel="stylesheet" href="{%static 'css/home.css'%}">
+{% endblock link_css %}
+{%block body%}
+<div id="section1">
+    <div class="container-fluid position-relative py-5 h-100 w-100" id="home-head-box">
+        <div class="row" id="home-head-contant">
+            <div class="context p-lg-5 p-2 mx-lg-5 mx-2 my-5">
+                <h1 class="">HEAD OUT ON YOUR <br>
+                    NEXT HIKING ADVENTURE</h1>
+                <a href="updates">
+                    <button class="btn1 bg-transparent p-2 text-white">Explore Tour</button>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="section2">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-3 col-12 py-5 text-center text-capitalize" id="section2weareMain">
+                <h1 class="py-5">
+                    We are Trek.Tales
+                </h1>
+            </div>
+            <div class="col-lg-9 col-12 py-5 " id="section2weare">
+
+                <p class="py-5 px-3 text-center text-lg-start">We are happy that u shown interest to know who we are !
+                    Trek.Tales offers various trek to an amazing places 🧗‍♀️, Travel 🚌,Night campings 🏕,Pool party,
+                    👨‍🦯Travel guide 🏊 and many more.
+                </p>
+            </div>
+        </div>
+        <div class="row text-uppercase text-center mb-3">
+            <div class="col-12 pt-4 pt-lg-0 pt-sm-0">
+                <h1 class="whyTrekTales">Why Trek.Tales</h1>
+            </div>
+        </div>
+        <div class="row text-uppercase text-center mb-5">
+            <div class="col-lg-3 col-6 py-lg-2 py-4 icons">
+                <img src="{%static 'images/icons/booking.png'%}" alt="" sizes="25px*25px"> <br>
+                Easy Booking
+            </div>
+            <div class="col-lg-3 col-6 py-lg-2 py-4 icons"><img src="{%static 'images/icons/24-hours.png'%}" alt=""
+                    sizes="25px*25px">
+                <br>
+                24X7 Available
+            </div>
+            <div class="col-lg-3 col-6 py-lg-2 py-4 icons"><img src="{%static 'images/icons/best-price.png'%}" alt=""
+                    sizes="25px*25px"> <br>
+                Flexible Prices
+            </div>
+
+            <div class="col-lg-3 col-6 py-lg-2 py-4 icons"><img src="{%static 'images/icons/custom.png'%}" alt=""
+                    sizes="25px*25px"> <br>
+                Customise Your Trip
+            </div>
+        </div>
+
+    </div>
+    <div class="container py-5">
+        <div class="row h-100">
+            <div class="col-12 text-center" id="hikeforall">
+                <h1>HIKES FOR ALL WALKS OF LIFE</h1>
+                <p class="py-2 mx-auto">
+                    The beautiful thing about hiking is that it's truly an activity everyone can do. <br> Whether you're
+                    young or old, an expert or an amateur.<br>
+                <h5><q> There are no shortcuts to any place worth going. </q></h5>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="news" class="mt-5">
+    <div class="container pb-4">
+        <div class="row py-5">
+            <div class="col-12 news text-center">
+                <h1><b class="text-shadow py-3"> Trek.Tales Updates </b></h1>
+            </div>
+            <div class="row">
+                {%for updates in updates.all%}
+                {%if updates.TourIsNotExpire %}
+                <div class="col-lg-4 col-sm-4 col-12 my-3 my-lg-0 my-sm-0 UpdatesContainer my-4 " >
+                    {%else%}
+                    <div class="col-lg-4 col-sm-4 col-12 my-3 my-lg-0 my-sm-0 UpdatesContainer my-4 TourExpireContiner "
+                        data-toggle="tooltip" title="Tour Is Expired" >
+                        {%endif%}
+                        <div class="card text-white text-center cardHoverd "
+                            style="background-image: url('{{updates.Tour_image.url}}');padding: 2rem; height: 100%;
+                            background-size : cover;background-position: center;background-repeat: no-repeat;">
+                            <h3 class="text-capitalize"  style="margin: auto;">{{updates.Heading|safe}}</h3>
+                            <b  style="margin: auto;"><i class="bi bi-clock-fill"></i>
+                                {{updates.tour_on_date}}
+                                <br><i class="bi bi-geo-alt-fill"></i>
+                                {{updates.location}}
+                                <i class="bi bi-person-fill ms-2"></i>
+                                {{updates.slorts}}
+                            </b>
+                            <br>
+                            <span  style="margin: auto;">
+
+                                {%if updates.TourIsNotExpire %}
+                                <button type="button" class="btn btn-outline-light btn1 mt-auto py-2 my-2 "
+                                    data-bs-toggle="modal" data-bs-target="#main{{updates.id}}">
+                                    <b>Details</b>
+                                </button>
+                                <a href="updates/bookslot{{updates.id}}">
+                                    <button class="btn btn-outline-light btn1 mt-auto py-2">
+                                        <b>₹{{updates.price}} | Book Your Slot Now</b>
+                                    </button>
+                                </a>
+                                {%else%}
+                                <button type="button"
+                                    class="btn btn-outline-light btn1 mt-auto py-2 my-2 TourExpire "
+                                    data-toggle="tooltip" data-placement="bottom" title="Tour All Ready Expired"
+                                    data-bs-toggle="modal" data-bs-target="#main{{updates.id}}">
+                                    <b>Details</b>
+                                </button>
+                                <button class="btn btn-outline-light btn1 mt-auto py-2 TourExpire"
+                                    title="Can't Book To This Tour ">
+                                    <b>₹{{updates.price}} | Book Your Slot Now</b>
+                                </button>
+                                {%endif%}
+                            </span>
+                        </div>
+                    </div>
+                    <!-- Modal -->
+                    <div class="modal fade" id="main{{updates.id}}" tabindex="-1" aria-labelledby="model{{updates.id}}"
+                        data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-body ">
+                                    <button type="button" class="btn-close btn-close-white position-absolute "
+                                        data-bs-dismiss="modal" aria-label="Close" title="close"></button>
+                                    <img src="{{updates.Tumbnail.url}}" alt="" class="img-fluid"
+                                        style="min-width: 100%;">
+                                    {{updates.packageInfo|safe}}
+                                </div>
+                                <div class="flex mx-auto py-3">
+                                    {%if updates.TourIsNotExpire %}
+                                    <a href="updates/bookslot{{updates.id}}">
+                                        <button type="button" class="btn-outline-light btn1 bg-transparent ">Book
+                                            Now</button>
+                                    </a>
+                                    {%else%}
+
+                                    <button type="button" class="btn-outline-light btn1 bg-transparent TourExpire">Book
+                                        Now</button>
+                                    {%endif%}
+                                    <button type="button" class="btn-outline-light btn1 bg-transparent "
+                                        data-bs-dismiss="modal">Close</button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    {%endfor%}
+                </div>
+            </div>
+            <div class="col-12 text-center pt-5 ">
+                <a href='updates'><button class="btn1 px-3 p-2 bg-transparent">Explore More</button></a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid py-5 my-3">
+    <div class="row">
+        <div class="col-12 text-center">
+            <h1 class=" my-3 text-shadow"><b>Testimonials</b></h1>
+            <div class="Testimonials " style="min-height:50vh;max-height: max-content;">
+                <!-- Carousel wrapper -->
+                <div id="carouselExampleControls" class="carousel slide text-center carousel-dark"
+                    data-mdb-ride="carousel">
+                    <div class="carousel-inner text-white">
+                        {%for Testimonials in Testimonials.all%}
+                        {% if forloop.first %}
+                        <div class="carousel-item active">
+                            {%else%}
+                            <div class="carousel-item ">
+                                {%endif%}
+                                <img class="rounded-circle shadow-1-strong mb-4 img-fluid"
+                                    src="{{Testimonials.ReviewerImage.url}}" alt="avatar" style="width: 150px;" />
+                                <div class="row d-flex justify-content-center">
+                                    <div class="col-lg-8">
+                                        <h5 class="mb-3">{{Testimonials.ReviewBy|safe}}</h5>
+                                        <p class="text-capitalize">{{Testimonials.profession|safe}}</p>
+                                        <p class="text-white-50">
+                                            <i class="fas fa-quote-left pe-2"></i>
+                                            {{Testimonials.Review|safe}}
+                                            <i class="fas fa-quote-right px-2"></i>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {%endfor%}
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-mdb-target="#carouselExampleControls"
+                            data-mdb-slide="prev">
+                            <span class="fas fa-angle-left text-white" aria-hidden="true"
+                                style="font-size: 2.5rem;"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-mdb-target="#carouselExampleControls"
+                            data-mdb-slide="next">
+                            <span class="fas fa-angle-right text-white" aria-hidden="true"
+                                style="font-size: 2.5rem;"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+                    <!-- Carousel wrapper -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock body%}
+{% block script %}
+<script src="{%static 'js/home.js'%}"></script>
+{% endblock script %}

@@ -1,0 +1,235 @@
+:root {
+    --peace: white;
+    /* motivated by peace */
+    --elegance: rgb(39 39 39);
+    --loyality: #1de1ff;
+    /* intimacy , loyality ,confidance */
+    --power: red;
+    /* motivated by power */
+    --intimacy: blue;
+    /* motivated by intimacy , loyality ,confidance */
+    --youth: #9a9ad6;
+    /* youth */
+}
+
+:root {
+    --primary-text: white;
+    --elegance: rgb(39 39 39);
+    --primary-theme: #a6c;
+    --card-bg: #37474f;
+    --primary-bg: #1c2331;
+    --hover: #4285f4;
+    --white: white;
+    /* --card-bg: #ffffff; */
+}
+
+
+*::selection{
+    background-color: var(--primary-theme);
+    color: white;
+
+}
+#status {
+    z-index: 10;
+    position: fixed;
+    width: 100vw;
+
+}
+
+#status>div {
+    text-align: center;
+    justify-content: center;
+    font-weight: 700;
+    font-family: 'Fredoka';
+}
+
+
+#loader {
+    /* background-color: var(--bg-color3); */
+    background-color: var(--card-bg) !important;
+    height: 100vh;
+    width: 100%;
+    position: fixed;
+    z-index: 105;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+#loader>.dot {
+    padding: 1.5vh;
+    margin: 0 1vh;
+    border: thin solid var(--youth);
+    border-radius: 10vh;
+    background: var(--youth);
+}
+
+#loader>.dot:nth-child(1) {
+    background: var(--loyality);
+    border: transparent;
+    animation-name: dotmove;
+    animation-delay: 100ms;
+    animation-duration: 3s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: infinite;
+}
+
+#loader>.dot:nth-child(2) {
+    background: red;
+    border: transparent;
+    animation-name: dotmove;
+    animation-delay: 300ms;
+    animation-duration: 3s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: infinite;
+}
+
+#loader>.dot:nth-child(3) {
+    background: orange;
+    border: white;
+    animation-name: dotmove;
+    animation-delay: 500ms;
+    animation-duration: 3s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: infinite;
+}
+
+#loader>.dot:nth-child(4) {
+    border: transparent;
+    background: rgb(24, 238, 24);
+    animation-name: dotmove;
+    animation-delay: 700ms;
+    animation-duration: 3s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: infinite;
+}
+
+#loader::after {
+    content: 'Loading...';
+    position: absolute;
+    font-size: 5vh;
+    font-weight: 600;
+    bottom: 38%;
+    font-family: 'Heebo', sans-serif;
+    color: var(--peace);
+    letter-spacing: normal;
+    animation-name: loading;
+    animation-delay: 100ms;
+    animation-duration: 2s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: infinite;
+}
+
+@keyframes dotmove {
+    0% {
+        transform: translateY(-5vh);
+    }
+
+    50% {
+        transform: translateY(0vh);
+    }
+
+    100% {
+        transform: translateY(-5vh);
+    }
+}
+
+@keyframes loading {
+    0% {
+        content: 'Loading.';
+
+    }
+
+    50% {
+        content: 'Loading..';
+
+    }
+
+    100% {
+        content: 'Loading...';
+
+    }
+}
+
+
+#loader1 {
+    background-color: var(--card-bg) !important;
+    height: 100vh;
+    width: 100%;
+    position: fixed;
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.balls {
+    width: 3.5em;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.balls div {
+    width: 0.8em;
+    height: 0.8em;
+    border-radius: 50%;
+    background-color: #fc2f70;
+    transform: translateY(-100%);
+    animation: wave 0.8s ease-in-out alternate infinite;
+}
+
+.balls div:nth-of-type(1) {
+    animation-delay: -0.4s;
+}
+
+.balls div:nth-of-type(2) {
+    animation-delay: -0.2s;
+}
+
+@keyframes wave {
+    from {
+        transform: translateY(-100%);
+    }
+
+    to {
+        transform: translateY(100%);
+    }
+}
+
+#loaderLogo {
+    height: 30vh;
+    border-radius: 100vh;
+    user-select: none;
+    position: relative;
+    padding: 0;
+    animation: none !important;
+}
+
+#load {
+    border: thick solid var(--hover);
+    border-radius: 100vh;
+    animation-name: borderload;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    animation-fill-mode: forwards;
+}
+
+@keyframes borderload {
+    0% {
+        filter: drop-shadow(0 0 1vh var(--hover));
+
+    }
+
+    50% {
+        filter: drop-shadow(0 0 2vh var(--hover));
+
+    }
+
+    100% {
+        filter: drop-shadow(0 0 1vh var(--hover));
+
+    }
+}

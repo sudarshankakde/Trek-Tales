@@ -1,0 +1,264 @@
+{% extends 'Base.html' %}
+{% load static %}
+
+{% block link_css %}
+<link rel="stylesheet" href="{%static 'css/home.css'%}">
+<link rel="stylesheet" href="{%static 'css/gallary.css'%}">
+<style>
+    .pointer {
+        cursor: pointer;
+    }
+
+    .not-visible {
+        visibility: hidden;
+    }
+
+    .modal-overlay {
+
+        background-color: rgb(28, 35, 49, .8);
+    }
+</style>
+{% endblock link_css %}
+{%block body%}
+<div class="container ">
+    <h1 class="text-center py-2 my-2"><i class="bi bi-images mx-2"></i>Memories.</h1>
+    <div class="row my-3" id="images">
+        {%for Memories in Memories.all%}
+        <div class="col-lg-4 col-sm-4 col-12 my-3 my-lg-0 my-sm-0">
+            <div class="bg-image hover-overlay ripple shadow-1-strong rounded hover-zoom my-3" data-ripple-color="light"
+                style="min-height:30vh;max-height: 30vh;background-image:url('{{Memories.photos_taken.url}}');background-position: center;background-size: cover;">
+                <a href="#image_{{Memories.id}}" data-mdb-toggle="modal" data-mdb-target="#image_{{Memories.id}}">
+                    <div class="mask" style="background-color: rgba(251, 251, 251, 0.2);"></div>
+                </a>
+            </div>
+            <span style="font-size: larger;" class="bg-transparent">
+                <span onclick="Liked(`{{Memories.id}}`,`{{Memories.likes}}`)" class="pointer">
+                    <span><i class="bi bi-heart text-white"></i> {{Memories.likes}}</span>
+                </span>
+                <a href="{{Memories.photo_taken_on_location_url}}" target="_blank" rel="noopener noreferrer"
+                    class="pointer">
+                    <span style="float: right;"><i class="bi bi-geo-alt-fill text-info"></i>
+                        {{Memories.photo_taken_on_tour}}</span>
+                </a>
+            </span>
+        </div>
+        <div class="modal fade modal-overlay" id="image_{{Memories.id}}" tabindex="-1"
+            aria-labelledby="image_{{Memories.id}}" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content ">
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-12 m-auto text-center h4 text-capitalize">
+                                    <span>{{Memories.photo_taken_on_tour}}</span>
+                                    <span class="text-white h1 float-end aling-end" data-mdb-dismiss="modal"
+                                        style="font-weight: 400; cursor: pointer;">
+                                        <span aria-hidden="true">&times;</span>
+                                    </span>
+                                </div>
+
+                            </div>
+                            <div class="row">
+
+                                <div class="col-1 my-auto">
+                                    <a href="#image_{{Memories.id|add:'-1'}}" data-mdb-toggle="modal"
+                                        data-mdb-target="#image_{{Memories.id|add:'-1'}}" class="GallaryControl">
+                                        <i class="bi bi-chevron-left h2 mr-3"></i>
+                                    </a>
+                                </div>
+                                <div class="col-8 mx-auto">
+                                    <div class="ratio ratio-16x9 ">
+                                        <img src="{{Memories.photos_taken.url}}" class="w-100" />
+                                    </div>
+                                    <span class="h6 my-1">
+                                        <span onclick="Liked(`{{Memories.id}}`,`{{Memories.likes}}`)" class="pointer">
+                                            <span><i class="bi bi-heart text-white"></i> {{Memories.likes}}</span>
+                                        </span>
+                                        <a href="{{Memories.photo_taken_on_location_url}}" target="_blank"
+                                            rel="noopener noreferrer" class="pointer">
+                                            <span style="float: right;"><i class="bi bi-geo-alt-fill text-info"></i>
+                                                {{Memories.photo_taken_on_tour}}</span>
+                                        </a>
+                                    </span>
+                                    <div class="text-center py-3">
+                                        <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">
+                                            Close
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="col-1 my-auto">
+                                    <a href="#image_{{Memories.id|add:'1'}}" data-mdb-toggle="modal"
+                                        data-mdb-target="#image_{{Memories.id|add:'1'}}" class="GallaryControl">
+                                        <i class="bi bi-chevron-right h2 ml-3"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+
+    </div>
+    <div class="row my-4">
+        <div class="col-12 mx-auto text-center">
+            <button class="btn1 bg-transparent p-1 text-white col-lg-auto px-2 mx-auto col-auto" id="loadmore"
+                style="opacity: 0.9;">Load More</button>
+        </div>
+        <div class="col-12 mx-auto text-center">
+            <div class="spinner-grow  mx-auto  theme-color not-visible" role="status" id="spinner">
+                <span class="sr-only">Loading...</span>
+            </div>
+            <div class="alert alert-primary text-center not-visible" role="alert" id="noMoreAlert">
+                All Done ✔. NO More Memories To Load!
+            </div>
+        </div>
+    </div>
+
+</div>
+<script>
+    // onclick lisner for ajax call 
+    document.getElementById('loadmore').addEventListener('click', loadMoreImages);
+    // spinner and loadmore btn and alert 
+    var spinner = document.getElementById('spinner');
+    var btn = document.getElementById('loadmore');
+    var alertNoMore = document.getElementById('noMoreAlert');
+    // update insert to append data from js to html
+    var ImageInsert = document.getElementById('images');
+    // current number of updates avaliable
+    var currentNoImages = 6;
+
+    function loadMoreImages() {
+        spinner.style.visibility = "visible";
+        btn.style.visibility = "hidden";
+
+        var getData = new XMLHttpRequest();
+
+        getData.open('GET', 'gallary/getImages' + currentNoImages, true);
+
+        getData.onload = () => {
+            // spiner hidden and load more vissible
+            spinner.style.visibility = "hidden";
+            btn.style.visibility = "visible";
+
+            if (getData.status == 200) {
+                currentNoImages += 4;
+                var imageData = JSON.parse(getData.responseText);
+                if (imageData.Images[0] == null) {
+                    btn.style.visibility = "hidden";
+                    alertNoMore.style.visibility = "visible";
+                }
+                for (var i in imageData.Images) {
+                    var imageToAccess = imageData.Images[i];
+                    console.log(imageToAccess);
+                    ImageInsert.innerHTML += `<div class="col-lg-4 col-sm-4 col-12 my-3 my-lg-0 my-sm-0">
+            <div class="bg-image hover-overlay ripple shadow-1-strong rounded hover-zoom my-3" data-ripple-color="light" style="min-height:25vh;max-height: 30vh;">
+                <img src="${imageToAccess.photos_taken}" class="w-100 " />
+                <a href="#image_${imageToAccess.id}" data-mdb-toggle="modal" data-mdb-target="#image_${imageToAccess.id}">
+                    <div class="mask" style="background-color: rgba(251, 251, 251, 0.2);"></div>
+                </a>
+            </div>
+            <span style="font-size: larger;" class="bg-transparent">
+                <a href="gallary/like/${imageToAccess.id}" class="pointer">
+                    <span><i class="bi bi-heart-fill text-danger"></i> ${imageToAccess.likes}</span>
+                </a>
+                <a href="${imageToAccess.photo_taken_on_location_url.url}" target="_blank" rel="noopener noreferrer"
+                    class="pointer">
+                    <span style="float: right;"><i class="bi bi-geo-alt-fill text-info"></i>
+                        ${imageToAccess.photo_taken_on_tour}</span>
+                </a>
+            </span>
+        </div>
+        <div class="modal fade " id="image_${imageToAccess.id}" tabindex="-1" aria-labelledby="image_${imageToAccess.id}"
+            aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content bg-transparent">
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-md-1 my-auto">
+                                    <a href="#image_{{Memories.id|add:'-1'}}" data-mdb-toggle="modal"
+                                        data-mdb-target="#image_{{Memories.id|add:'-1'}}" class="GallaryControl">
+                                        <i class="bi bi-chevron-left h2 mr-3"></i>
+                                    </a>
+                                </div>
+                                <div class="col-8 mx-auto">
+                                    <div class="ratio ratio-16x9">
+                                        <img src="${imageToAccess.photos_taken}" class="w-100" />
+                                    </div>
+                                    <span class="h6 my-1">
+                                        <a href="gallary/like/${imageToAccess.id}" class="pointer">
+                                            <span><i class="bi bi-heart-fill text-danger"></i> ${imageToAccess.likes}</span>
+                                        </a>
+                                        <a href="${imageToAccess.photo_taken_on_location_url.url}}" target="_blank" rel="noopener noreferrer"
+                                            class="pointer">
+                                            <span style="float: right;"><i class="bi bi-geo-alt-fill text-info"></i>
+                                                ${imageToAccess.photo_taken_on_tour}</span>
+                                        </a>
+                                    </span>
+                                    <div class="text-center py-3">
+                                        <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">
+                                            Close
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="col-md-1 my-auto">
+                                    <a href="#image_{{Memories.id|add:'1'}}" data-mdb-toggle="modal"
+                                        data-mdb-target="#image_{{Memories.id|add:'1'}}" class="GallaryControl">
+                                        <i class="bi bi-chevron-right h2 ml-3"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>`
+                }
+
+            }
+            else {
+                alertNoMore.innerHTML = "Can't Load More Tours";
+                alertNoMore.style.visibility = "visible";
+                btn.style.visibility = "hidden";
+
+
+            }
+        }
+
+        getData.send();
+    }
+
+
+
+    // liked
+    function Liked(e, e1) {
+        var element = event.currentTarget;
+        var GiveLike = new XMLHttpRequest();
+        GiveLike.open('GET', 'gallary/like/' + e, true);
+        GiveLike.onload = () => {
+            if (GiveLike.status == 200) {
+                console.log("liked" + e);
+                element.innerHTML = `<span onclick="Liked({{Memories.id}})" class="pointer">
+                                            <span>
+                                                <i class="bi bi-heart-fill text-danger"></i> 
+                                                `+ (parseInt(e1) + 1) + `
+                                            </span>
+                                        </span>`;
+                element.dispatchEvent;
+            }
+            else {
+                console.log("liked Failed" + e);
+            }
+        }
+        GiveLike.send();
+    }
+</script>
+{% endblock body%}
+{% block Script %}
+<!-- Go to www.addthis.com/dashboard to customize your tools -->
+
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-6200cfd66fd339e5"></script>
+
+{% endblock Script %}

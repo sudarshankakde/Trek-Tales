@@ -1,0 +1,54 @@
+{% extends 'Base.html' %}
+{% load static %}
+{% block link_css %}
+<link rel="stylesheet" href="{%static 'css/home.css'%}">
+<style>
+    #main {
+        min-height: 67vh;
+    }
+</style>
+{% endblock link_css %}
+{%block body%}
+<div class="conatiner my-5 py-5" id="main">
+    <div class="row my-5">
+        {%if done%}
+        <div class="col-10 col-lg-6 text-center mx-auto ">
+            <div class="text-center text-capitalize my-5 ">
+                <h1 class="heading ">Cancelation done 🪂.</h1>
+            </div>
+
+            <form action="" method="post" class="">
+                {% csrf_token %}
+                <div class="form-outline form-white">
+                    <input type="text" id="TripId" class="form-control form-control-lg" name="TripId" />
+                    <label class="form-label" for="TripId">Enter Trip Id</label>
+                </div>
+                <div class="text-center">
+                    <button class="btn1 bg-transparent  my-3  text-capi0talize px-4 py-1" type="submit"
+                        style="border-radius: 3px;">Cancel Trip <i class="mx-1 bi bi-x-octagon"></i>
+                </div>
+            </form>
+        </div>
+        {%else%}
+
+        <div class="col-lg-6  col-10 mx-auto">
+            <div class="text-center text-capitalize my-5 ">
+                <h1 class="heading">Cancelation of Booking.</h1>
+                <p></p>
+            </div>
+            <form action="" method="post" class="">
+                {% csrf_token %}
+                <div class="form-outline form-white">
+                    <input type="text" id="TripId" class="form-control form-control-lg" name="TripId" />
+                    <label class="form-label" for="TripId">Enter Trip Id</label>
+                </div>
+                <div class="text-center">
+                    <button class="btn1 bg-transparent  my-3  text-capi0talize px-4 py-1" type="submit"
+                        style="border-radius: 3px;">Cancel Trip <i class="mx-1 bi bi-x-octagon"></i>
+                </div>
+            </form>
+        </div>
+        {%endif%}
+    </div>
+</div>
+{%endblock body%}

@@ -1,0 +1,37 @@
+
+body{
+    overflow-x: hidden;
+}
+@media(max-width:500px) {
+   
+}
+
+.spanThrow {
+    position: relative;
+}
+
+.linethrow {
+    border: thin solid var(--white);
+    position: absolute;
+    width: 100%;
+    top: 40%;
+    z-index: -1;
+}
+.contacts {
+    font-size: 4vh;
+    text-align: center;
+}
+
+.contacts>a {
+    margin: 0 2vw;
+}
+.bi-Hover:hover{
+    transition: all 200ms;
+    background: linear-gradient(to right, var(--primary-theme),#ff2f97);
+    -webkit-background-clip: text;
+    color: transparent;
+}
+#contact{
+    height: max-content;
+    width: max-content;
+}
