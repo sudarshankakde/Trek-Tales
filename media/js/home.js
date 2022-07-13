@@ -33,13 +33,4 @@ function changebg() {
 
     }
 }
-var manu = document.getElementById('manu');
-function openmanu(){
-    manu.style.visibility="visible";
-}
-function closemanu() {
-    manu.style.visibility='hidden';
-}
 
-var img = document.getElementsByTagName('img');
-img.classList.add("img-fluid");

@@ -19,6 +19,7 @@
 
   <!-- aso -->
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  
   <link rel="stylesheet" href="{%static 'css/loader.css'%}">
   <link rel="icon" href="{%static 'images/logo.png'%}" type="image/gif" sizes="20x20">
   <!-- Font Awesome -->
@@ -41,7 +42,7 @@
   </div>
   <!-- info status -->
   <div id="status" style="visibility: hidden;">
-    <div class="alert alert-warning d-flex align-items-center " role="alert" >
+    <div class="alert alert-warning d-flex align-items-center" role="alert" >
       <i class="bi bi-wifi-off"> </i>
       &nbsp;
       <div>
@@ -54,7 +55,7 @@
   </div>
 
   <nav class="navbar bg-dark text-white" id="navbar">
-    <a class="navbar-brand mx-auto" href="../home"><b id="nav-text">Trek.Tales</b></a>
+    <a class="navbar-brand mx-auto" href="{% url 'home' %}"><b id="nav-text">Trek.Tales</b></a>
     <span id="manubar" class="bi bi-list mx-3 " style="background-color: transparent;" onclick="openmanu()">
     </span>
   </nav>
@@ -63,22 +64,22 @@
     </span>
     <div id="items">
       <ul>
-        <li><a href="../home" class="manuItem">Home</a></li>
-        <li><a href="../updates" class="manuItem">Updates</a></li>
-        <li><a href="../gallary" class="manuItem">Gallary</a></li>
-        <li><a href="../contact" class="manuItem">Contact</a></li>
-        <li><a href="../cancelation" class="manuItem" title="Cancelation Of Trip">Cancelation</a></li>
+        <li><a href="{% url 'home' %}" class="manuItem">Home</a></li>
+        <li><a href="{% url 'updates' %}" class="manuItem">Updates</a></li>
+        <li><a href="{% url 'gallary' %}" class="manuItem">Gallary</a></li>
+        <li><a href="{% url 'contact' %}" class="manuItem">Contact</a></li>
+        <li><a href="{% url 'cancelation' %}" class="manuItem" title="Cancelation Of Trip">Cancelation</a></li>
       </ul>
     </div>
 
     <div id="socails">
-      <a href="https://www.instagram.com/trek.tales_/" target="_blank">
+      <a href="https://www.instagram.com/trek.tales_/" target="_blank" title="instagram">
         <i class="bi bi-instagram  bi-Hover"></i>
       </a>
-      <a href="tel:+917083011343" target="_blank">
+      <a href="tel:+917083011343" target="_blank" title="call" >
         <i class="bi bi-telephone bi-Hover"></i>
       </a>
-      <a href="https://api.whatsapp.com/send?phone=7083011343&text=Hello." target="_blank">
+      <a href="https://api.whatsapp.com/send?phone=7083011343&text=Hello." target="_blank" title="whatsapp">
         <i class="bi bi-whatsapp bi-Hover"></i>
       </a>
     </div>

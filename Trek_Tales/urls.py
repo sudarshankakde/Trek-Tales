@@ -14,28 +14,36 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path , include
-from updates import urls , views 
-from Trek_Tales import views
-from django.conf import settings
-from django.conf.urls.static import static
+from django.urls import path, include
+from updates import urls, views
+from Trek_Tales import views 
+from Trek_Tales import settings
+from django.urls import re_path as url
 from Gallary import views as gallaryViews
+from django.views.static import serve
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     # home
-    path('',views.home,name='home'),
-    path('home',views.home,name='home'),
-    #contact
-    path('contact',views.contact,name='contact'),
-    #Cancelation
-    path('cancelation',views.cancelation,name='cancelation'),
+    path('', views.home, name='home'),
+    path('home', views.home, name='home'),
+    # contact
+    path('contact', views.contact, name='contact'),
+    # Cancelation
+    path('cancelation', views.cancelation, name='cancelation'),
     # gallary
-    path('gallary',gallaryViews.gallary,name='gallary'),
-    path('gallary/like/<int:id>',gallaryViews.likeMemory,name='likeMemory'),
-    path('gallary/getImages<int:number>',gallaryViews.loadMore,name="loadMore"),
+    path('gallary', gallaryViews.gallary, name='gallary'),
+    path('gallary/like/<int:id>', gallaryViews.likeMemory, name='likeMemory'),
+    path('gallary/getImages<int:number>',
+         gallaryViews.loadMore, name="loadMore"),
     # updates
-    path('updates',include('updates.urls')),
-    
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    path('updates', include('updates.urls')),
+    url(r'^media/(?P<path>.*)$', serve,
+        {'document_root': settings.MEDIA_ROOT}),
 
+    url(r'^static/(?P<path>.*)$', serve,
+        {'document_root': settings.STATIC_ROOT}),
+]
+
+handler404 = 'Trek_Tales.views.error_404_view'
+handler500 = 'Trek_Tales.views.error_500_view'

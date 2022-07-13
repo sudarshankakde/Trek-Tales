@@ -5,14 +5,15 @@
     @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300&family=Smooch+Sans&display=swap');
 
     :root {
-        --primary-text: white;
+        --primary-text: #ffffff;
         --elegance: rgb(39 39 39);
-        --primary-theme: #a6c;
         --card-bg: #37474f;
+        --primary-theme: #498553;
         --primary-bg: #1c2331;
         --hover: #4285f4;
         --white: white;
-        /* --card-bg: #ffffff; */
+        /* --primary-hover : #1bc23e; */
+        --primary-hover : #1bc23e;
     }
     .theme-color {
         color: var(--primary-theme);
@@ -85,7 +86,8 @@
         border: thin solid var(--white);
         color: var(--white);
         border-radius: 0%;
-        background-image: linear-gradient(#ff2f97, #ff2f97);
+        background-image: linear-gradient(var(--primary-hover),var(--primary-hover));
+        /* background-image: linear-gradient(#ff2f97, #ff2f97); */
         background-repeat: no-repeat;
         background-size: 0% 100%;
         background-position-x: right;
@@ -331,14 +333,16 @@
     .modelBlur {
         backdrop-filter: blur(1px) !important;
     }
-
+    .bi-Hover{
+        color: var(--primary-text);
+        opacity: 0.8;
+    }
     .bi-Hover:hover {
         transition: all 200ms;
-        background: linear-gradient(to right, var(--primary-theme), #ff2f97);
-        -webkit-background-clip: text;
-        color: transparent;
-    }
+        color: var(--primary-text);
+        opacity: 1;
 
+    }
     @media (max-width:768px) {
         #manu{
             width: 50vw;

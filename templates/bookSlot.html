@@ -84,7 +84,7 @@
                 <img src="{%static 'images/icons/sorry-no-slots.jpg'%}" alt="" class="img-fluid">
                 <span class="text-center mx-auto">
                     <div class="py-3">
-                        We're sorry, all the slots are currently reserved. If you contact us, we'll find a way to
+                        We're sorry, all the slots are currently reserved or tour has been expired already. If you contact us, we'll find a way to
                         accommodate your needs
                     </div>
                     <h6 class="text-center "><a href="contact" class="text-decoration-underline px-2 ">Contact US</a>
@@ -104,7 +104,7 @@
                     <b>Tour on -</b> {{updates.tour_on_date}}
                 </p>
                 <div class="card-body" style="overflow-y: auto;">
-                    <span>{{updates.packageInfo}}</span>
+                    <span>{{updates.packageInfo|safe}}</span>
                 </div>
             </div>
         </div>
@@ -115,5 +115,5 @@
 
 {% endblock body%}
 {% block script %}
-
+<script>window.document.title+=" | BookSlot"</script>
 {% endblock script %}

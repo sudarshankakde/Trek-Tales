@@ -22,6 +22,8 @@ import random
 import razorpay
 import os
 from twilio.rest import Client
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
 
 # Find your Account SID and Auth Token at twilio.com/console
 # and set the environment variables. See http://twil.io/secure
@@ -93,25 +95,26 @@ def bookslot(request, id):
             messages.success(
                 request, f'Awesome <i class="bi bi-emoji-laughing"></i>,Slot Booked Successfully .Check Email For All Details')
 
-            # send email
-            Mail_Subject = f'Slot Booked Succesfully'
-            Mail_Message = f"Hello {name}, I am glad to inform you that your booking for {tour.Heading} the amount Rs.{tour.price} has been completed successfully your Trip ID is {TripId} .Please stay in touch with us for updates. {linktree}"
-            Mail_To = [email, ]
+            subject = f'Slot Booked Succesfully'
+            html_message = render_to_string('MailTempletes/Mail_templete.html', {'name': name , 'tour':tour,'TripId':TripId})
+            plain_message = strip_tags(html_message)
             Mail_From = settings.EMAIL_HOST_USER
-            send_mail(Mail_Subject, Mail_Message, Mail_From,
-                      Mail_To, fail_silently=True)
+            Mail_To = [email, ]
+            send_mail(subject, plain_message, Mail_From, Mail_To, html_message=html_message,fail_silently=True)
+            
+            # send email
+            # Mail_Subject = f'Slot Booked Succesfully'
+            # Mail_Message = f"Hello {name}, I am glad to inform you that your booking for {tour.Heading} the amount Rs.{tour.price} has been completed successfully your Trip ID is {TripId} .Please stay in touch with us for updates. {linktree}"
+            # Mail_To = [email, ]
+            # Mail_From = settings.EMAIL_HOST_USER
+            # send_mail(Mail_Subject, Mail_Message, Mail_From,
+            #           Mail_To, fail_silently=True)
 
             # 1 slort get reserved
             tour.slorts = tour.slorts - 1
             tour.save()
-            
 
-            message = clientWp.messages.create(
-                from_='whatsapp:'+ settings.TWILIO_NUMBER,
-                body=f'Slot Booked By {name} for Trip of {tour.location} And payment Method is Cash on Pay Payable Amount will be {amount}. Contact Details Are: 1. Mobile Number +91{Phone_no1} 2.Gmail Id {email} 3.Address {address} 4.TripId {TripId} contact on wp to notify them https://api.whatsapp.com/send?phone=+91{Phone_no1}&text=Hello%20{fName}%20{lName}%20your%20Slot%20is%20booked%20successfully.%20Thanks%20For%20Choosing%20Us!',
-                to='whatsapp:+919021767520'
-            )
-    return render(request, 'bookSlot.html', {'slotsRemaing': slorts, 'updates': tour})
+    return render(request, 'bookSlot.html', {'slotsRemaing': slorts,'updates': tour})
 
 
 def getMoreUpdates(request, number):

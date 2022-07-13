@@ -15,12 +15,11 @@
 :root {
     --primary-text: white;
     --elegance: rgb(39 39 39);
-    --primary-theme: #a6c;
     --card-bg: #37474f;
+    --primary-theme: #498553;
     --primary-bg: #1c2331;
     --hover: #4285f4;
     --white: white;
-    /* --card-bg: #ffffff; */
 }
 
 

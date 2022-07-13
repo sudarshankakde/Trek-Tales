@@ -17,7 +17,6 @@
 <h1 class="text-capitalize mt-4 mb-2 py-2 text-center heading bi-emoji-heart-eyes-fill">
     Upcoming Tours
 </h1>
-
 <div class="container">
     <div class="row py-2" id="updates">
         {%for updates in tours.all%}
@@ -81,7 +80,7 @@
                         <div class="modal-body ">
                             <button type="button" class="btn-close btn-close-white position-absolute "
                                 data-bs-dismiss="modal" aria-label="Close" title="close"></button>
-                            <img src="{{updates.Tumbnail.url}}" alt="" class="img-fluid mx-auto w-100" >
+                            <img src="{{updates.Tumbnail.url}}" alt="" class="img-fluid mx-auto w-100">
                             {{updates.packageInfo|safe}}
                         </div>
                         <div class="flex mx-auto py-3">
@@ -152,6 +151,7 @@
     </div>
 
     <script>
+        window.document.title += " | Updates";
         var TourIsNotExpire = document.getElementsByClassName('TourIsNotExpire').style;
 
         // onclick lisner for ajax call 

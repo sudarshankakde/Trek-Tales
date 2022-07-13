@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 from django.contrib.messages import constants as messages
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -24,10 +25,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-5u@ba3%-2gp00c(vn=$-!d3uc!(v@0c8vl4ta-z!185a(bozvw'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
+WHITENOISE_AUTOREFRESH = True
 
 # Application definition
 
@@ -116,26 +118,21 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-    BASE_DIR / "static",
-
-]
-STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-    BASE_DIR / "static",
-]
-
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+MEDIA_URL = ''
+MEDIA_ROOT = os.path.join(BASE_DIR, '')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+EMAIL_BACKEND ='django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'trektalestrekkers@gmail.com'  # Enter your email
-EMAIL_HOST_PASSWORD = 'Trektales@123'  # Enter the password to the email
-
+EMAIL_PORT = 587
+EMAIL_HOST_USER ='trektales.com@gmail.com'
+EMAIL_HOST_PASSWORD = 'boptqadskuycxqfi'
 
 Razorpay_ApiKey = "rzp_test_69X53YYq175VWt"
 Razorpay_Api_SecretKey = "eqrdX2hingZ9KWlslWLEL7tO"
@@ -184,9 +181,9 @@ JAZZMIN_SETTINGS = {
         "auth": "fas fa-users-cog",
         "auth.user": "fas fa-user",
         "auth.Group": "fas fa-users",
-        "Gallary.memories" : "fas fa-image",
-        
-        
+        "Gallary.memories": "fas fa-image",
+
+
 
     },
     # Icons that are used when one is not manually specified
