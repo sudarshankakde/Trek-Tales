@@ -1,0 +1,191 @@
+{% extends 'Base.html' %}
+{% block link_css %}
+{% load static %}
+
+<style>
+  .card-img {
+    filter: opacity(0.8);
+  }
+
+  .person-info {
+    width: 100%;
+    left: 0;
+    background: linear-gradient(180deg, transparent, var(--primary-theme)90%);
+    opacity: 1;
+  }
+
+
+  .rollNumber {
+    font-size: 5vh;
+    font-weight: 800;
+
+  }
+
+  .text-user-theme-primary {
+    background: -webkit-linear-gradient(var(--primary-text), var(--primary-theme));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    user-select: none;
+  }
+
+  .img-badge::before {
+    content: 'Founders';
+    background-color: var(--primary-theme);
+    padding: 2px 10px;
+    opacity: 0.8;
+    position: absolute;
+    border-top-left-radius: 5px;
+    top: 0;
+    left: 0;
+    z-index: 40;
+  }
+
+  .hover-opacity-100 {
+    opacity: .7;
+  }
+
+  .hover-opacity-100:hover {
+    opacity: 1;
+  }
+</style>
+{% endblock link_css %}
+{%block body%}
+<div class="container-fluid ">
+  <h1 class="whyTrekTales text-center py-5">IT’S TIME TO
+    KNOW US</h1>
+  <div class="row">
+    <div class="col-lg-3 col-12 py-5 text-center text-capitalize" id="section2weareMain">
+      <h1 class="py-5">
+        We are Trek.Tales
+      </h1>
+    </div>
+    <div class="col-lg-9 col-12 py-5 " id="section2weare">
+
+      <p class="py-5 px-3 text-center text-lg-start">
+        <span class="opacity-100">Having an interest in who we are makes us happy.</span>
+        <br>
+        <span class="opacity-85">
+
+          <b class="letter-space-75">Trek.Tales_</b> organizes various tours and treks as well as will
+          customize them for you. Additionally, we offer night camping🏕️, pool parties 🎉, travel plans,
+          and
+          itinerary planners 👨‍🏫. Also we organize events as well.
+        </span>
+        <br>
+        <span class="opacity-85">
+          Feel free to contact us if you need assistance.
+        </span>
+        <br>
+        <b class="letter-space-75 pt-4 text-decoration-underline text-light">
+          <a href="{%url 'aboutUs'%}">Team Trek.Tales_</a></b>
+
+      </p>
+    </div>
+  </div>
+  <div class="container ">
+    <!-- founders -->
+    <div class="row ">
+      <h1 class="text-center font-weight-normal whyTrekTales pt-5 pt-lg-5 "> Our Team </h1>
+      {%for organizer in organizer%}
+      <div class="col-lg-3 col-sm-4 col-12 mx-auto my-2 my-lg-2 pb-lg-5 pb-2 d-flex align-items-stretch flex-lg-nowrap">
+        <div class="card position-relative hover-opacity-100 hover-shadow-soft " style="min-height: 18rem;">
+          <img src={{organizer.image.url}} alt="{{organizer.Name}}" class="card-img h-100 rounded-5 ">
+          <div class="card-img-overlay ">
+            <div class="position-absolute bottom-0 left-0 py-3  px-3 person-info">
+              <h5>{{organizer.Name}}</h5>
+              <h6 class="small my-2">
+                {%for tag in organizer.Tags.all%}
+
+                <span class="ml-2 badge badge-success">#{{tag}}</span>
+
+                {%endfor%}
+              </h6>
+              <div class="Socials d-flex gap-4 ">
+                <a href="{{organizer.whatsapp}}" target="_blank"><i class="bi bi-whatsapp h5"></i></a>
+                <a href="{{organizer.instagram}}" target="_blank"><i class="bi bi-instagram h5"></i></a>
+                <a href="mailto:{{organizer.mail}}" target="_blank"><i class="bi bi-envelope h5"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {%endfor%}
+    </div>
+  </div>
+
+  <!-- stats  -->
+  <div class="row text-capitalize text-center py-5 ">
+    <h1 class="whyTrekTales">Our achievement</h1>
+    <div class="col-lg-4  col-6 text-user-theme-primary my-3 my-lg-0 ">
+      <div class="rollNumber">{{total_Tours}}+</div>
+      Completed Tours
+    </div>
+    <div class="col-lg-4  col-6 text-user-theme-primary my-3 my-lg-0">
+      <div class="rollNumber">{{total_Costumers}}+</div>
+      Total Costumers
+    </div>
+    <div class="col-lg-4  col-auto mx-auto text-user-theme-primary my-3 my-lg-0">
+      <div class="rollNumber">{{total_Review}}+</div>
+      Total Review's
+    </div>
+  </div>
+
+  <div class="row text-uppercase text-center my-3 ">
+    <div class="col-12 pt-4 pt-lg-0 pt-sm-0">
+      <h1 class="whyTrekTales text-capitalize">We offers</h1>
+    </div>
+  </div>
+
+  <div class="row text-uppercase text-center mb-5">
+    <div class="col-lg-3 col-6 py-lg-2 py-4 icons">
+      <img src="{%static 'images/icons/booking.png'%}" alt="Mobile" sizes="25px*25px" width="75px" height="75px">
+
+      <p class="text-center opacity-75 mt-2">Easy Booking</p>
+    </div>
+    <div class="col-lg-3 col-6 py-lg-2 py-4 icons"><img src="{%static 'images/icons/24-hours.png'%}" alt="24x7"
+        sizes="25px*25px" width="75px" height="75px">
+
+      <p class="text-center opacity-75 mt-2">24X7 Available</p>
+    </div>
+    <div class="col-lg-3 col-6 py-lg-2 py-4 icons"><img src="{%static 'images/icons/best-price.png'%}" alt="Best Price"
+        sizes="25px*25px" width="75px" height="75px">
+      <p class="text-center opacity-75 mt-2">Flexible Prices</p>
+    </div>
+
+    <div class="col-lg-3 col-6 py-lg-2 py-4 icons"><img src="{%static 'images/icons/custom.png'%}" alt="Costom"
+        sizes="25px*25px" width="75px" height="75px">
+      <p class="text-center opacity-75 mt-2">Customize Your Tour</p>
+    </div>
+  </div>
+
+  <div class="row text-capitalize text-center py-4">
+    <h1 class="whyTrekTales">Follow us On instagram</h1>
+    <div class="col-lg-4  col-12 text-user-theme-primary my-3 my-lg-0">
+      <img src="{%static 'images/bgimage2.jpg'%}" alt="trek tales instagram" class="img-fluid "
+        style="height: 35vh; width: 35vh;">
+
+    </div>
+    <div class="col-lg-4  col-12 text-user-theme-primary my-3 my-lg-0">
+      <img src="{%static 'images/bgimage6.jpg'%}" alt="trek tales instagram" class="img-fluid "
+        style="height: 35vh; width: 35vh;">
+    </div>
+    <div class="col-lg-4   col-12 mx-auto text-user-theme-primary my-3 my-lg-0">
+      <img src="{%static 'images/bgimage7.jpg'%}" alt="trek tales instagram" class="img-fluid "
+        style="height: 35vh; width: 35vh;">
+    </div>
+    <div class="text-center my-5">
+      <a href="https://www.instagram.com/trek.tales_/" class="text-center btn1  p-2 text-lowercase">@trek.tales_ </a>
+    </div>
+  </div>
+
+</div>
+</div>
+{% block script %}
+
+<script>
+  window.document.title = "Trek Tales | About Us";
+
+</script>
+
+{% endblock script %}
+{% endblock body%}

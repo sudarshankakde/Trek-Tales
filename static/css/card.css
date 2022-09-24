@@ -1,0 +1,63 @@
+
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 5px 22px 0px rgba(0, 0, 0, 0.44);
+    -webkit-box-shadow: 0px 5px 22px 0px rgba(0, 0, 0, 0.44);
+    -moz-box-shadow: 0px 5px 22px 0px rgba(0, 0, 0, 0.44);
+}
+
+.card {
+    cursor: pointer;
+    transition: all;
+    transition-delay: 0s;
+    transition-duration: .5s;
+    max-width: 375px;
+
+}
+
+.overlay-card {
+    top: 0;
+    background: linear-gradient(180deg,rgba(0,0,0,.7) 0,transparent 95%);
+    width: 100%;
+}
+.expired{
+    position: absolute;
+    left: 0;
+    background: var(--primary-theme);
+    padding: 1px 5px;
+}
+
+.card{
+    background-color: var(--card-bg)!important;
+}
+
+#NewsLetter_Card{
+    width: 35%;
+}
+#NewsLetter_Card:hover{
+    transition: none;
+    transform:none; 
+}
+
+.spanThrow {
+    position: relative;
+}
+
+.linethrow {
+    border: thin solid var(--white);
+    position: absolute;
+    width: 95%;
+    top: 40%;
+    z-index: -1;
+}
+@media (max-width:576px) {
+    #NewsLetter_Card{
+        width: 45%;
+        
+    }
+  
+}
+#updates{
+    position: relative;
+}

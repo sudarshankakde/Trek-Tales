@@ -1,0 +1,153 @@
+{% extends 'Base.html' %}
+{% load static %}
+{% block link_css %}
+<link rel="stylesheet" href="{%static 'css/home.css'%}">
+{% endblock link_css %}
+{%block body%}
+<div class="container">
+  <div class="row">
+    <div class="col-12 my-3">
+
+      <div class=" h6 text-capitalize opacity-75 text-center">{{BookedSlotsHeading.Heading|striptags}}&nbsp;|&nbsp;
+        {{BookedSlotsHeading.location|striptags}}&nbsp;|&nbsp;<i
+          class="bi bi-currency-rupee"></i>{{payable_Amount}}&nbsp;<small>(<i class="bi bi-currency-rupee"></i>
+          {{BookedSlotsHeading.price}} + <i class="bi bi-currency-rupee"></i> {{platfrom_fee}}
+          {{Payment_Charges}}%Platform fee)
+        </small> </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12 mb-3">
+      <!-- Default dropend button -->
+      <div class="dropdown">
+        <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+          Select Tour
+        </button>
+        <a href="#ReFunds"><button class="btn btn-primary">ReFunds</button></a>
+        <a href="../exportExcel/{{BookedSlotsHeading.id}}"><button class="btn btn-success">Export Excel</button></a>
+        <small class="float-end">Press F3 To Search Into Page</small>
+        <ul class="dropdown-menu">
+          {%for tour in tours%}
+          <li><a href="{{tour.id}}" class="dropdown-item">{{tour.Heading|striptags}} <b>|</b>
+              {{tour.location|striptags}}</a></li>
+          {%endfor%}
+        </ul>
+      </div>
+    </div>
+    <div class="col-12 my-3">
+      <h3 id="bookings" class="opacity-75">Bookings</h3>
+
+      <div class="table-responsive">
+        <table class="table ">
+          <thead>
+            <tr class="table-info">
+              <th scope="col">#</th>
+              <th scope="col">Name</th>
+              <th scope="col">Gender</th>
+              <th scope="col">Phone No</th>
+              <th scope="col">Email</th>
+              <th scope="col">Payment Status</th>
+              <th scope="col">Address</th>
+              <th scope="col">Trip Id</th>
+              <th scope="col">razorpay_payment_id</th>
+              <th scope="col">razorpay_order_id</th>
+            </tr>
+          </thead>
+          <tbody>
+            {%for Slot in BookedSlots%}
+            <tr class="text-light">
+              <th scope="row">{{forloop.counter}}</th>
+              <th>{{Slot.Name}}</th>
+              <td>{{Slot.gender}}</td>
+              <td><a href="tel:+91{{Slot.Phone_no1}}">{{Slot.Phone_no1}}</a></td>
+              <td><a href="mailto:{{Slot.email}}">{{Slot.email}}</a></td>
+              {%if Slot.Payment_Status%}
+              <td class="w-25">Paid</td>
+              {%else%}
+              <td class="w-25">Not Paid</td>
+              {%endif%}
+              <td class="w-25 small">{{Slot.address}}</td>
+              <td class="">{{Slot.TripId}}</td>
+              <td class="w-25">{{Slot.razorpay_payment_id}}</td>
+              <td class="w-25">{{Slot.razorpay_order_id}}</td>
+            </tr>
+            {%endfor%}
+
+          </tbody>
+        </table>
+      </div>
+      <hr>
+      <h3 id="ReFunds" class="opacity-75">Refunds Related To This Tour</h3>
+      <div class="table-responsive">
+        <table class="table ">
+          <thead>
+            <tr class="table-info">
+              <th scope="col">#</th>
+              <th scope="col">Name</th>
+              <th scope="col">Gender</th>
+              <th scope="col">Phone No</th>
+              <th scope="col">Email</th>
+              <th scope="col">Refund_Amount </th>
+              <th scope="col">Refund_Status </th>
+              <th scope="col">Payment_Status</th>
+              <th scope="col">Charge%</th>
+              <th scope="col">Razorpay_payment_id</th>
+              <th scope="col">Razorpay_order_id</th>
+              <th scope="col">Charge_Day</th>
+              <th scope="col">Cancelation_date</th>
+              <th scope="col">TripId</th>
+              <th scope="col">Address</th>
+              <th scope="col">Actions</th>
+
+            </tr>
+          </thead>
+          <tbody>
+            {%for refund in ReFund%}
+            <tr class="text-light">
+              <th scope="row">{{forloop.counter}}</th>
+              <th>{{refund.Name}}</th>
+              <td>{{refund.gender}}</td>
+              <td><a href="tel:+91{{refund.Phone_no1}}">{{refund.Phone_no1}}</a></td>
+              <td><a href="mailto:{{refund.email}}">{{refund.email}}</a></td>
+              <td class="">Rs.{{refund.refund_Amount}}</td>
+              {%if refund.Refund_Status %}
+              <td class="">Refunded Successfuly</td>
+              {%else%}
+              <td class="" id="state">Yet To Refund</td>
+              {%endif%}
+              <td class="">{{refund.Payment_Status}}</td>
+              <td class="">{{refund.charge_percenrate}} %</td>
+              <td class="">{{refund.razorpay_payment_id}}</td>
+              <td class="">{{refund.razorpay_order_id}}</td>
+              <td class="">{{refund.charge_Day}} Day</td>
+              <td class="">{{refund.cancelation_date}}</td>
+              <td class="">{{refund.TripId}}</td>
+              <td class="small ">{{refund.address}}</td>
+              {%if refund.Refund_Status %}
+              <td class="">AlReady Refunded</td>
+              {%else%}
+              <td class="text-center " style="cursor: pointer;">
+                <form hx-get="{%url 'Mark_Refunded'%}" hx-target="#state" hx-trigger="submit">
+                  <input type="hidden" name="id" value="{{refund.id}}">
+                  <button type="submit">
+                    <i class="bi bi-check-circle text-primary h3 text-center"></i>
+                    <br>Mark As Refunded
+                  </button>
+                </form>
+              </td>
+              {%endif%}
+            </tr>
+            {%endfor%}
+
+          </tbody>
+        </table>
+      </div>
+
+
+    </div>
+  </div>
+</div>
+<script>
+
+</script>
+{%endblock body%}

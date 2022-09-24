@@ -1,0 +1,32 @@
+{
+    "name":"Trek Tales",
+    "short_name":"TrekTales",
+    "start_url":"/home",
+    "display":"standalone",
+    "background_color":"#1c2331",
+    "theme_color":"#498553",
+    "orientation": "portrait-primary",
+    "description":"explore maharstra",
+    "icon":[
+        {
+            "src": "/images/logo/icon-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/logo/icon-256x256.png",
+            "sizes": "256x256",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/logo/icon-384x384.png",
+            "sizes": "384x384",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/logo/icon-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}

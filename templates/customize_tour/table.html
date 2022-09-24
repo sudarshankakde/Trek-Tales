@@ -1,0 +1,35 @@
+<div class="table-responsive my-5" id="table">
+    <table class="table">
+        <thead>
+            <tr class="table-info">
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Phone No</th>
+                <th scope="col">Email</th>
+                <th scope="col">requested on</th>
+                <th scope="col">group_size Status</th>
+                <th scope="col">no_of_day</th>
+                <th scope="col">start_date</th>
+                <th scope="col">trek_name</th>
+                <th scope="col">tour_explain</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%for request in data%}
+            <tr class="text-light">
+                <th scope="row">{{forloop.counter}}</th>
+                <th>{{request.name}}</th>
+                <td><a href="tel:+91{{request.phone}}">{{request.phone}}</a></td>
+                <td><a href="mailto:{{request.email}}">{{request.email}}</a></td>
+                <td class="text-capitalize">{{request.request_on_date|date:"d-b-y"}}</td>
+                <td>{{request.group_size}}</td>
+                <td class="">{{request.no_of_day}}</td>
+                <td class="w-25">{{request.start_date}}</td>
+                <td class="w-25">{{request.trek_name}}</td>
+                <td class="">{{request.tour_explain}}</td>
+            </tr>
+            {%endfor%}
+
+        </tbody>
+    </table>
+</div>

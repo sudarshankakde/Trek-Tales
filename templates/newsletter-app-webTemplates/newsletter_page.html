@@ -1,0 +1,62 @@
+{% extends 'Base.html' %}
+{% load static %}
+{% block link_css %}
+<style>
+    #img-1 {
+        position: relative;
+        z-index: 10;
+    }
+
+    #img-2 {
+        position: absolute;
+        top: 0;
+        right: 0;
+        z-index: 2;
+        transform: translate(10px, -35px);
+    }
+
+    .container {
+        margin: 15vh auto;
+    }
+</style>
+<script src="https://unpkg.com/hyperscript.org@0.9.7"></script>
+{% endblock link_css %}
+{%block body%}
+<div class="container ">
+    <div class="row py-5">
+        <div class="col-lg-7 col-sm-12 col-12 ">
+            <p class="h3 fw-normal opacity-85 mb-2">Subscribe to Trek Tales's Newsletter</p>
+            <p class="h6 fw-light opacity-75   mb-4">Delivered to your inbox, Trek Tales newsflash is filled with latest
+                tours, discount's and story's.</p>
+            <form hx-post="{%url 'NewsLetter'%}" hx-indicator=".progress" hx-trigger='submit' hx-target="#result"
+                hx-swap="innerHTML" id="sub">
+                {%csrf_token%}
+                <div class="form-outline form-white mb-4 ">
+                    <input type="email" id="EmailID" class="form-control form-control-lg" name='EmailID' required />
+                    <label class="form-label" for="EmailID"><i class="bi bi-envelope-fill"></i> Your
+                        Email</label>
+                </div>
+
+                <div class=" small d-flex flex-nowrap justify-content-between">
+                    <button type="submit" class="button-primary mb-2">Subscribe</button>
+                    <a href="{%url 'unsubscribe'%}"
+                        class="text-decoration-underline opacity-50 mt-4 small">Unsubscribe To NewsLetter</a>
+                </div>
+                <br>
+                <div id="result" class="my-3 text-light opacity-75 fw-semibold"></div>
+            </form>
+        </div>
+        <div class="col-lg-5 d-sm-none d-none d-lg-block position-relative">
+            <img src="{%static 'images/fort.jpg'%}" alt="sub" class="img-fluid " id="img-1">
+            <img src="{%static 'images/bgimage9.jpg'%}" alt="sub" class="img-fluid w-75 h-75" id="img-2">
+        </div>
+    </div>
+</div>
+<script>
+    document.getElementById('sub').onsubmit = () => {
+        document.getElementById('result').innerText = 'Please wait, we are adding you to our subscriber list.'
+    }
+</script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+{%endblock body%}

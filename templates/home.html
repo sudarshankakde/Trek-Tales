@@ -1,0 +1,210 @@
+{% extends 'Base.html' %}
+{% load static %}
+{% block link_css %}
+<link rel="stylesheet" href="{%static 'css/home.css'%}">
+<link rel="stylesheet" href="{%static 'css/card.css'%}">
+<style>
+    body {
+        overflow-x: hidden !important;
+    }
+</style>
+{% endblock link_css %}
+{%block body%}
+<div id="section1">
+    <div class="container-fluid position-relative py-5 h-100 w-100" id="home-head-box">
+
+        <div class="row" id="home-head-contant">
+            <div class="context p-lg-5 p-2 mx-lg-5 mx-2 my-5">
+                <h1 class="mb-2 h1">HEAD OUT ON YOUR <br>
+                    NEXT HIKING ADVENTURE</h1>
+                <a href="{%url 'updates'%}">
+                    <button class="btn1 bg-transparent p-2 px-3 text-white">Explore Tour</button>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="section2">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-3 col-12 py-5 text-center text-capitalize" id="section2weareMain">
+                <p class="py-5 h1">
+                    We are Trek.Tales
+                </p>
+            </div>
+            <div class="col-lg-9 col-12 py-5 " id="section2weare">
+                <p class="px-3 text-center text-lg-start">
+                    <span class="opacity-100">Having an interest in who we are makes us happy.</span>
+                    <br>
+                    <span class="opacity-85">
+
+                        <b class="letter-space-75">Trek.Tales_</b> organizes various tours and treks as well as will
+                        customize them for you. Additionally, we offer night camping🏕️, pool parties 🎉, travel plans,
+                        and
+                        itinerary planners 👨‍🏫. Also we organize events as well.
+                    </span>
+                    <br>
+                    <span class="opacity-85">
+                        Feel free to contact us if you need assistance.
+                    </span>
+                    <br>
+                    <b class="letter-space-75 pt-4 text-decoration-underline text-light">
+                        <a href="{%url 'aboutUs'%}">Team Trek.Tales_</a></b>
+
+                </p>
+            </div>
+        </div>
+        <div class="row text-uppercase text-center my-3 ">
+            <div class="col-12 pt-4 pt-lg-0 pt-sm-0">
+                <p class="whyTrekTales h1">Why Trek.Tales</p>
+            </div>
+        </div>
+        <div class="row text-uppercase text-center mb-5">
+            <div class="col-lg-3 col-6 py-lg-2 py-4 icons">
+                <img src="{%static 'images/icons/booking.png'%}" alt="Mobile" sizes="25px*25px" width="75px"
+                    height="75px">
+
+                <p class="text-center opacity-75 mt-2">Easy Booking</p>
+            </div>
+            <div class="col-lg-3 col-6 py-lg-2 py-4 icons"><img src="{%static 'images/icons/24-hours.png'%}" alt="24x7"
+                    sizes="25px*25px" width="75px" height="75px">
+
+                <p class="text-center opacity-75 mt-2">24X7 Available</p>
+            </div>
+            <div class="col-lg-3 col-6 py-lg-2 py-4 icons"><img src="{%static 'images/icons/best-price.png'%}"
+                    alt="Best Price" sizes="25px*25px" width="75px" height="75px">
+                <p class="text-center opacity-75 mt-2">Flexible Prices</p>
+            </div>
+
+            <div class="col-lg-3 col-6 py-lg-2 py-4 icons"><img src="{%static 'images/icons/custom.png'%}" alt="Costom"
+                    sizes="25px*25px" width="75px" height="75px">
+                <p class="text-center opacity-75 mt-2">Customize Your Tour</p>
+            </div>
+        </div>
+
+    </div>
+    <div class="container py-5">
+        <div class="row h-100">
+            <div class="col-12 text-center" id="hikeforall">
+                <h2 class="h1">HIKES FOR ALL WALKS OF LIFE</h2>
+                <p class="py-2 mx-auto opacity-75">
+                    The beautiful thing about hiking is that it's truly an activity everyone can do. <br> Whether you're
+                    young or old, an expert or an amateur.<br>
+                <p class="h5 fw-semibold"><q> There are no shortcuts to any place worth going. </q></p>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+<p class="text-center">
+    <a href="{%url 'aboutUs' %}">
+        <button class="button-primary ">
+            More About Us
+        </button>
+    </a>
+</p>
+<div id="news" class="mt-5">
+    <div class="container-fluid pb-4">
+        <div class="row py-5">
+            <div class="col-12 news text-center mb-4">
+                <p><b class="text-shadow py-3 h1"> Upcoming Events </b></p>
+            </div>
+            <div class="row  d-flex align-items-stretch mx-auto">
+                {% include 'card.html' %}
+            </div>
+            <div class="col-12 text-center pt-5 ">
+                <a href="{%url 'updates'%}"><button class="btn1 px-3 p-2 bg-transparent">Explore More <i
+                            class="bi bi-box-fill"></i></button></a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid py-5 my-3 ">
+    <div class="row mb-5">
+        <div class="col-12 text-center" id="Testimonials">
+            <p class=" my-3 text-shadow h1"><b>Testimonials</b></p>
+            <div class="container mb-4">
+                <div class="row row-cols-lg-2 row-cols-1 row-cols-sm-2 row-cols-md-2">
+                    {%for Testimonial in Testimonials.all%}
+                    <div class="col my-auto mx-auto">
+                        <div class="card mb-3 " style="max-width: 540px; cursor:auto;">
+                            <div class="row g-0">
+                                <div class="col-md-4 order-lg-2 order-sm-2 order-1 ">
+                                    <img src={{Testimonial.ReviewerImage.url}} alt={{Testimonial.ReviewBy|safe}}
+                                        class="img-fluid rounded-start h-100 w-auto" />
+                                </div>
+                                <div class="col-md-8 order-lg-1 order-sm-1 order-2">
+                                    <div class="card-body ">
+                                        <i class="bi bi-quote  h1 float-start "></i>
+                                        <p class="card-text small text-end">{{Testimonial.Review|safe}}<i
+                                                class="bi bi-quote fa fa-rotate-180 h1 d-lg-none d-sm-none"></i></p>
+
+                                        <p class="card-text text-end text-capitalize small"><span
+                                                class="opacity-75 fw-semibold letter-space-75">{{Testimonial.ReviewBy|safe}}
+                                                <br><span class="small">- {{Testimonial.profession|safe}}</span></span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {%endfor%}
+                </div>
+            </div>
+
+        </div>
+        <div class="col-12 text-center">
+            <a href="https://bit.ly/3p7WG7X" target="_blank" rel="noopener noreferrer">
+                <button class="button-primary py-1 px-3">
+                    Write Review <i class="bi bi-star-fill"></i>
+                </button>
+
+            </a>
+        </div>
+    </div>
+    <div class="container-fluid pb-5 pt-2">
+        <p class="h1 my-3 text-shadow text-center"><b>Featured Photos</b></p>
+        <p class=" text-center opacity-75">use <a href="https://www.instagram.com/explore/tags/trektales_/"
+                target="_blank" rel="noopener noreferrer"><span class="badgeuser  fonts">#trektales_</span></a> & tag us
+            with
+            your photo on instagram to get featured</p>
+        <div class="row position-relative">
+            <div class="col-6 col-sm-1 col-lg-1 col-sm-1 my-auto order-1 order-sm-1 order-lg-1 d-lg-block d-sm-block d-none">
+                <i class="bi bi-caret-left text-white  h5 rounded rounded-circle p-lg-2 p-1 p-sm-2 border border-light float-end"
+                    onclick="goBack() " style="cursor: pointer;"></i>
+            </div>
+            <div class="col-12 col-lg-10 col-sm-10 order-sm-2 order-lg-2 order-3">
+                <div class="d-flex gap-3 flex-nowrap overflow-auto " id="scrollbar">
+                    {%for image in gallary%}
+                    <div class="col-4 my-auto rounded" style="background-image:url({{image.photos_taken.url}}) ; height: 35vh;background-position: center; width: 35vh;
+                background-repeat: no-repeat;
+                background-size: cover;">
+                    </div>
+                    {%endfor%}
+                    <div class="col-2 my-auto text-center ">
+                        <a href="{%url 'gallary'%}" class="opacity-75">View More <i class="bi bi-image-fill"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-sm-1 col-lg-1 col-sm-1 order-sm-3 order-lg-3 order-sm-3 order-2 my-auto d-lg-block d-sm-block d-none">
+                <i class="bi bi-caret-right text-white  h5 rounded rounded-circle  p-lg-2 p-1 p-sm-2 border border-light float-start"
+                    onclick="goForward() " style="cursor: pointer;"></i>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+
+    function goForward() {
+        document.getElementById('scrollbar').scrollBy(620, 0);
+    }
+    function goBack() {
+        document.getElementById('scrollbar').scrollBy(-620, 0)
+    }
+    document
+
+    window.document.title += " | Home";
+</script>
+{% endblock body%}

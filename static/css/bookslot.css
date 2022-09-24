@@ -1,0 +1,31 @@
+#actionBtn {
+    position: relative;
+    background: linear-gradient(180deg, var(--primary-bg), var(--primary-bg) 80%);
+    padding-top: 1vh;
+    user-select: none;
+}
+
+#actionBtn>span {
+    cursor: pointer;
+
+}
+
+#actionBtn>span:hover {
+    text-decoration: underline;
+
+}
+
+#DetailCard {
+    overflow: hidden;
+
+}
+
+#details {
+    transition: all;
+    transition-delay: 0s;
+    transition-duration: .3s;
+    transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, .3s);
+    scroll-behavior: smooth;
+    display: block;
+}
+

@@ -1,0 +1,39 @@
+{%for updates in tours%}
+<div class="col-lg-4 col-sm-4 col-12 mb-4  mx-auto">
+    <a href="{% url 'tourDetails' slug=updates.slug %}">
+        <div class="card bg-secondary text-white overflow-hidden d-flex flex-column ">
+            <div class="card-img-top rounded-top rounded-4">
+                <img src="{{updates.Tour_image.url}}" alt="{{updates.title|safe}}" class="rounded-top"
+                    style="min-height: 225px;" />
+                <div class="position-absolute overlay-card px-2 rounded   pt-2 ">
+                    {%if updates.slorts < 1 %} {% elif updates.TourIsNotExpire %} <span class=""><i
+                            class="bi bi-person-fill"></i> {{updates.slorts}}</span>
+                        {%else%} <span class=" expired">
+
+                            Booking Closed</span>
+                        {%endif%}
+
+                </div>
+            </div>
+            <div class="card-body ">
+                <div class="fw-bold mb-1 text-capitalize">{{updates.Heading|striptags}}</div>
+                <div class="fw-semibold opacity-75">{{updates.tour_from_to}} | {{updates.location}}</div>
+            </div>
+            <div class="card-body pt-0">
+                <div class="text-user-primary opacity-75">
+                    <span class="fw-bold "><i class="bi bi-currency-rupee"></i>{{updates.price}}</span>&nbsp;onwards
+                </div>
+            </div>
+        </div>
+    </a>
+</div>
+
+{%endfor%}
+{%if tours.has_next%}
+<span id="loadMoreBtn_Span" class="text-center"> 
+    <button class="button-primary  htmx-request" id="loadMoreBtn" hx-get="?page={{ tours.next_page_number }}"
+        hx-target="#loadMoreBtn_Span" hx-trigger="click " hx-swap="outerHTML" hx-indicator=".progress">Load More <i class="bi bi-box-seam-fill"></i>
+    </button>
+</span>
+{%else%}
+{%endif%}

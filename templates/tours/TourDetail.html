@@ -1,0 +1,230 @@
+{% extends 'Base.html' %}
+{% load static %}
+{% block link_css %}
+<link rel="stylesheet" href="{%static 'css/tour_details.css'%}">
+{% endblock link_css %}
+{% block body %}
+<div class="container-fluid position-static  py-sm-5 py-lg-5 py-0">
+    <div class="row ">
+        <div class="col-lg-3 col-sm-3 col-12  h-max-content p-0 p-lg-auto p-sm-auto   sticky-lg-top top-10
+        sticky-sm-top sticky-top  h-max-content " id="scrollbar">
+            <ul id="NavBar_list"
+                class="d-flex flex-lg-column flex-sm-column flex-row gap-lg-3 text-center  visible mx-auto">
+                <li>
+                    <a class="list-group-item list-group-item-action bg-transparent
+                                " href="#EventInfromation">Event&nbsp;Infromation</a>
+                </li>
+                <li>
+                    <a class="list-group-item list-group-item-action bg-transparent
+                            " href="#Venue">Venue</a>
+                </li>
+                <li>
+                    <a class="list-group-item list-group-item-action bg-transparent
+                            " href="#Organizer">Organizer</a>
+                </li>
+                <li>
+                    <a class="list-group-item list-group-item-action bg-transparent
+                            " href="#Contact" id="contactLink">Contact&nbsp;Organizer</a>
+                </li>
+            </ul>
+
+        </div>
+        <div class="col-lg-6 col-sm-6 col-12 pt-3 pt-lg-0 pt-sm-0 
+            h-100">
+            <div class="row">
+                <div class="col-12 " id="BasisInfo">
+                    <img src="{{tour.Tumbnail.url}}" alt="{{tours.Heading|striptags}}" class="rounded" id="image">
+                    <div class="row py-3">
+                        <div class="col-12">
+                            <div class="text-capitalize h4 font-weight-normal">{{tour.Heading|striptags}}</div>
+                            <div class="d-flex flex-lg-row flex-column gap-2
+                                align-baseline justify-content-lg-between w-100
+                                small font-weight-lighter">
+                                <span><i class="bi bi-calendar-event text-user
+                                        mt-2"></i>&nbsp;
+                                    {{tour.tour_from_to}}&nbsp;|&nbsp;{{tour.time|time:"h:i A"}}
+                                    <span class="text-white-75 small">(IST)</span>
+                                </span>
+                                <span> <i class="bi bi-geo-alt-fill"></i>
+                                    {{tour.location|striptags}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="row w-100 mx-auto mt-3" id="EventInfromation">
+                    <div class="col-12 border border-light rounded
+                        position-relative" id="DetailCard">
+                        <div class="text-start text-uppercase
+                            fw-bold h4 py-3 d-block pt-4">
+                            Tour INFORMATION
+                        </div>
+                        <div class="small text-justify ">
+                            <div id="details">{{tour.packageInfo|safe}}</div>
+                        </div>
+                        <span id="actionBtn" class="text-center d-block
+                            small text-white action1 "><span onclick="ShowMoreDetails()" id="action-text">Read
+                                More</span></span>
+                    </div>
+                </div>
+                <div class="row w-100 mx-auto mt-3" id="Venue">
+                    <div class="col-12 border border-light rounded py-4">
+                        <div class="text-start text-uppercase
+                            fw-bold h4  d-block text-center text-lg-start text-sm-start">
+                            VENUE
+                        </div>
+                        <div class="row py-3">
+                            <div class="col-lg-6 col-sm-6 col-12 small my-2
+                                my-lg-0 my-sm-0 text-break text-center text-lg-start text-sm-start">
+                                {{tour.location|striptags}}
+                                <hr style="margin: 1px;">
+                                <span class="small text-white-75" style="word-break: keep-all;line-break:
+                                    anywhere;">
+                                    {{tour.city|striptags}},&nbsp;{{tour.district|striptags}},&nbsp;India
+                                </span>
+                            </div>
+                            <div class="col-lg-6 col-sm-6 col-12
+                                text-lg-center mx-auto my-2 mt-3 my-lg-0 my-sm-0 text-center
+                                my-auto">
+                                <a href="{{tour.googleMap}}" class="w-100" target="_blank">
+                                    <span class=" small font-monospace btnW
+                                        btn1">
+                                        <i class="bi bi-map"></i> View On
+                                        Map
+                                    </span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="w-100 mx-auto mt-3 rounded" id="Organizer">
+                    <div class="col-12 rounded">
+                        <img src={{tour.Organizer.backgroundImg.url}} alt="{{tour.Organizer.Name}}" class="w-100 rounded-top">
+                        <div class="row w-100 mx-auto pb-2 rounded-bottom " style="background-color: var(--card-bg);">
+                            <div class="col-3 position-relative">
+                                <img src={{tour.Organizer.image.url}} alt="{{tour.Organizer.Name}}" class="rounded rounded-circle
+                                    position-absolute w-100" id="OrganizerImage">
+
+                            </div>
+                            <div class="col-9">
+                                <span class="h4">
+                                    {{tour.Organizer.Name}}
+                                </span>
+                                <div class="aboutorganizer small my-2">
+                                    {{tour.Organizer.About|safe}}
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-12 col-lg-6 my-2 my-lg-0
+                                        ">
+                                        {%for tag in tour.Organizer.Tags.all%}
+                                        <span class="ml-2 badge
+                                            badge-success">#{{tag}}</span>
+                                        {%endfor%}
+                                    </div>
+
+                                    <div class="col-12 my-2 my-lg-0
+                                        col-lg-6">
+                                        <div class="d-flex gap-4
+                                            justify-content-end h5 mx-auto
+                                            flex-wrap ">
+                                            <a href="{{tour.Organizer.whatsapp}}" target="_blank">
+                                                <i class="bi bi-whatsapp "></i>
+                                            </a>
+                                            <a href="{{tour.Organizer.instagram}}" target="_blank">
+                                                <i class="bi bi-instagram "></i>
+                                            </a>
+                                            <a href="tel:+91{{tour.Organizer.telephone}}" target="_blank">
+                                                <i class="bi bi-telephone "></i>
+                                            </a>
+                                            <a href="mailto:{{tour.Organizer.mail}}" target="_blank">
+                                                <i class="bi bi-envelope"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-lg-3 col-sm-3 col-12
+            sticky-lg-top top-10
+            sticky-sm-top h-max-content ">
+            <div class="w-100" id="BookNowBtn">
+                {%if tour.TourIsNotExpire%}
+                <a href="{% url 'bookslot' slug=tour.slug%}">
+                    <button class="btn btn-success w-100">
+                        <div class="d-flex flex-lg-column gap-2 justify-content-between">
+                            <span class="h6">
+                                <i class="bi bi-currency-rupee"></i>{{tour.price}}/-&nbsp;
+                                Onwards
+                            </span>
+                            <span>
+                                Book Now <i class="bi bi-arrow-right h6"></i>
+                            </span>
+                        </div>
+                    </button>
+                </a>
+                {%else%}
+                <button class="btn btn-success  opacity-100 w-100 disabled">
+
+                    <span class="h5">
+                        Sold Out
+                    </span>
+
+                </button>
+                {%endif%}
+            </div>
+            <div class="my-4 w-lg-75 w-100 mx-auto border border-light text-center
+                py-3 rounded" id="Contact">
+                <span>
+                    <i class="bi bi-question-lg h1"></i>
+                    <br>
+                    <b class="text-capitalize">Have a question</b>
+                    <br>
+                    <small class="w-75">Send your queries to the tour
+                        organizer.</small>
+
+                    <a href="{{tour.Organizer.whatsapp}}" class="mt-2 d-block">
+                        <button class="btn btn-success">
+                            Ask Now&nbsp;<i class="bi bi-whatsapp
+                                font-weight-bolder"></i>
+                        </button>
+                    </a>
+                </span>
+            </div>
+
+
+
+
+        </div>
+    </div>
+</div>
+<script>
+    window.document.title += " | {{tour.Heading|striptags}}";
+
+    let details = document.getElementById('details');
+    const mainVal = details.clientHeight;
+    let detailCard = document.getElementById('DetailCard');
+    details.style.height = (mainVal / 2) + 'px';
+    var click = 1;
+    function ShowMoreDetails() {
+
+        if (click == 1) {
+            details.style.height = (mainVal) + 15 + 'px';
+            click = 2;
+            document.getElementById('action-text').innerText = 'Collapse';
+        }
+        else {
+            details.style.height = (mainVal / 2) + 'px';
+            click = 1;
+            document.getElementById('action-text').innerText = 'Read More';
+        }
+    }
+
+</script>
+
+{% endblock body %}

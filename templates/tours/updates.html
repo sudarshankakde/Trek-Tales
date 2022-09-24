@@ -1,0 +1,42 @@
+{% extends 'Base.html' %}
+{% load static %}
+
+{% block link_css %}
+<link rel="stylesheet" href="{%static 'css/home.css'%}">
+<link rel="stylesheet" href="{%static 'css/card.css'%}">
+<style>
+    .not-display {
+        display: none;
+
+    }
+</style>
+{% endblock link_css %}
+
+{%block body%}
+
+
+
+<div class="text-capitalize h2 mt-4 mb-2 py-2 text-center  opacity-75 fw-bold bi-emoji-heart-eyes-fill">
+    <span class="">Upcoming Tours.</span>
+</div>
+<div class="container-fluid">
+   
+    <div class="row py-2 " id="updates">
+        {%include 'card.html'%}
+    </div>
+ 
+    {%include 'newsletter-app-webTemplates/newsletter_card.html'%}
+
+</div>
+<script>
+
+    window.document.title += " | Latest Tours";
+</script>
+{% endblock body%}
+{% block Script %}
+<!-- Go to www.addthis.com/dashboard to customize your tools -->
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-6200cfd66fd339e5"></script>
+<script src="{%static 'js/gallary.js'%}"></script>
+
+</div>
+{% endblock Script %}

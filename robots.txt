@@ -1,0 +1,4 @@
+user-agent:*
+Disallow:/admin/
+Disallow:/bookslot/
+Disallow:/Payment_Success

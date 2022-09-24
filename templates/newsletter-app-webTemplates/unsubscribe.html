@@ -1,0 +1,51 @@
+{% extends 'Base.html' %}
+{% load static %}
+{%block body%}
+<div class="container " style="margin: 20vh auto;">
+    <div class="row py-5">
+        <div class="col-lg-6 col-sm-6 col-10 mx-auto text-center">
+            <form hx-post='' hx-indicator=".progress" hx-trigger='confirmed' hx-target="#result" hx-swap="innerHTML"
+                id="unsub">
+                {% csrf_token %}
+                <div class="mb-3 h5 fw-bold opacity-75">
+                    Unsubscribe To Newsletter.
+                </div>
+                <div class="form-outline form-white mb-4 ">
+                    <input type="email" id="email_user" class="form-control form-control-lg" name='email' required />
+                    <label class="form-label" for="email_user"><i class="bi bi-envelope-fill"></i> Your
+                        Email</label>
+                </div>
+                <button type="submit" class="button-primary mb-2 ">submit</button>
+                <br>
+                <div id="result" class="my-3 text-light opacity-75 fw-semibold"></div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    document.getElementById('unsub').onsubmit = () => {
+        event.preventDefault();
+        console.log('swal fire')
+        Swal.fire({
+            title: 'Are you sure.',
+            icon: 'question',
+            html:
+                '<span class="small opacity-75">By unsubscribing to newsletter you will not get any updates regarding new tours.</span>',
+            backdrop: '#1c233180',
+            background: '#1c2331',
+            color: '#ffffff',
+            showCancelButton: true,
+            confirmButtonText: 'Unsubscribe',
+            denyButtonText: `Cancel`,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('result').innerText = 'Please wait, we are removeing you from our subscriber list.'
+                htmx.trigger(htmx.find("#unsub"), "confirmed");
+
+            }
+        })
+    }
+</script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+{%endblock body%}
