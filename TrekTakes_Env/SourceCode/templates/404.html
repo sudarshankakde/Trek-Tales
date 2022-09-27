@@ -1,0 +1,18 @@
+{% extends 'Base.html' %}
+{% load static %}
+{% block link_css %}
+{% endblock link_css %}
+{%block body%}
+<div class="container my-5 pb-5">
+    <div class="col-lg-8 col-12 mx-auto text-center mt-5">
+        <img src="{%static 'images/404.svg'%}" alt="" class="img-fluid" id="image404">
+        <h3 class="my-4 opacity-75 ">Seems like you are lost !</h3>
+        <a href="{%url 'home'%}" class="button-primary  text-decoration-none text-uppercase px-4 py-2 my-2">
+            <span class="">GO to home</span></a>
+    </div>
+</div>
+
+{% endblock body%}
+{% block script %}
+<script>window.document.title+=" | Page Not Found"</script>
+{% endblock script %}

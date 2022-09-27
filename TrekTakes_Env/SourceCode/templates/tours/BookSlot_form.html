@@ -1,0 +1,189 @@
+{% extends 'Base.html' %}
+{% load static %}
+
+{% block link_css %}
+<link rel="stylesheet" href="{%static 'css/bookslot.css'%}">
+<style>
+    .card {
+        background-color: unset !important;
+        box-shadow: none;
+    }
+
+    .coursor-pointer {
+        cursor: pointer;
+    }
+
+    .td {
+        padding: 0px 5px !important;
+    }
+
+    .table-sm>:not(caption)>*>* {
+        padding: 0.5rem 0.4rem;
+    }
+
+    .card-book {
+        background-image:url({{updates.Tumbnail.url}}),
+        linear-gradient(90deg, var(--card-bg) 5%, var(--primary-theme) 35%, var(--primary-theme) 100%);
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+</style>
+{% endblock link_css %}
+{%block body%}
+<div class="container my-5">
+
+    <div class="row">
+        <div class="col-12 mx-auto">
+            <div class="row rounded-5 card-bg position-relative">
+                <div class="col-lg-5 col-sm-5 col-12 my-auto">
+                    <div class="card-book text-bg-dark rounded ">
+                        <div class=" text-center m-0  my-auto h-100 p-3 overflow-auto ">
+                            <small class="fw-semibold bi bi-signpost-fill h6">&nbsp;{{updates.Heading}}</small>
+                            <table class="table table-sm text-light text-capitalize text-start table-borderless mt-2">
+                                <tbody>
+                                    <tr>
+                                        <td class="fw-bold"><i class="bi bi-geo-alt-fill me-1"></i>Destination</td>
+                                        <td>{{updates.location}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-bold"><i class="bi bi-currency-rupee me-1"></i>price</td>
+                                        <td>{{updates.price}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-bold"><i class="bi bi-calendar-fill me-1"></i>Tour on </td>
+                                        <td>{{updates.tour_on_date}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <a href="{% url 'tourDetails' slug=updates.slug %}" target="_blank"
+                                rel="noopener noreferrer" class="text-decoration-underline">All Details</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-7 col-sm-7 col-12 mx-auto py-4 my-4 my-lg-0 my-sm-0 " id="bookComp">
+                    <form class="form-control bg-transparent border-0  text-white" id="BookingForm"
+                        hx-post="{% url 'confirm_booking' %}" hx-indicator=".progress" hx-target="#BookingForm"
+                        hx-trigger='confirmed' hx-swap="outerHTML">
+                        <div class="d-flex flex-row justify-content-between">
+                            <p class="my-auto">&nbsp;</p>
+                            <span>
+                                step 1 of 2
+                            </span>
+                        </div>
+                        {% csrf_token %}
+                        <input type="hidden" name="TourId" value="{{updates.id}}">
+                        <div class="text-capitalize pt-3 pb-1 opacity-75">Personal Details:</div>
+                        <!-- Name -->
+                        <div class="row">
+                            <!-- first name  -->
+                            <div class="col-md-6 mb-3 mt-1">
+                                <div class="form-outline form-white">
+                                    <input type="text" id="fName" class="form-control form-control-lg" name="fName"
+                                        required />
+                                    <label class="form-label" for="fName">First Name</label>
+                                </div>
+                            </div>
+                            <!-- last name  -->
+                            <div class="col-md-6 mb-3">
+                                <div class="form-outline form-white">
+                                    <input type="text" id="lastName" class="form-control form-control-lg"
+                                        name="lastName" required />
+                                    <label class="form-label" for="lastName">Last Name</label>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- gender -->
+                        <div class="form-check form-check-inline m-0">
+                            <input class="form-check-input" type="radio" name="gender" id="male" value="Male"
+                                required="" />
+                            <label class="form-check-label" for="male"><i class="bi bi-gender-male"></i>
+                                Male</label>
+                        </div>
+                        <div class="form-check form-check-inline mx-4">
+                            <input class="form-check-input " type="radio" name="gender" id="female" value="Female"
+                                required />
+                            <label class="form-check-label" for="female"><i class="bi bi-gender-female"></i>
+                                Female</label>
+                        </div>
+                        <!-- Contact -->
+                        <div class="text-capitalize pt-3 pb-1 opacity-75">Contact Details:</div>
+                        <!-- email id -->
+                        <div class="form-outline form-white mt-1 " >
+                            <input type="email" id="email_user" class="form-control form-control-lg" name='email'
+                                required inputmode="email" />
+                            <label class="form-label" for="email_user"><i class="bi bi-envelope-fill"></i> Your
+                                Email</label>
+                        </div>
+                        <!-- phone no 1 -->
+                        <div class="form-outline form-white  my-4">
+                            <input type="tel" class="form-control form-control-lg" id="Phone_no1_user" name="Phone_no1"
+                                required data-mdb-showcounter="true" maxlength="10" inputmode="tel" />
+                            <label class="form-label" for="Phone_no1_user"><i class="bi bi-telephone-fill"></i> Your
+                                Phone
+                                number</label>
+                            <div class="form-helper text-light opacity-85 "></div>
+                        </div>
+                        <!-- adress -->
+                        <div class="form-outline form-white my-4">
+                            <textarea class="form-control form-control-lg" rows="4" name="address" id="address"
+                                class="form-control required" required></textarea>
+                            <label class="form-label" for="address"><i class="bi bi-geo-alt-fill"></i> Your
+                                Address</label>
+                        </div>
+                        <!-- hidden Values -->
+                        <input type="hidden" class="" id="Payment_Status" placeholder="" name="Payment_Status" value="">
+                        <input type="hidden" class="" id="payment_order_id" placeholder="" name="payment_order_id"
+                            value="{{order_id}}">
+                        <input type="hidden" class="" id="amount" placeholder="" required="" name="amount"
+                            value="{{updates.price}}">
+                        <input type="hidden" class="" id="razorpay_payment_id" placeholder="" required=""
+                            name="razorpay_payment_id" value="">
+                        <input type="hidden" class="" id="razorpay_order_id" placeholder="" required=""
+                            name="razorpay_order_id" value="">
+                        <input type="hidden" class="" id="razorpay_signature" placeholder="" required=""
+                            name="razorpay_signature" value="">
+
+                        <button type="submit" class="btn1 btn-outline-light text-capitalize bg-transparent my-1 my-lg-0"
+                            id="clickme">Continue &nbsp;<i class="bi bi-wallet2"></i></button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+
+</div>
+<!-- RAZORPAY INTEGRATION HERE -->
+{%block script%}
+<script>
+    var form = document.getElementById('BookingForm');
+    document.getElementById('BookingForm').onsubmit = () => {
+        event.preventDefault();
+        console.log('swal fire')
+        Swal.fire({
+            title: 'Proceed To Payment?',
+            icon: 'question',
+            html:
+                '<p class="opacity-75">Please make sure your provided details are accurate before proceeding to the payment page.</p>',
+            backdrop: '#1c233180',
+            background: '#1c2331',
+            color: '#ffffff',
+            showCancelButton: true,
+            confirmButtonText: 'Proceed',
+            denyButtonText: `Cancel Booking`,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                htmx.trigger(htmx.find("#BookingForm"), "confirmed");
+
+            }
+        })
+    }
+
+</script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+{%endblock script%}
+
+{% endblock body%}

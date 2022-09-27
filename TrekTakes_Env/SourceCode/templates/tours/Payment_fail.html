@@ -1,0 +1,18 @@
+{% extends 'Base.html' %}
+{% load static %}
+
+{%block body%}
+<div class="container">
+    <div class="row">
+        <div class="col-10 text-capitalize mx-auto text-center " style="margin: 10vh 0;">
+            Sorry Your payment Failed
+            <br>
+            You will receive a refund within 48-72 hours if any amount has been debited from your account
+            <br>
+            <a href="{%url 'updates'%}">
+                Retry Booking
+            </a>
+        </div>
+    </div>
+</div>
+{%endblock body%}

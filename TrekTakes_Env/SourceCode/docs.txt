@@ -1,0 +1,110 @@
+project base on Django version 4.0.2, using settings 'Trek_Tales.settings'
+all important dowload and installations are at 'requirement.txt'
+there are total 3 parts of project 
+-1. Gallary (Aka memories)
+    --views.py
+        --gallary
+
+    --models.py
+        <!-- Databse Tables -->
+        --Memories
+
+    --admin.py
+
+-2. updates (Aka Tours)
+    --views.py
+        <!-- functions -->
+        --update
+        --GenrateTripID
+        --bookslot
+        --details
+        --confirm_booking
+        --Payment_Completed
+        --Payment_Failed
+
+    --urls.py
+        <!-- URL pattens -->
+        -name='updates'
+        -name='bookslot' # slotBooking
+        -name='confirm_booking' # payment id genrate
+        -name='Payment_Completed'  # payment success  handle  
+        -name='Payment_Failed' # payment  fail handle  
+        -name='tourDetails' # details and more
+
+    --models.py
+        <!-- Databse Tables -->
+        --Organizer
+        --Tags
+        --Updates
+        --Testimonials
+        --BookSlot
+        --SiteData
+        --Contact
+        --NewsLetter_Subscriber
+        --ReFund
+
+   
+
+-3. Trek_Tales (Aka Main APP)
+    --settings.py
+        MIDDLEWARE
+            'updates.middlewares.UnderConstructionMiddleware',
+        
+        Email
+            EMAIL_BACKEND ='django.core.mail.backends.smtp.EmailBackend'
+            EMAIL_HOST = 'smtp.gmail.com'
+            EMAIL_USE_TLS = True
+            EMAIL_PORT = 587
+            EMAIL_HOST_USER ='trektales.com@gmail.com'
+            EMAIL_HOST_PASSWORD = 'boptqadskuycxqfi'
+        
+        Razorpay_ApiKey
+            Razorpay_ApiKey = "rzp_test_jk50Ag7VxxDIV4"
+            Razorpay_Api_SecretKey = "lrpU0piH4PFN7iX4EWZ0Cpas"
+            Payment_Charges = 2 
+
+        Refund_Charges
+            "More_Then_25_Days_Remain":15,
+            "More_Then_15_Days_Remain":40,
+            "Less_Then_15_Days_Remain":50
+
+    --urls.py
+        <!-- URL pattens -->
+
+        --admin [admin/]
+        --serve.MEDIA_ROOT [DataBase/]
+        --serve.STATICFILES_DIRS / serve.STATIC_ROOT [static/]
+        --include('updates.urls') [tours/]
+        --handler404 = 'Trek_Tales.views.error_404_view'
+        --handler500 = 'Trek_Tales.views.error_500_view'
+        --name='ShowBookings'
+        --name='ShowBookingsOfId'
+        --name='exportExcel'
+        --name='NewsLetter'
+        --name='home'
+        --name='contact'
+        --name='cancelation'
+        --name='Mark_Refunded'
+        --name='gallary'
+        --name='aboutUs'
+
+    --views.py
+        <!-- functions -->
+        --home
+        --contact
+        --cancelation
+        --aboutUs
+        --error_404_view
+        --error_500_view
+        --ShowBookings
+        --ShowBookingsOfId
+        --exportExcel
+        --NewsLetter
+        --Mark_Refunded
+
+
+after giving all personal and contact details requred user will sent post request to "confirm_booking" in response 
+this function will render "payment_card.html" and will create razorpay clint at backend so we will get "payment_id" in backend which will be passed with rendered templete as form of "context"
+letter on after succesful payment user will sent to "payment_success" page and at that time all details of payment and user's will be stored in database.
+
+we can see all bookedslots at 'ShowBookings/' Login Requied. for loging visit 'admin/'.

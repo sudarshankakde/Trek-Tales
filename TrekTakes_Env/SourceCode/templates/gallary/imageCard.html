@@ -1,0 +1,20 @@
+{% load static %}
+
+{%for Memories in memories%}
+
+<div class="gallary-image">
+    <a href="{{Memories.photos_taken.url}}" title="{{Memories.photo_taken_on_tour.Heading}}"
+        data-lcl-txt="{{Memories.photo_taken_on_tour.tour_on_date|date:'d M Y'}}" data-lcl-author="{{Memories.author}}">
+        <img src="{{Memories.photos_taken.url}}" class="img-fluid rounded-2" id="image_{{Memories.id}}">
+    </a>
+</div>
+{% endfor %}
+{%if memories.has_next%}
+<span id="loadMoreBtn_Span" class="d-grid">
+    <button class=" button-primary  htmx-request " id="loadMoreBtn" hx-get="?page={{ memories.next_page_number }}"
+        hx-target="#loadMoreBtn_Span" hx-trigger="click " hx-swap="outerHTML" hx-indicator=".progress">Load More <i
+            class="bi bi-image-fill"></i>
+    </button>
+</span>
+{%else%}
+{%endif%}

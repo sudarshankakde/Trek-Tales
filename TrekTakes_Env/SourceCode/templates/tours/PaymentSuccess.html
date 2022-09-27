@@ -1,0 +1,193 @@
+{% extends 'Base.html' %}
+{% load static %}
+
+{% block link_css %}
+<script src="https://cdn.jsdelivr.net/npm/party-js@latest/bundle/party.min.js"></script>
+<style>
+    p {
+        line-height: 25px;
+    }
+</style>
+{% endblock link_css %}
+{%block body%}
+
+{%if state == "success" %}
+<div class="conatiner pb-5" style="min-height: 85vh;" id="box" onclick="party.confetti(this)">
+    <div class="row py-5">
+        <div class="col-lg-2 col-5 mx-auto">
+            <?xml version="1.0" encoding="utf-8"?><svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+                class="img-fluid" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 117.72 117.72"
+                style="enable-background:new 0 0 117.72 117.72" xml:space="preserve">
+                <style type="text/css">
+                    <![CDATA[
+                    .st0 {
+                        fill: var(--primary-theme);
+                    }
+                    ]]>
+                </style>
+                <g>
+                    <path class="st0"
+                        d="M58.86,0c9.13,0,17.77,2.08,25.49,5.79c-3.16,2.5-6.09,4.9-8.82,7.21c-5.2-1.89-10.81-2.92-16.66-2.92 c-13.47,0-25.67,5.46-34.49,14.29c-8.83,8.83-14.29,21.02-14.29,34.49c0,13.47,5.46,25.66,14.29,34.49 c8.83,8.83,21.02,14.29,34.49,14.29s25.67-5.46,34.49-14.29c8.83-8.83,14.29-21.02,14.29-34.49c0-3.2-0.31-6.34-0.9-9.37 c2.53-3.3,5.12-6.59,7.77-9.85c2.08,6.02,3.21,12.49,3.21,19.22c0,16.25-6.59,30.97-17.24,41.62 c-10.65,10.65-25.37,17.24-41.62,17.24c-16.25,0-30.97-6.59-41.62-17.24C6.59,89.83,0,75.11,0,58.86 c0-16.25,6.59-30.97,17.24-41.62S42.61,0,58.86,0L58.86,0z M31.44,49.19L45.8,49l1.07,0.28c2.9,1.67,5.63,3.58,8.18,5.74 c1.84,1.56,3.6,3.26,5.27,5.1c5.15-8.29,10.64-15.9,16.44-22.9c6.35-7.67,13.09-14.63,20.17-20.98l1.4-0.54H114l-3.16,3.51 C101.13,30,92.32,41.15,84.36,52.65C76.4,64.16,69.28,76.04,62.95,88.27l-1.97,3.8l-1.81-3.87c-3.34-7.17-7.34-13.75-12.11-19.63 c-4.77-5.88-10.32-11.1-16.79-15.54L31.44,49.19L31.44,49.19z" />
+                </g>
+            </svg>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-10 col-lg-6 mx-auto text-center">
+            <h3 class="">Payment Success</h3>
+            <h6>Your Slot Is Booked</h6>
+            <br>
+            <p class="small mx-auto py-3">Hello {{Name}}, I am glad to inform you that your booking for
+                <b>
+                    {{tour|striptags}}
+                </b>
+                <br>
+                the amount Rs.{{amount}} has been completed successfully
+                <br>
+                your
+                Trip ID is
+                <b>
+                    {{TripId}}.
+                </b>
+                <br>
+                and your Payment Id is
+                <b>
+                    {{razorpay_payment_id}}
+                </b>
+            </p>
+            <div class="row pt-3">
+                <div class="col-12 d-inline-flex gap-3 justify-content-center flex-wrap flex-lg-nowrap">
+                    <a href="{%url 'home'%}" class="">
+                        <button class="btn1 bg-transparent px-3 py-2 ">Go To Home</button>
+                    </a>
+                    <a href="{%url 'updates'%}" class="">
+                        <button class="btn1 bg-transparent px-3 py-2 ">Explore More Tours </button>
+                    </a>
+                    <a href="{%url 'contact'%}" class="">
+                        <button class="btn1 bg-transparent px-3 py-2 ">Contact Us</button>
+                    </a>
+
+                </div>
+                <div class="col-12 text-center mt-3">
+
+                    <span style="cursor: pointer;"><i class="bi bi-printer-fill h3 pointer"
+                            onclick="printRecipt()"></i></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% elif state == "PaymentIdExist" %}
+<div class="conatiner pb-5" style="min-height: 85vh;" id="box" onclick="party.confetti(this)">
+    <div class="row py-5 ">
+        <div class="col-lg-2 col-5 mx-auto">
+            <?xml version="1.0" encoding="utf-8"?><svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+                class="img-fluid" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 117.72 117.72"
+                style="enable-background:new 0 0 117.72 117.72" xml:space="preserve">
+                <style type="text/css">
+                    <![CDATA[
+                    .st0 {
+                        fill: var(--primary-theme);
+                    }
+                    ]]>
+                </style>
+                <g>
+                    <path class="st0"
+                        d="M58.86,0c9.13,0,17.77,2.08,25.49,5.79c-3.16,2.5-6.09,4.9-8.82,7.21c-5.2-1.89-10.81-2.92-16.66-2.92 c-13.47,0-25.67,5.46-34.49,14.29c-8.83,8.83-14.29,21.02-14.29,34.49c0,13.47,5.46,25.66,14.29,34.49 c8.83,8.83,21.02,14.29,34.49,14.29s25.67-5.46,34.49-14.29c8.83-8.83,14.29-21.02,14.29-34.49c0-3.2-0.31-6.34-0.9-9.37 c2.53-3.3,5.12-6.59,7.77-9.85c2.08,6.02,3.21,12.49,3.21,19.22c0,16.25-6.59,30.97-17.24,41.62 c-10.65,10.65-25.37,17.24-41.62,17.24c-16.25,0-30.97-6.59-41.62-17.24C6.59,89.83,0,75.11,0,58.86 c0-16.25,6.59-30.97,17.24-41.62S42.61,0,58.86,0L58.86,0z M31.44,49.19L45.8,49l1.07,0.28c2.9,1.67,5.63,3.58,8.18,5.74 c1.84,1.56,3.6,3.26,5.27,5.1c5.15-8.29,10.64-15.9,16.44-22.9c6.35-7.67,13.09-14.63,20.17-20.98l1.4-0.54H114l-3.16,3.51 C101.13,30,92.32,41.15,84.36,52.65C76.4,64.16,69.28,76.04,62.95,88.27l-1.97,3.8l-1.81-3.87c-3.34-7.17-7.34-13.75-12.11-19.63 c-4.77-5.88-10.32-11.1-16.79-15.54L31.44,49.19L31.44,49.19z" />
+                </g>
+            </svg>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-10 col-lg-6 mx-auto text-center pb-4">
+            <h3 class="">Payment Was Success</h3>
+            <h6>Your Slot Is Booked Already.</h6>
+
+            <br>
+            <p class="small mx-auto">Hello <span class="text-capitalize">{{Name}}</span>, I am glad to inform you that
+                your booking for
+                <b class="text-capitalize">
+                    {{tour|striptags}}
+                </b>
+                <br>
+                the amount <b>Rs.{{amount}}</b> has been completed successfully.
+
+                and your Payment Id is
+                <b>
+                    {{razorpay_payment_id}}
+                </b>
+            </p>
+            <div class="row pt-3">
+                <div class="col-12 d-inline-flex gap-3 justify-content-center flex-wrap flex-lg-nowrap">
+                    <a href="{%url 'home'%}" class="">
+                        <button class="btn1 bg-transparent px-3 py-2 ">Go To Home</button>
+                    </a>
+                    <a href="{%url 'updates'%}" class="">
+                        <button class="btn1 bg-transparent px-3 py-2 ">Explore More Tours </button>
+                    </a>
+                    <a href="{%url 'contact'%}" class="">
+                        <button class="btn1 bg-transparent px-3 py-2 ">Contact Us</button>
+                    </a>
+                </div>
+                <div class="col-12 text-center mt-3">
+
+                    <span style="cursor: pointer;"><i class="bi bi-printer-fill h3 pointer"
+                            onclick="printRecipt()"></i></span>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+{% elif state == "signatureNotMatch" %}
+<div class="conatiner pb-5" style="min-height: 85vh;">
+
+    <div class="row py-5">
+        <div class="col-10 col-lg-6 mx-auto text-center">
+            <h3 class="">Payment Failed</h3>
+            <h6>Some Issue Occures.</h6>
+            <br>
+            <p class="small mx-auto text-center">Payment was unsuccessful due to a temporary issue.
+                <br>
+                If amount got deducted, it will be refunded within 5-7 working days.
+                <br>
+                Still we have save your details our Team member will reach you soon.
+                <br>
+                <br>
+                <small>note: we just have save your details your slot is not booked yet.</small>
+            </p>
+            <div class="row pt-3">
+                <div class="col-12 d-inline-flex gap-3 justify-content-center flex-wrap flex-lg-nowrap">
+                    <a href="{%url 'home'%}" class="">
+                        <button class="btn1 bg-transparent px-3 py-2 ">Go To Home</button>
+                    </a>
+                    <a href="{%url 'updates'%}" class="">
+                        <button class="btn1 bg-transparent px-3 py-2 ">Explore More Tours </button>
+                    </a>
+                    <a href="{%url 'contact'%}" class="">
+                        <button class="btn1 bg-transparent px-3 py-2 ">Contact Us</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<script>
+    window.document.title += " | Payment Successful";
+
+    onload = function () {
+        party.confetti(document.getElementById('box'), {
+            count: party.variation.range(300, 10),
+            size: party.variation.skew(1, 0.4),
+        });
+    }
+    function printRecipt() {
+
+        window.print();
+    }
+
+</script>
+{% endblock body %}

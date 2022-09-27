@@ -1,0 +1,43 @@
+<hr>
+<div class="row  py-5 rounded mb-3 text-center  overflow-hidden">
+    <div class="col-lg-6 col-sm-6 col-12 my-auto ">
+        <small>
+            <h4>Subscribe to our newsletter!</h4>
+            <h6 class="opacity-75">So that you never miss any upcoming Tour of us</h6 class="opacity-75">
+        </small>
+
+    </div>
+    <div class="col-lg-6 col-sm-6 col-12 my-auto">
+        <div class="popUp mx-auto my-2 col-lg-10 col-sm-10 col-12">
+            <form hx-post="{%url 'NewsLetter'%}" hx-target="#result" hx-trigger="submit" hx-indicator=".progress" 
+         >
+         {%csrf_token%}
+                <div class="form-outline form-white">
+
+                    <input type="email" class="form-control " aria-label="Your Email" aria-describedby="btnLetter"
+                        name="EmailID" id="EmailID">
+                    <label class="form-label" for="TripId"><i class="bi bi-envelope-fill"></i> Your Email Id</label>
+
+                </div>
+
+
+                <button type="submit" class="btn  btn-success mt-2 rounded" id="btnLetter">
+                    Subscribe <i class="bi bi-bell-fill"></i>
+                </button>
+            </form>
+            <small id="result" class=" text-center "></small>
+
+        </div>
+    </div>
+    <div class="spanThrow text-center my-2 p-auto text-center">
+        <h5 class="linethrow"></h5>
+        <span class="text-center text-uppercase px-1" style="background-color: var(--primary-bg);">or</span>
+    </div>
+    <div class="col-12 mt-2">
+        <a href="https://wa.me/91{{sitedata.WPNumber}}?text=join%20grouphttps://wa.me/91{{sitedata.WPNumber}}?text=join%20group
+        " target="_blank"   rel="noopener noreferrer" class="text-light text-decoration-underline">
+            <i class="bi bi-whatsapp h3"></i> <br>
+            <small class="opacity-75">Join Our Whatsapp Group</small>
+        </a>
+    </div>
+</div>

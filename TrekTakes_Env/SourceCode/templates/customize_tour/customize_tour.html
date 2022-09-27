@@ -1,0 +1,183 @@
+{% extends 'Base.html' %}
+{% load static %}
+
+{% block link_css %}
+{% endblock link_css %}
+
+
+
+{%block body%}
+{% if user.is_superuser %}
+<div class="container">
+    <div class="row my-5">
+        <div class="col-12">
+            <form hx-post="" hx-target="#table" hx-trigger="submit" hx-indicator=".progress" hx-swap="">
+                {%csrf_token%}
+                <input type="month" name="filter_month" id="filter_month" value="month">
+                <button type="submit">submit</button>
+            </form>
+            {%include 'customize_tour/table.html'%}
+        </div>
+    </div>
+</div>
+{%else%}
+<div class="container">
+    <div class="row border  rounded rounded-5 bg-transparent border-success py-4 my-5 d-lg-block d-sm-block d-none">
+        <p class="h2 text-capitalize text-center fw-semibold opacity-85">customized tour by Trek tales</p>
+        <div class="col-12 mx-start mx-2">
+            <p class="opacity-85 fw-light ">As a community, our goal is to offer you personalized and customized
+                trekcation experiences. We do this by understanding you, your group if any, your requirements,
+                interests, and then customizing itineraries to suit specific needs. </p>
+            <div class="row mt-3">
+                <div class="col-md-5">
+                    <p class="opacity-80">
+                        Customized treks are a great option for:
+                    <ol class="small opacity-80">
+                        <li>Families</li>
+                        <li>Group of friends</li>
+                        <li>Corporate teams</li>
+                    </ol>
+                    </p>
+                </div>
+                <div class="col-md-7">
+                    <p class="opacity-80">
+                        Why option for customized treks:
+                    <ol class="small opacity-80">
+                        <li>You get to customize the itinerary as per your liking and interest.</li>
+                        <li>You don't have to worry about the hassle of joining another group for a trek.</li>
+                        <li>You and your group will experience a personalized trekking experience</li>
+                        <li>You can customize your departure dates as and when your time permits.</li>
+                    </ol>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row my-5 ">
+        <p class=" text-center text-capitalize opacity-85"><span class="h3">customize your tour <i
+                    class="bi bi-bookmark-fill "></i> </span>
+            <br>
+            <small class="opacity-80">Please use the below form to request a customized and personalized travel plan
+                <b>EXCLUSIVELY FOR YOUR TEAM</b>.</small>
+        </p>
+        <div class="col-12">
+            <form hx-post="{%url 'customize_tour'%}" hx-target="#result" hx-indicator=".progress" hx-trigger='confirmed'
+                hx-swap="outerHTML" id="form">
+                {%csrf_token%}
+                <div class="text-capitalize pt-3 pb-1 opacity-85">Personal Details:</div>
+                <!-- Name -->
+                <div class="row">
+                    <!-- first name  -->
+                    <div class="col-md-6 mb-3">
+                        <div class="form-outline form-white">
+                            <input type="text" id="fName" class="form-control form-control-lg" name="fName" required />
+                            <label class="form-label" for="fName">First Name</label>
+                        </div>
+                    </div>
+                    <!-- last name  -->
+                    <div class="col-md-6 mb-3">
+                        <div class="form-outline form-white">
+                            <input type="text" id="lastName" class="form-control form-control-lg" name="lastName"
+                                required />
+                            <label class="form-label" for="lastName">Last Name</label>
+                        </div>
+                    </div>
+                </div>
+                <!-- Contact -->
+                <div class="text-capitalize pt-3 pb-1 opacity-85">Contact Details:</div>
+                <!-- email id -->
+                <div class="form-outline form-white mb-4 ">
+                    <input type="email" id="email_user" class="form-control form-control-lg" name='email' required />
+                    <label class="form-label" for="email_user"><i class="bi bi-envelope-fill"></i> Your
+                        Email</label>
+                </div>
+                <!-- phone no 1 -->
+                <div class="form-outline form-white  my-4">
+                    <input type="tel" class="form-control form-control-lg" id="phone" name="phone" required
+                        data-mdb-showcounter="true" maxlength="10" inputmode="numeric" />
+                    <label class="form-label" for="phone"><i class="bi bi-telephone-fill"></i> Your
+                        Phone
+                        number</label>
+                    <div class="form-helper text-light opacity-85 "></div>
+                </div>
+                <div class="text-capitalize pt-3 pb-1 opacity-85">Tour Details:</div>
+
+                <div class="row  mb-lg-4 mb-sm-4 mb-0">
+                    <!-- group_size  -->
+                    <div class="col-md-4  mb-3 mb-sm-0 mb-lg-0">
+                        <div class="form-outline form-white  ">
+                            <input type="number" class="form-control form-control-lg" id="group_size" name="group_size"
+                                required inputmode="numeric" />
+                            <label class="form-label" for="group_size"><i class="bi bi-people-fill"></i> Group
+                                Size</label>
+                        </div>
+                    </div>
+                    <!-- Start Date  -->
+                    <div class="col-md-4  mb-3 mb-sm-0 mb-lg-0">
+                        <div class="form-outline form-white">
+                            <input type="date" id="start_date" class="form-control form-control-lg" name="start_date"
+                                required min="{% now 'Y-m-j' %}" />
+                            <label class="form-label" for="start_date"><i class="bi bi-calendar-event-fill"></i> Start
+                            </label>
+                        </div>
+                    </div>
+                    <!-- no_of_day  -->
+                    <div class="col-md-4  mb-3 mb-sm-0 mb-lg-0">
+                        <div class="form-outline form-white">
+                            <input type="number" id="no_of_day" class="form-control form-control-lg" name="no_of_day"
+                                required inputmode="numeric" />
+                            <label class="form-label" for="no_of_day"><i class="bi bi-moon-fill"></i> No of Days</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-outline form-white mb-4">
+                    <input type="text" id="trek_name" class="form-control form-control-lg" name="trek_name" required />
+                    <label class="form-label" for="trek_name"><i class="bi bi-binoculars-fill"></i> Trek Name</label>
+                </div>
+                <div class="form-outline form-white mb-4">
+                    <textarea class="form-control form-control-lg" rows="4" name="tour_explain" id="tour_explain"
+                        class="form-control required"></textarea>
+                    <label class="form-label" for="tour_explain"><i class="bi bi-text-paragraph"></i> Brief explaination
+                        of tour </label>
+                </div>
+                <div class="text-center mb-5" id="result">
+                    <button type="submit" class="button-primary ">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{%endif%}
+
+{% endblock body%}
+{%block script%}
+<script>
+    document.getElementById('form').onsubmit = () => {
+        event.preventDefault();
+        console.log('swal fire')
+        Swal.fire({
+            title: 'Are you sure?',
+            icon: 'question',
+            html:
+                '<p class="opacity-75">Please make sure your provided details are accurate.</p>',
+            backdrop: '#1c233180',
+            background: '#1c2331',
+            color: '#ffffff',
+            showCancelButton: true,
+            confirmButtonText: 'Proceed',
+            denyButtonText: `Cancel Booking`,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                htmx.trigger(htmx.find("#form"), "confirmed");
+                var fields = document.getElementById("form").getElementsByTagName("input", "textarea");
+                document.getElementById('tour_explain').disabled = true;
+                for (var i = 0; i < fields.length; i++) {
+                    fields[i].disabled = true;
+                }
+            }
+        })
+    }
+
+</script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+{%endblock script%}

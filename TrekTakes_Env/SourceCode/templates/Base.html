@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="manifest" href="{%static 'menifest/manifest.json'%}">
+  <meta name="description" content="A Trekking and Camping group, we are based in Aurangabad, Maharashtra. We organize treks, night camping🏕️, pool parties 🎉,and itinerary planners 👨‍🏫 and other recreational activities.Want adventure without the risk? Come join our crew for a weekend! 
+  Join Trek Tales and let them give you a hand!">
+  <title>Treak Tales</title>
+  <!--google font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="{%static 'bootstrap-icons-1.9.1/bootstrap-icons.css'%}">
+  <!-- aso -->
+  <link rel="stylesheet" href="{%static 'css/Base.css'%}">
+  <link rel="icon" href="{%static 'images/logo.png'%}" type="image/gif" sizes="20x20">
+  <link rel="apple-touch-icon" href="{%static 'images/logo.png'%}">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+  <!-- MDB -->
+  <link rel="stylesheet" href="{%static 'MDB/css/mdb.min.css'%}">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative&display=swap" rel="stylesheet">
+
+  <script src="https://unpkg.com/htmx.org@1.8.0"></script>
+  {% block link_css %}
+  {% endblock link_css %}
+</head>
+
+<body class='text-white user-bg'>
+  <!-- preloader -->
+  <div id="Preloader">
+    <img src="{%static 'images/logo/Trek_Tales2.png'%}" alt="" class="img-fluid">
+  </div>
+
+  <!-- navbar -->
+  <div class="menu-icon d-inline-flex align-items-baseline justify-content-between sticky-top">
+    <span class="px-lg-5 px-2">
+      <a class="navbar-brand mx-auto" href="{% url 'home' %}"><b id="nav-text">Trek Tales</b></a>
+    </span>
+    <span class="px-lg-4  px-2" id="manuIcon">
+      <span class="menu-icon__line menu-icon__line-left"></span>
+      <span class="menu-icon__line"></span>
+      <span class="menu-icon__line menu-icon__line-right"></span>
+    </span>
+  </div>
+
+  <div class="nav" style="z-index: 75;">
+    <div class="nav__content text-center">
+      <ul class="nav__list ">
+        <li class="nav__list-item "><a href="{% url 'home' %}" data-bs-title="Home" data-bs-toggle="tooltip"
+            data-bs-placement="left" data-bs-delay='{"show":"500", "hide":"100"}'>Home</a></li>
+        <li class="nav__list-item"><a href="{% url 'updates' %}" data-bs-title="Upcoming Trips & Tours"
+            data-bs-toggle="tooltip" data-bs-placement="left" data-bs-delay='{"show":"500", "hide":"100"}'>Latest
+            Tours</a></li>
+
+        <li class="nav__list-item"><a href="{% url 'gallary' %}" data-bs-title="See Photos Form Our Trips/Tours"
+            data-bs-toggle="tooltip" data-bs-placement="left" data-bs-delay='{"show":"500", "hide":"100"}'>Photo
+            Gallary</a></li>
+        <li class="nav__list-item"><a href="{% url 'newsletter' %}"
+            data-bs-title="Subscriber To Newsletter And Get Exicting Offers And Updates" data-bs-toggle="tooltip"
+            data-bs-placement="left" data-bs-delay='{"show":"500", "hide":"100"}'>NewsLetter</a>
+        </li>
+        <li class="nav__list-item"><a href="{% url 'aboutUs' %}" data-bs-title="Know Who We Are"
+            data-bs-toggle="tooltip" data-bs-placement="left" data-bs-delay='{"show":"500", "hide":"100"}'>About
+            Us</a></li>
+        <li class="nav__list-item"><a href="{% url 'contact' %}" data-bs-title="Have Any Query Just Contact us"
+            data-bs-toggle="tooltip" data-bs-placement="left" data-bs-delay='{"show":"500", "hide":"100"}'>Contact
+            Us</a></li>
+        <li class="nav__list-item"><a href="{% url 'customize_tour' %}" data-bs-title="Make Your Own Trip/Tour With Us"
+            data-bs-toggle="tooltip" data-bs-placement="left" data-bs-delay='{"show":"500", "hide":"100"}'> customize
+            tour</a></li>
+        <li class="nav__list-item"><a href="{% url 'cancelation' %}" data-bs-title="Cancelation Of Trip/Tour"
+            data-bs-toggle="tooltip" data-bs-placement="left"
+            data-bs-delay='{"show":"500", "hide":"100"}'>Cancelation</a>
+          {% if user.is_superuser %}
+        <li class="nav__list-item"><a href="{% url 'admin_links' %}">admin_links</a>
+        </li>
+        {% endif %}
+
+      </ul>
+    </div>
+
+  </div>
+
+
+
+  <div class="progress" style="height: 3px; background-color: white;">
+    <div class="indeterminate" style="background-color: var(--primary-theme);"></div>
+  </div>
+
+
+  <div data-bs-spy="scroll" data-bs-target="#NavBar_list" tabindex="0" id="spyOnThis">
+    {% block body %}
+    {% endblock body %}
+  </div>
+
+  <footer>
+    <div class="container-fluid py-2 d-none d-lg-block d-sm-block" style="background-color: var(--primary-theme);">
+      <div class="row py-2 ">
+        <div class="col-auto mx-auto my-2 my-lg-0 order-lg-1 order-0 order-sm-1  ">
+          <div class="d-flex flex-lg-nowrap flex-wrap gap-4 justify-content-center  ">
+            <a href="{{sitedata.WP_Link}}" class="socails" target="_blank" rel="noopener noreferrer"><i
+                class="bi bi-whatsapp p-2 rounded rounded-circle border " aria-label="Message Us on Whatsapp"
+                role="link"></i></a>
+            <a href="{{sitedata.Instagram_Profile_Link}}" class="socails" target="_blank" rel="noopener noreferrer"><i
+                class="bi bi-instagram p-2 rounded rounded-circle border" aria-label="Follow and see posts on instagram"
+                role="link"></i></a>
+            <a href="mailto:{{sitedata.Email_id}}" class="socails" target="_blank"><i
+                class="bi bi-envelope p-2 rounded rounded-circle border" aria-label="Mail Us" role="link"></i></a>
+
+            <a href="tel:+91{{sitedata.SecondNumber}}" class="socails"><i
+                class="bi bi-telephone p-2 rounded rounded-circle border" aria-label="Call us" role="link"></i></a>
+          </div>
+        </div>
+        <div class="col-auto mx-auto my-2 my-lg-0 order-lg-0 order-1 order-sm-0 ">
+          <div class="d-flex gap-3 flex-wrap flex-lg-nowrap justify-content-center">
+            <a href="{%url 'home'%}" class="footer-link">Home</a>
+            <a href="{%url 'updates'%}" class="footer-link">Latest Tours</a>
+            <a href="{%url 'gallary'%}" class="footer-link">Gallary</a>
+            <a href="{%url 'contact'%}" class="footer-link">Contact Us</a>
+            <a href="{%url 'aboutUs'%}" class="footer-link">About Us</a>
+            <a href="{%url 'cancelation'%}#Cancelation_Policy" class="footer-link">Cancelation Policy</a>
+          </div>
+        </div>
+      </div>
+      <hr>
+    </div>
+    <div class="container-fluid py-2" style="background-color: var(--primary-theme);">
+      <div class="row text-center py-2">
+        <div class="col-10 mx-auto fw-light ">
+          <b class="float-lg-start  float-sm-start float-none fw-light ">
+           <span class="Julius-text"> Trek Tales </span>&copy; {%now 'Y'%}
+          </b>
+          <b class="float-lg-end float-sm-end float-none fw-light">
+            Designed & Developed By <a href="https://sudarshan_kakde.bio.link/"
+              class="text-decoration-underline text-white" target="_blank" rel="noopener noreferrer">Sudarshan
+              Kakde.</a>
+          </b>
+        </div>
+      </div>
+    </div>
+
+
+  </footer>
+
+
+
+
+
+
+
+
+
+
+  <!-- jquery -->
+  <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
+    crossorigin="anonymous"></script>
+  <!-- local js -->
+  <script src="{%static 'js/Base.js'%}"></script>
+  <script src="{%static 'MDB/js/mdb.min.js'%}"></script>
+  <script src="{%static 'MDB/js/bootstrap.bundle.min.js'%}"></script>
+
+  <script>
+    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+    $(function () {
+      $('[data-toggle="tooltip"]').tooltip()
+    })
+  </script>
+  {%block script%}
+  {%endblock script%}
+
+</body>
+
+</html>

@@ -1,0 +1,41 @@
+{%extends 'Base.html'%}
+{%block body%}
+<div class="container my-5">
+    <div class="row">
+        <div class="col-12 mx-auto d-flex flex-row flex-wrap gap-4  justify-content-center">
+            <a href="{% url 'ShowBookings' %}" title="ShowBookings Of Tours">
+                <div class="card text-center  border rounded" style="max-width: 250px;padding: 3vh 2vw;">
+                    <i class="bi bi-list-stars h2 d-block"></i>
+                    <p class="h6">ShowBookings</p>
+                    <small class="small opacity-75">show list of pepoles who had booked there slot</small>
+
+                </div>
+            </a>
+            <a href="{% url 'SendNewsletter' %}" title="SendNewsletter Of Tours">
+                <div class="card text-center  border rounded" style="max-width: 250px;padding: 3vh 2vw;">
+                    <i class="bi bi-envelope-fill h2 d-block"></i>
+
+                    <p class="h6">SendNewsletter</p>
+                    <small class="small opacity-75">send mail to all newsletter subscribers regrading latest tour and
+                        other.</small>
+                </div>
+            </a>
+            <a href="{% url 'customize_tour' %}" title="customize_tour ">
+                <div class="card text-center  border rounded" style="max-width: 250px;padding: 3vh 2vw;">
+                    <i class="bi bi-info h2 d-block"></i>
+                    <p class="h6">customized tour</p>
+                    <small class="small opacity-75">See all requests regrading customized tour by user.</small>
+                </div>
+            </a>
+            <a href="{% url 'contacted_data' %}" title="Contacted_users">
+                <div class="card text-center  border rounded" style="max-width: 250px;padding: 3vh 2vw;">
+                    <i class="bi bi-chat-dots h2 d-block"></i>
+                    <p class="h6">Contacted_users </p>
+                    <small class="small opacity-75">See who had contact us by contact us form.</small>
+                </div>
+            </a>
+
+        </div>
+    </div>
+</div>
+{%endblock body%}

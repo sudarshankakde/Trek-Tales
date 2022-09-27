@@ -1,0 +1,802 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway:400,800');
+@import url('https://fonts.googleapis.com/css2?family=Julius+Sans+One&display=swap');
+:root {
+    --primary-text: #ffffff;
+    --elegance: rgb(39 39 39);
+    --card-bg: #36454F;
+    --primary-theme: #498553;
+    --primary-bg: #1c2331;
+    --hover: #4285f4;
+    --white: white;
+    --primary-hover: #1bc23e;
+}
+
+body {
+    overflow-y: hidden;
+}
+
+#Preloader {
+    position: fixed;
+    background-color: var(--primary-bg);
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    z-index: 1500;
+    top: 0;
+
+}
+
+#Preloader>img {
+    height: 50vh;
+    position: relative;
+}
+
+
+.socails:hover {
+    transform: scale(1.1);
+    transition: all .25s;
+}
+
+.button-primary {
+    min-width: 130px;
+    height: 40px;
+    border: thin solid var(--primary-text);
+    padding: 5px 10px;
+    color: var(--primary-text);
+    font-size: medium;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: transparent;
+    font-weight: 400;
+
+}
+
+.button-primary::after {
+    content: '';
+    position: absolute;
+    top: 6px;
+    left: 5px;
+    width: 100%;
+    height: 100%;
+    background-color: var(--primary-theme);
+    z-index: -5;
+    transition: all 0.3s ease;
+}
+
+.button-primary:hover:after {
+    top: 0;
+    left: 0;
+}
+
+
+
+
+
+/* Navbar.css */
+/* --------------------------------------------------------------------------------------------------------- */
+
+.menu-icon {
+    top: 0;
+    height: 30px;
+    width: 100%;
+    position: sticky;
+    z-index: 2;
+    background-color: var(--card-bg);
+    height: max-content;
+}
+
+#manuIcon {
+    cursor: pointer;
+}
+
+.menu-icon__line {
+    height: 2px;
+    width: 30px;
+    display: block;
+    background-color: #ffffff;
+    margin-bottom: 4px;
+    transition: transform 0.2s ease, background-color 0.5s ease;
+    align-self: baseline;
+}
+
+.menu-icon__line-left {
+    width: 15px;
+}
+
+.menu-icon__line-right {
+    width: 15px;
+    float: right;
+
+}
+
+.nav {
+    position: fixed;
+    z-index: 1;
+    width: max-content;
+    visibility: hidden;
+    transition: all;
+    transition-duration: 0.5s;
+    transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.nav:before, .nav:after {
+    content: "";
+    position: fixed;
+    width: 35%;
+    right: 0%;
+    height: 100vh;
+    background: rgba(234, 234, 234, 0.2);
+    z-index: -1;
+    transition: transform cubic-bezier(0.77, 0, 0.175, 1) 0.8s;
+    transform: translateX(0%) translateY(-100%);
+}
+
+.nav:after {
+    background: var(--card-bg);
+    transition-delay: 0s;
+}
+
+.nav:before {
+    transition-delay: 0.1s;
+}
+
+.nav__content {
+    position: fixed;
+    top: +5%;
+    /* transform: translate(0, -50%); */
+    width: max-content;
+    text-align: center;
+    font-size: calc(2vw + 10px);
+    font-weight: 200;
+    cursor: pointer;
+    right: 10%;
+}
+
+.nav__list::-webkit-scrollbar {
+    width: 2px !important;
+    background-color: transparent !important;
+}
+
+.nav__list::-webkit-scrollbar-thumb {
+    background-color: var(--primary-theme) !important;
+}
+
+.nav__list-item {
+    position: relative;
+    display: flex;
+    transition-delay: 0.8s;
+    opacity: 0;
+    transform: translate(0%, 100%);
+    transition: opacity 0.2s ease, transform 0.3s ease;
+    margin-right: 25px;
+    color: var(--primary-text);
+    margin: 25px 0 0 0;
+    width: fit-content;
+    text-transform: capitalize;
+    font-size: 4vh;
+}
+
+.nav__list-item:before {
+    content: "";
+    position: absolute;
+    background: var(--primary-text);
+    width: 20px;
+    height: 1px;
+    top: 100%;
+    transform: translate(0%, 0%);
+    transition: all 0.3s ease;
+    z-index: -1;
+}
+
+.nav__list-item:hover:before {
+    width: 100%;
+    background-color: var(--primary-theme);
+}
+
+body.nav-active .menu-icon__line {
+    background-color: var(--primary-text);
+    transform: translateX(0px) rotate(-45deg);
+
+}
+
+body.nav-active .menu-icon__line-left {
+    transform: translateX(1px) rotate(45deg);
+
+}
+
+body.nav-active .menu-icon__line-right {
+    transform: translateX(-2px) rotate(45deg);
+
+}
+
+body.nav-active .nav {
+    visibility: visible;
+}
+
+body.nav-active .nav:before, body.nav-active .nav:after {
+    transform: translateX(0%) translateY(0%);
+}
+
+body.nav-active .nav:after {
+    transition-delay: 0.1s;
+}
+
+body.nav-active .nav:before {
+    transition-delay: 0s;
+}
+
+body.nav-active .nav__list-item {
+    opacity: 1;
+    transform: translateX(0%);
+    transition: opacity 0.2s ease, transform 0.2s ease, color 0.2s ease;
+}
+
+body.nav-active .nav__list-item:nth-child(0) {
+    transition-delay: 0.2s;
+}
+
+body.nav-active .nav__list-item:nth-child(1) {
+    transition-delay: 0.3s;
+}
+
+body.nav-active .nav__list-item:nth-child(2) {
+    transition-delay: 0.4s;
+}
+
+body.nav-active .nav__list-item:nth-child(3) {
+    transition-delay: 0.5s;
+}
+
+body.nav-active .nav__list-item:nth-child(4) {
+    transition-delay: 0.6s;
+}
+
+body.nav-active .nav__list-item:nth-child(5) {
+    transition-delay: 0.7s;
+}
+
+body.nav-active .nav__list-item:nth-child(6) {
+    transition-delay: 0.8s;
+}
+
+body.nav-active .nav__list-item:nth-child(7) {
+    transition-delay: 0.9s;
+}
+
+body.nav-active .nav__list-item:nth-child(8) {
+    transition-delay: 1s;
+}
+
+body.nav-active .nav__list-item:nth-child(9) {
+    transition-delay: 1.1s;
+}
+
+body.nav-active .nav__list-item:nth-child(10) {
+    transition-delay: 1.2s;
+}
+
+body.nav-active .nav__list-item:nth-child(11) {
+    transition-delay: 1.3s;
+}
+
+body.nav-active .nav__list-item:nth-child(12) {
+    transition-delay: 1.4s;
+}
+
+@media (max-width:1024px) {
+    .nav__list-item {
+        font-size: 3.5vh;
+    }
+
+    .nav__content {
+        right: 5%;
+    }
+
+    .nav-active {
+        overflow-y: auto;
+    }
+}
+
+@media (max-width:992px) {
+    .nav__list-item {
+        font-size: inherit;
+    }
+
+    .nav__content {
+        right: 10%;
+    }
+}
+
+@media (max-width:768px) {
+    .nav:before, .nav:after {
+        width: 40%;
+    }
+
+    .nav__content {
+        right: 3%;
+    }
+
+}
+
+@media (max-width:450px) {
+    .nav__content {
+        right: 10%;
+        text-align: center;
+    }
+
+    .nav__list {
+        width: 100vw;
+        text-align: center;
+        transform: translateX(5vw);
+    }
+
+    .nav:before, .nav:after {
+        width: 100vw;
+    }
+
+    .nav-active {
+        overflow-y: hidden !important;
+    }
+}
+
+.fixed-top {
+    z-index: 80 !important;
+}
+
+.progress {
+    position: fixed;
+    z-index: 1000;
+    height: 4px;
+    width: 100%;
+    border-radius: 2px;
+    background-clip: padding-box;
+    overflow: hidden;
+
+}
+
+.progress .indeterminate:before {
+    content: "";
+    position: absolute;
+    background-color: inherit;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    will-change: left, right;
+    -webkit-animation: indeterminate 2.1s cubic-bezier(0.65, 0.815, 0.735, 0.395) infinite;
+    animation: indeterminate 2.1s cubic-bezier(0.65, 0.815, 0.735, 0.395) infinite;
+}
+
+.progress .indeterminate:after {
+    content: "";
+    position: absolute;
+    background-color: inherit;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    will-change: left, right;
+    -webkit-animation: indeterminate-short 2.1s cubic-bezier(0.165, 0.84, 0.44, 1) infinite;
+    animation: indeterminate-short 2.1s cubic-bezier(0.165, 0.84, 0.44, 1) infinite;
+    -webkit-animation-delay: 1.15s;
+    animation-delay: 1.15s;
+}
+
+.progress {
+    opacity: 0;
+}
+
+.htmx-request .progress {
+    opacity: 1;
+}
+
+.htmx-request.progress {
+    opacity: 1;
+}
+
+@-webkit-keyframes indeterminate {
+    0% {
+        left: -35%;
+        right: 100%;
+    }
+
+    60% {
+        left: 100%;
+        right: -90%;
+    }
+
+    100% {
+        left: 100%;
+        right: -90%;
+    }
+}
+
+@keyframes indeterminate {
+    0% {
+        left: -35%;
+        right: 100%;
+    }
+
+    60% {
+        left: 100%;
+        right: -90%;
+    }
+
+    100% {
+        left: 100%;
+        right: -90%;
+    }
+}
+
+@-webkit-keyframes indeterminate-short {
+    0% {
+        left: -200%;
+        right: 100%;
+    }
+
+    60% {
+        left: 107%;
+        right: -8%;
+    }
+
+    100% {
+        left: 107%;
+        right: -8%;
+    }
+}
+
+@keyframes indeterminate-short {
+    0% {
+        left: -200%;
+        right: 100%;
+    }
+
+    60% {
+        left: 107%;
+        right: -8%;
+    }
+
+    100% {
+        left: 107%;
+        right: -8%;
+    }
+}
+
+.text-user-primary {
+    color: var(--primary-hover);
+}
+
+
+
+
+/* home.css */
+/* ------------------------------------------------------------------------------------ */
+
+
+
+
+
+.theme-color {
+    color: var(--primary-theme);
+}
+
+.letter-space-75 {
+    letter-spacing: .75px;
+}
+
+::-webkit-scrollbar {
+    background-color: var(--primary-bg);
+    width: 1vw;
+
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--primary-theme);
+}
+
+.scrollbar::-webkit-scrollbar {
+    background-color: transparent;
+    width: 0;
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+    background-color: transparent;
+}
+
+.card {
+    background-color: var(--card-bg) !important;
+}
+
+body {
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    background-color: var(--primary-bg) !important;
+}
+
+.user-bg {
+    background: var(--primary-bg) !important;
+}
+
+#section1 {
+    transition: background;
+    background-image: url("/static/images/visapur-fort.jpg");
+    height: 100vh;
+    width: 100vw;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: var(--white);
+    overflow-x: hidden;
+    filter: brightness(-10vh);
+    transition-duration: 0.2s;
+    transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+#home-head-box {
+    backdrop-filter: brightness(0.5);
+}
+
+#home-head-contant {
+    margin-top: 15vh;
+
+}
+
+#home-head-contant>div>h1 {
+    font-weight: 900;
+    word-spacing: 2px;
+    line-height: 8vh;
+    font-size: 7vh;
+    font-family: 'Heebo', sans-serif;
+    text-shadow: -3px 4px 2px var(--primary-bg);
+}
+
+#nav-text {
+    font-size: 1.7rem;
+    font-family: 'Julius Sans One', sans-serif;
+    text-shadow: 3px 1px 2px rgb(147 150 150 / 50%);
+    user-select: none;
+}
+.Julius-text{
+    font-family: 'Julius Sans One', sans-serif;
+    font-weight: normal;
+
+}
+
+.Trek_Tales_latters {
+    font-family: 'Julius Sans One', sans-serif;
+}
+
+.btn1 {
+    border: thin solid var(--white);
+    color: var(--white);
+    border-radius: 0%;
+    background-image: linear-gradient(var(--primary-hover), var(--primary-hover));
+    
+    background-repeat: no-repeat;
+    background-size: 0% 100%;
+    background-position-x: right;
+    transition: background-size 500ms;
+    user-select: none;
+}
+
+.btn1:hover {
+
+    background-size: 100% 100%;
+    background-position-x: left;
+}
+
+.btn {
+    border-radius: 0;
+    transition: all 0.8s;
+    user-select: none;
+
+}
+
+#section2weare {
+    background-image: url('/static/images/section2Home.webp');
+    background-position: right;
+    background-size: auto;
+    background-repeat: no-repeat;
+    background-color: var(--primary-theme);
+    height: max-content;
+    text-align: left;
+    vertical-align: middle;
+    color: var(--white2);
+    box-shadow: 8px 10px 6px -1px rgba(0, 0, 0, 0.7);
+    user-select: none;
+}
+
+#section2weareMain>.h1 {
+    font-size: 6vh;
+    user-select: none;
+}
+
+#section2weareMain {
+    font-weight: 700;
+    line-height: 8vh;
+    font-family: 'Heebo', sans-serif;
+    user-select: none;
+}
+
+.whyTrekTales {
+    font-weight: 700;
+    line-height: 8vh;
+    font-family: 'Heebo', sans-serif;
+}
+
+#hikeforall>.h1,
+.news>.h1 {
+    font-weight: 700;
+    font-family: 'Heebo', sans-serif;
+    user-select: none;
+
+}
+
+#hikeforall>p {
+    width: 85vw;
+}
+
+#news {
+    background-color: var(--primary-theme);
+    color: var(--white2);
+    box-shadow: 8px 10px 6px -1px rgba(0, 0, 0, 0.7);
+}
+
+.text-shadow {
+    text-shadow: -2px 3px 2px var(--elegance);
+}
+
+#section2 {
+    height: auto;
+}
+
+
+.heading {
+    font-family: 'Heebo', sans-serif !important;
+    user-select: none;
+}
+
+a {
+    text-decoration: none;
+    color: inherit !important;
+}
+
+a:hover {
+    color: inherit;
+}
+
+#items {
+    margin: 10vh 3vw;
+    margin-top: 25vh;
+    font-size: 3rem;
+    height: 45vh;
+    overflow-y: auto;
+    font-family: 'Heebo', sans-serif;
+    border: thin solid var(--primary-bg);
+    border-left: none;
+    border-right: none;
+}
+
+#items>ul>li {
+    list-style: none;
+}
+
+#socails {
+    margin: 0 2vw;
+    text-align: center;
+    font-size: 4vh;
+}
+
+#socails>a {
+    font-size: 2rem;
+    margin: 0 2rem;
+}
+
+.bg-dark {
+    background-color: var(--card-bg) !important;
+}
+
+.icons {
+    border-left: thin solid var(--primary-theme);
+}
+
+.icons:first-child {
+    border-left: none;
+}
+
+@media (max-width:768px) {
+
+    ::-webkit-scrollbar {
+
+        width: 0 !important;
+        background-color: unset !important;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background-color: unset !important;
+    }
+}
+
+@media (max-width:576px) {
+    #section2 {
+        height: auto;
+    }
+
+    #section2weare {
+        background-position: center !important;
+    }
+
+    .icons {
+        border: none;
+    }
+
+    #section2 {
+        height: auto;
+    }
+
+    #section2weare {
+        background-position: center !important;
+    }
+
+    .whyTrekTales {
+        font-size: 3rem;
+        margin-top: 1rem;
+    }
+
+    #section2weareMain>.h1 {
+        font-size: 3rem;
+    }
+}
+
+
+#Testimonials {
+    background-image: url('/static/images/icons/right-quote-sign.png');
+    background-position: right;
+    background-position-y: top;
+    background-repeat: no-repeat;
+    background-size: 15%;
+}
+
+@media (max-width:576px) {
+    #Testimonials {
+        background-image: none !important;
+
+    }
+
+    #image {
+        height: 200px !important;
+        width: 100%;
+    }
+}
+
+#image {
+    height: 300px;
+    width: 100%;
+}
+
+.text-white-75 {
+    opacity: 0.75 !important;
+}
+
+#scrollbar::-webkit-scrollbar {
+    height: 0px;
+}
+
+#scrollbar {
+    scroll-behavior: smooth !important;
+    transition: all;
+    transition-delay: 0.1s;
+    transition-duration: .5s;
+
+}
+
+.badgeuser {
+    background-color: var(--primary-theme);
+    opacity: 0.9;
+    font-size: small;
+    border-radius: 5px;
+    padding: 0 5px;
+    letter-spacing: 1px;
+}
