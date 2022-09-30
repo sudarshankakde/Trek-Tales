@@ -1,4 +1,4 @@
-from datetime import date,datetime
+from datetime import date, datetime
 import email
 from http import client
 from django.conf import settings
@@ -15,15 +15,26 @@ from django.utils.html import strip_tags
 from django.core.paginator import Paginator
 
 
+def checkTourExpiry(tour):
+    if (tour.tour_on_date >= date.today()):
+        tour.TourIsNotExpire = True
+        tour.save()
+    else:
+        tour.TourIsNotExpire = False
+        tour.save()
+    return
+
 
 def update(request):
     reponse_data = Updates.objects.order_by('-tour_on_date').all()
+    for i in reponse_data:
+        checkTourExpiry(i)
     peginator = Paginator(reponse_data, 6)
     page_number = request.GET.get('page', 1)
     tours = peginator.get_page(page_number)
     if(request.htmx):
-        return render(request, 'card.html', {'tours': tours })
-    return render(request, 'tours/updates.html', {'tours': tours })
+        return render(request, 'card.html', {'tours': tours})
+    return render(request, 'tours/updates.html', {'tours': tours})
 
 
 Whatsapp = SiteData.objects.first().WP_Link
@@ -40,16 +51,17 @@ def bookslot(request, slug):
     tour = get_object_or_404(Updates, slug=slug)
     tourId = tour.id
     slorts = tour.slorts
-    
+
     if slorts < 1 or tour.TourIsNotExpire == False:
-        return render(request, 'tours/Expired.html', {'slotsRemaing': slorts, 'updates': tour })
+        return render(request, 'tours/Expired.html', {'slotsRemaing': slorts, 'updates': tour})
     else:
         return render(request, 'tours/BookSlot_form.html', {'slotsRemaing': slorts, 'updates': tour, "Razorpay_ApiKey": Razorpay_ApiKey})
 
 
 def details(request, slug):
     tour = get_object_or_404(Updates, slug=slug)
-    return render(request, 'tours/TourDetail.html', {'tour': tour })
+    checkTourExpiry(tour)
+    return render(request, 'tours/TourDetail.html', {'tour': tour})
 
 
 def confirm_booking(request):
@@ -64,6 +76,7 @@ def confirm_booking(request):
         Phone_no1 = request.POST.get('Phone_no1')
         gender = request.POST.get('gender')
         address = request.POST.get('address')
+
         def calculate_Payable_Amount(price):
             return (price+((price * Payment_Charges)/100))
 
@@ -168,14 +181,14 @@ def Payment_Completed(request):
 
                 return render(request, 'tours/PaymentSuccess.html', {'Payment_Status': Payment_Status, 'razorpay_payment_id': razorpay_payment_id, 'TripId': TripId, "Name": name, "amount": amount, 'tour': tour.Heading, 'state': 'success'})
             else:
-                return render(request, 'tours/PaymentSuccess.html', {'state': "PaymentIdExist", 'Payment_Status': Payment_Status, 'razorpay_payment_id': razorpay_payment_id, 'TripId': TripId, "Name": name, "amount": amount, 'tour': tour.Heading , })
+                return render(request, 'tours/PaymentSuccess.html', {'state': "PaymentIdExist", 'Payment_Status': Payment_Status, 'razorpay_payment_id': razorpay_payment_id, 'TripId': TripId, "Name": name, "amount": amount, 'tour': tour.Heading, })
         except Exception as e:
             slot = BookSlot(Name=name, gender=gender, Phone_no1=Phone_no1,
                             address=address, amount=amount, slotFor=Updates(id=tourId), email=email, TripId=TripId, razorpay_signature=razorpay_signature, razorpay_order_id=razorpay_order_id, razorpay_payment_id=razorpay_payment_id,
                             Payment_Status=Payment_Status)
             slot.save()
             print(e)
-            return render(request, 'tours/PaymentSuccess.html', {'issue': ' signature dont match', 'state': 'signatureNotMatch' , })
+            return render(request, 'tours/PaymentSuccess.html', {'issue': ' signature dont match', 'state': 'signatureNotMatch', })
 
 
 def Payment_Failed(request):
@@ -264,7 +277,7 @@ def customize_tour(request):
     return render(request, 'customize_tour/customize_tour.html')
 
 
-def show_person_details(request,id):
-    response = get_object_or_404(customized_tour,id=id)
+def show_person_details(request, id):
+    response = get_object_or_404(customized_tour, id=id)
 
-    return render(request, 'admin/show_person_Details.html',{'data':response})
+    return render(request, 'admin/show_person_Details.html', {'data': response})

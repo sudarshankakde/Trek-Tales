@@ -6,7 +6,7 @@
                 <img src="{{updates.Tour_image.url}}" alt="{{updates.title|safe}}" class="rounded-top"  
                      width="375" height="225"/>
                 <div class="position-absolute overlay-card px-2 rounded   pt-2 ">
-                    {%if updates.slorts < 1 %} {% elif updates.TourIsNotExpire %} <span class=""><i
+                    {%if updates.slorts < 1 %} <span class=" expired" title="All the available slots on this tour have been filled.">All Slots Booked</span>{% elif updates.TourIsNotExpire %} <span class=""><i
                             class="bi bi-person-fill"></i> {{updates.slorts}}</span>
                         {%else%} <span class=" expired">
 

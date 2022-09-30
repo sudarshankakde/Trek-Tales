@@ -29,15 +29,22 @@
   <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative&display=swap" rel="stylesheet">
 
   <script src="https://unpkg.com/htmx.org@1.8.0"></script>
+
   {% block link_css %}
   {% endblock link_css %}
+ 
 </head>
 
 <body class='text-white user-bg'>
   <!-- preloader -->
   <div id="Preloader">
-    <img src="{%static 'images/logo/Trek_Tales2.png'%}" alt="" class="img-fluid">
+    <svg viewBox="0 0 1320 300" id="preloaderSvg">
+      <text x="50%" y="50%" dy=".35em" text-anchor="middle">
+        Trek Tales
+      </text>
+    </svg>	
   </div>
+  
 
   <!-- navbar -->
   <div class="menu-icon d-inline-flex align-items-baseline justify-content-between sticky-top">
@@ -173,6 +180,7 @@
     $(function () {
       $('[data-toggle="tooltip"]').tooltip()
     })
+    
   </script>
   {%block script%}
   {%endblock script%}

@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Raleway:400,800');
 @import url('https://fonts.googleapis.com/css2?family=Julius+Sans+One&display=swap');
+
 :root {
     --primary-text: #ffffff;
     --elegance: rgb(39 39 39);
@@ -15,6 +16,53 @@ body {
     overflow-y: hidden;
 }
 
+
+#preloaderSvg {
+    font-family: 'Russo One', sans-serif;
+    position: absolute;
+    width: auto;
+    height: 10vw;
+    user-select: none;
+}
+
+#preloaderSvg text {
+    text-transform: uppercase;
+    animation: stroke 5s infinite alternate;
+    stroke-width: 2;
+    stroke: var(--primary-theme);
+    font-size: 140px;
+
+}
+
+@keyframes stroke {
+    0% {
+        fill: rgba(72, 138, 20, 0);
+        stroke: var(--primary-theme);
+        stroke-dashoffset: 25%;
+        stroke-dasharray: 0 50%;
+        stroke-width: 2;
+    }
+
+    70% {
+        fill: rgba(72, 138, 20, 0);
+        stroke: var(--primary-theme);
+    }
+
+    80% {
+        fill: rgba(72, 138, 20, 0);
+        stroke: var(--primary-theme);
+        stroke-width: 3;
+    }
+
+    100% {
+        fill: var(--primary-theme);
+        stroke: rgba(54, 95, 160, 0);
+        stroke-dashoffset: -25%;
+        stroke-dasharray: 50% 0;
+        stroke-width: 0;
+    }
+}
+
 #Preloader {
     position: fixed;
     background-color: var(--primary-bg);
@@ -26,11 +74,10 @@ body {
     overflow: hidden;
     z-index: 1500;
     top: 0;
-
 }
 
 #Preloader>img {
-    height: 50vh;
+    height: 22vh;
     position: relative;
 }
 
@@ -299,6 +346,11 @@ body.nav-active .nav__list-item:nth-child(12) {
     .nav-active {
         overflow-y: auto;
     }
+    #preloaderSvg {
+        
+        height: 10vw;
+       
+    }
 }
 
 @media (max-width:992px) {
@@ -309,6 +361,11 @@ body.nav-active .nav__list-item:nth-child(12) {
     .nav__content {
         right: 10%;
     }
+    #preloaderSvg {
+        
+        height: 15vw;
+       
+    }
 }
 
 @media (max-width:768px) {
@@ -318,6 +375,11 @@ body.nav-active .nav__list-item:nth-child(12) {
 
     .nav__content {
         right: 3%;
+    }
+    #preloaderSvg {
+        
+        height: 20vw;
+       
     }
 
 }
@@ -340,6 +402,11 @@ body.nav-active .nav__list-item:nth-child(12) {
 
     .nav-active {
         overflow-y: hidden !important;
+    }
+    #preloaderSvg {
+        
+        height: 25vw;
+       
     }
 }
 
@@ -535,7 +602,7 @@ body {
 }
 
 #home-head-box {
-    backdrop-filter: brightness(0.5);
+    backdrop-filter: brightness(0.8);
 }
 
 #home-head-contant {
@@ -558,10 +625,15 @@ body {
     text-shadow: 3px 1px 2px rgb(147 150 150 / 50%);
     user-select: none;
 }
-.Julius-text{
+
+.Julius-text {
     font-family: 'Julius Sans One', sans-serif;
     font-weight: normal;
 
+}
+
+.rotate-180::before {
+    rotate: 180deg !important;
 }
 
 .Trek_Tales_latters {
@@ -573,7 +645,7 @@ body {
     color: var(--white);
     border-radius: 0%;
     background-image: linear-gradient(var(--primary-hover), var(--primary-hover));
-    
+
     background-repeat: no-repeat;
     background-size: 0% 100%;
     background-position-x: right;

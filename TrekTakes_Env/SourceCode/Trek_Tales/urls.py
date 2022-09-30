@@ -62,8 +62,10 @@ urlpatterns = [
     url(r'^DataBase/(?P<path>.*)$', serve,
         {'document_root': settings.MEDIA_ROOT}),
 
+    # url(r'^static/(?P<path>.*)$', serve,
+    #     {'document_root': settings.STATICFILES_DIRS}),
     url(r'^static/(?P<path>.*)$', serve,
-        {'document_root': settings.STATICFILES_DIRS}),
+        {'document_root': settings.STATIC_ROOT}),
 ]
 
 handler404 = 'Trek_Tales.views.error_404_view'

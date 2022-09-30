@@ -17,6 +17,7 @@ from Trek_Tales.settings import *
 from django.core.files.storage import FileSystemStorage
 import datetime
 import xlwt
+from updates.views import checkTourExpiry
 # Create your views here.
 
 
@@ -29,6 +30,8 @@ def admin_links(request):
 def home(request):
     gallary = Memories.objects.order_by('-photo_taken_on_tour')[0:5]
     updates = Updates.objects.order_by('-tour_on_date')[0:3]
+    for i in updates:
+        checkTourExpiry(i)
     testimonials = Testimonials.objects.order_by('-date_added')[:6]
     return render(request, 'home.html', {'tours': updates, 'Testimonials': testimonials, 'gallary': gallary})
 
@@ -280,8 +283,8 @@ def SendNewsletter(request):
         file = request.FILES['file']
         filename = file.name
         filename = str(datetime.date.today().strftime("%d-%b-%Y"))+filename
-        file_instance = FileSystemStorage('templates/newsletter')
-        if FileSystemStorage('templates/newsletter').exists(filename):
+        file_instance = FileSystemStorage(f'{BASE_DIR}/templates/newsletter')
+        if FileSystemStorage(f'{BASE_DIR}/templates/newsletter').exists(filename):
             return HttpResponse('file name allready exists please rename your file')
         else:
             domain = request.get_host()
@@ -294,7 +297,7 @@ def SendNewsletter(request):
             """
             file_instance.save(filename, file)
             file_edit = open(
-                f"templates/newsletter/{FileSystemStorage().get_valid_name(filename)}", "r+")
+                f"{BASE_DIR}/templates/newsletter/{FileSystemStorage().get_valid_name(filename)}", "r+")
             for line in file_edit:
                 try:
                     if line.find("</body>") == -1:
@@ -311,7 +314,8 @@ def SendNewsletter(request):
                     pass
             file_edit.close()
             return HttpResponse('file uploaded refresh the page to see changes!')
-    fs = FileSystemStorage(location=BASE_DIR/'templates').listdir('newsletter')
+    fs = FileSystemStorage(
+        location=f'{BASE_DIR}/templates').listdir('newsletter')
     templates = list()
     for i in fs:
         for j in i:
@@ -327,20 +331,23 @@ def SendNewsletter(request):
 @login_required
 def NewsLatter_sendMails(request):
     if(request.method == 'POST'):
-        template = request.POST['template_selected']
-        subject = request.POST['subject']
-        mailto = NewsLetter_Subscriber.objects.all()
-        data_frame = read_frame(mailto, fieldnames=['Email_Id'])
-        mail_list = data_frame['Email_Id'].values.tolist()
+        try:
+            template = request.POST['template_selected']
+            subject = request.POST['subject']
+            mailto = NewsLetter_Subscriber.objects.all()
+            data_frame = read_frame(mailto, fieldnames=['Email_Id'])
+            mail_list = data_frame['Email_Id'].values.tolist()
 
-        html_message = render_to_string(
-            f'newsletter/{FileSystemStorage().get_valid_name(template)}', {})
-        plain_message = strip_tags(html_message)
-        Mail_From = settings.EMAIL_HOST_USER
-        for mail_to in mail_list:
-            send_mail(subject, plain_message, Mail_From, [mail_to],
-                      html_message=html_message, fail_silently=True)
-        return HttpResponse("Mail Sent to NewsLetter Subscribers")
+            html_message = render_to_string(
+                f'newsletter/{FileSystemStorage().get_valid_name(template)}', {})
+            plain_message = strip_tags(html_message)
+            Mail_From = settings.EMAIL_HOST_USER
+            for mail_to in mail_list:
+                send_mail(subject, plain_message, Mail_From, [mail_to],
+                          html_message=html_message, fail_silently=True)
+            return HttpResponse("Mail Sent to NewsLetter Subscribers")
+        except Exception as e:
+            return HttpResponse(f"""Something went wrong please contact devloper , issue is {e}""")
 
 
 def Unsubscribe(request):

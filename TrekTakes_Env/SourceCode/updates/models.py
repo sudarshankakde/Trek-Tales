@@ -52,7 +52,7 @@ class Updates(models.Model):
     packageInfo = models.TextField()
     Tour_added = models.DateTimeField(
         auto_now=True, editable=False, auto_created=True)
-    TourIsNotExpire = models.BooleanField(default=False)
+    TourIsNotExpire = models.BooleanField(default=True,editable=False)
     Organizer = models.ForeignKey(Organizer(id), on_delete=models.PROTECT,default="1")
     googleMap = models.URLField(
         max_length=200, verbose_name="Google Map VENUE Url")

@@ -1,8 +1,7 @@
-// pre loader
+// // pre loader
 var loader = document.getElementById('Preloader');
 document.body.style.overflowY = "hidden";
-
-window.addEventListener('load', loaded);
+window.document.addEventListener('load',loaded());
 function loaded() {
     document.body.style.overflowY = "visible";
     loader.style.display = "none";
