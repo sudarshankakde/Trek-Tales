@@ -8,7 +8,7 @@ from Gallary.models import Memories
 from datetime import date, timedelta
 from django.contrib import messages
 from django_pandas.io import read_frame
-from django.core.mail import send_mail
+from django.core.mail import send_mail ,EmailMessage
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 from django.template import RequestContext
@@ -19,6 +19,9 @@ import datetime
 import xlwt
 from updates.views import checkTourExpiry
 # Create your views here.
+total_Tours = 256
+total_Costumers = 900
+total_Review = 300
 
 
 @login_required
@@ -33,8 +36,7 @@ def home(request):
     for i in updates:
         checkTourExpiry(i)
     testimonials = Testimonials.objects.order_by('-date_added')[:6]
-    return render(request, 'home.html', {'tours': updates, 'Testimonials': testimonials, 'gallary': gallary})
-
+    return render(request, 'home.html', {'tours': updates, 'Testimonials': testimonials, 'gallary': gallary, 'total_Tours': total_Tours, 'total_Costumers': total_Costumers, 'total_Review': total_Review})
 
 def contact(request):
     if request.method == 'POST':
@@ -58,8 +60,7 @@ def contact(request):
         Mail_To = [MailId, ]
         send_mail(subject, plain_message, Mail_From, Mail_To,
                   html_message=html_message, fail_silently=True)
-        return HttpResponse(f"""Your response is saved. A member of our team will
-        contact you shortly!""")
+        return HttpResponse(f"""Your response is saved. Our executive will contact you shortly!""")
 
     return render(request, 'contact.html', )
 
@@ -161,9 +162,7 @@ def cancelation(request):
 
 
 def aboutUs(request):
-    total_Tours = 256
-    total_Costumers = 900
-    total_Review = 300
+
     Founders = Organizer.objects.filter(
         Tags=Tags.objects.get(Tag='Founder').id)
     organizer = Organizer.objects.order_by('-id')
@@ -208,7 +207,8 @@ def exportExcel(request, id):
             return HttpResponse('No enterys for this tour yet')
         else:
             rows = BookSlot.objects.filter(slotFor=id).values_list(
-                'Name', 'gender', 'Phone_no1', 'email', 'address', 'TripId', 'razorpay_payment_id', 'Payment_Status', 'razorpay_order_id')
+                'Name', 'gender', 'Phone_no1',
+                'email', 'address', 'TripId', 'aadhaar_number', 'birth_of_date', 'razorpay_payment_id', 'Payment_Status', 'razorpay_order_id')
             tourIs = Updates.objects.filter(id=id).first()
             response = HttpResponse(content_type='application/ms-excel')
             response['Content-Disposition '] = f'attachment;filename={tourIs.Heading}|Rs.{tourIs.price}|DowloadedOn__' +\
@@ -219,7 +219,7 @@ def exportExcel(request, id):
             font_style = xlwt.XFStyle()
             font_style.font.bold = True
             columns = ['Name', 'gender', 'Phone_no1',
-                       'email', 'address', 'TripId', 'razorpay_payment_id', 'Payment_Status', 'razorpay_order_id']
+                       'email', 'address', 'TripId', 'aadhaar_number', 'birth_of_date', 'razorpay_payment_id', 'Payment_Status', 'razorpay_order_id']
             for col_num in range(len(columns)):
                 ws.write(row_num, col_num, columns[col_num], font_style)
             font_style = xlwt.XFStyle()

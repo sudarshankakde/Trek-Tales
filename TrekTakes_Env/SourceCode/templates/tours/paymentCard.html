@@ -2,9 +2,10 @@
 <form action="{% url 'Payment_Completed' %}" method="post" id="paymentForm">
     {% csrf_token %}
     <!-- hidden Values -->
-    <div class="d-flex flex-row justify-content-between">
-        <p class="my-auto">&nbsp;</p>
-        <span>
+    <div class="d-flex flex-row justify-content-between align-items-center">
+        <p class="my-auto w-75 opacity-90 small">
+        </p>
+        <span class="opacity-90 small">
             step 2 of 2
         </span>
     </div>
@@ -43,6 +44,9 @@
     <div class="hidden">
         <input type="hidden" name="TourId" value="{{updates.id}}">
         <input type="hidden" class="" id="name" placeholder="" name="name" value="{{name}}">
+        <input type="hidden" class="" id="age" placeholder="" name="age" value="{{age}}">
+        <input type="hidden" class="" id="birth_of_date" placeholder="" name="birth_of_date" value="{{birth_of_date}}">
+        <input type="hidden" class="" id="aadhaar" placeholder="" name="aadhaar" value="{{aadhaar}}">
         <input type="hidden" class="" id="address" placeholder="" name="address" value="{{address}}">
         <input type="hidden" class="" id="gender" placeholder="" name="gender" value="{{gender}}">
         <input type="hidden" class="" id="email" placeholder="" name="email" value="{{email}}">
@@ -73,8 +77,9 @@
                 </tr>
                 <tr>
                     <td class="fw-bold">Total Payble Amount:</td>
-                    <td><i class="bi bi-currency-rupee"></i>{{payable_Amount}} <span class="opacity-75">(<i class="bi bi-currency-rupee"></i>{{updates.price}} <small>Tour
-                            price</small> + {{Payment_charges}}% <small>platform fee</small>)</span></td>
+                    <td><i class="bi bi-currency-rupee"></i>{{payable_Amount}} <span class="opacity-75">(<i
+                                class="bi bi-currency-rupee"></i>{{updates.price}} <small>Tour
+                                price</small> + {{Payment_charges}}% <small>platform fee</small>)</span></td>
                 </tr>
                 <tr class="small">
                     <td class="fw-bold">Payment Method:</td>

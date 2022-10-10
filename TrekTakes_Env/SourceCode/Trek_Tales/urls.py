@@ -27,33 +27,35 @@ urlpatterns = [
     path('admin_links', views.admin_links, name='admin_links'),
     path('contacted_data', views.contacted_data, name='contacted_data'),
     path('ShowBookings/', views.ShowBookings, name='ShowBookings'),
-    path('ShowBookings/<int:id>',views.ShowBookingsOfId , name="ShowBookingsOfId"),
+    path('ShowBookings/<int:id>', views.ShowBookingsOfId, name="ShowBookingsOfId"),
     path('exportExcel/<int:id>', views.exportExcel, name='exportExcel'),
-    path('exportRefundExcel/<int:id>', views.exportRefundExcel, name='exportRefundExcel'),
+    path('exportRefundExcel/<int:id>',
+         views.exportRefundExcel, name='exportRefundExcel'),
     path('NewsLetter', views.NewsLetter, name='NewsLetter'),
     path('SendNewsletter', views.SendNewsletter, name='SendNewsletter'),
-    path('NewsLatter_sendMails', views.NewsLatter_sendMails, name='NewsLatter_sendMails'),
-    path('unsubscribe',views.Unsubscribe,name="unsubscribe"),
-    path('newsletter',views.newsletter,name="newsletter"),
-   
+    path('NewsLatter_sendMails', views.NewsLatter_sendMails,
+         name='NewsLatter_sendMails'),
+    path('unsubscribe', views.Unsubscribe, name="unsubscribe"),
+    path('newsletter', views.newsletter, name="newsletter"),
+
     # home
     path('', views.home, name='home'),
     path('home', views.home, name='home'),
-    
+
     # contact
     path('contact', views.contact, name='contact'),
     # Cancelation
     path('cancelation', views.cancelation, name='cancelation'),
-    
-    #Refund
+
+    # Refund
     path('Mark_Refunded', views.Mark_Refunded, name='Mark_Refunded'),
 
     # gallary
     path('gallary', gallaryViews.gallary, name='gallary'),
 
-    #about us
+    # about us
     path('aboutUs', views.aboutUs, name='aboutUs'),
-    
+
 
     # updates
     path('tours/', include('updates.urls')),
@@ -62,10 +64,10 @@ urlpatterns = [
     url(r'^DataBase/(?P<path>.*)$', serve,
         {'document_root': settings.MEDIA_ROOT}),
 
-    # url(r'^static/(?P<path>.*)$', serve,
-    #     {'document_root': settings.STATICFILES_DIRS}),
     url(r'^static/(?P<path>.*)$', serve,
-        {'document_root': settings.STATIC_ROOT}),
+        {'document_root': settings.STATICFILES_DIRS}),
+    # url(r'^static/(?P<path>.*)$', serve,
+    #     {'document_root': settings.STATIC_ROOT}),
 ]
 
 handler404 = 'Trek_Tales.views.error_404_view'

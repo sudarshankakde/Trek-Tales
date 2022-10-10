@@ -24,35 +24,7 @@
     </div>
 </div>
 <div id="section2">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-lg-3 col-12 py-5 text-center text-capitalize" id="section2weareMain">
-                <p class="py-5 h1">
-                    We are Trek.Tales
-                </p>
-            </div>
-            <div class="col-lg-9 col-12 py-5 " id="section2weare">
-                <p class="px-3 text-center text-lg-start">
-                    <span class="opacity-100">Having an interest in who we are makes us happy.</span>
-                    <br>
-                    <span class="opacity-85">
-
-                        <b class="letter-space-75">Trek.Tales_</b> organizes various tours and treks as well as will
-                        customize them for you. Additionally, we offer night camping🏕️, pool parties 🎉, travel plans,
-                        and
-                        itinerary planners 👨‍🏫. Also we organize events as well.
-                    </span>
-                    <br>
-                    <span class="opacity-85">
-                        Feel free to contact us if you need assistance.
-                    </span>
-                    <br>
-                    <b class="letter-space-75 pt-4 text-decoration-underline text-light">
-                        <a href="{%url 'aboutUs'%}">Team Trek.Tales_</a></b>
-
-                </p>
-            </div>
-        </div>
+    <div class="container-fluid pt-4">
         <div class="row text-uppercase text-center my-3 ">
             <div class="col-12 pt-4 pt-lg-0 pt-sm-0">
                 <p class="whyTrekTales h1">Why Trek.Tales</p>
@@ -77,10 +49,25 @@
 
             <div class="col-lg-3 col-6 py-lg-2 py-4 icons"><img src="{%static 'images/icons/custom.png'%}" alt="Costom"
                     sizes="25px*25px" width="75px" height="75px">
-                <p class="text-center opacity-75 mt-2">Customize Your Tour</p>
+                <p class="text-center opacity-75 mt-2">Customize Your Tours,Treks & Events</p>
             </div>
         </div>
-
+        <!-- stats  -->
+        <div class="row text-capitalize text-center py-5 ">
+            <h1 class="whyTrekTales h1">Our achievement</h1>
+            <div class="col-lg-4  col-6 text-user-theme-primary my-3 my-lg-0 ">
+                <div class="rollNumber">{{total_Tours}}+</div>
+                Completed Tours
+            </div>
+            <div class="col-lg-4  col-6 text-user-theme-primary my-3 my-lg-0">
+                <div class="rollNumber">{{total_Costumers}}+</div>
+                Total Costumers
+            </div>
+            <div class="col-lg-4  col-auto mx-auto text-user-theme-primary my-3 my-lg-0">
+                <div class="rollNumber">{{total_Review}}+</div>
+                Total Review's
+            </div>
+        </div>
     </div>
     <div class="container py-5">
         <div class="row h-100">
@@ -168,7 +155,8 @@
             with
             your photo on instagram to get featured</p>
         <div class="row position-relative">
-            <div class="col-6 col-sm-1 col-lg-1 col-sm-1 my-auto order-1 order-sm-1 order-lg-1 d-lg-block d-sm-block d-none">
+            <div
+                class="col-6 col-sm-1 col-lg-1 col-sm-1 my-auto order-1 order-sm-1 order-lg-1 d-lg-block d-sm-block d-none">
                 <i class="bi bi-caret-left text-white  h5 rounded rounded-circle p-lg-2 p-1 p-sm-2 border border-light float-end"
                     onclick="goBack() " style="cursor: pointer;"></i>
             </div>
@@ -185,7 +173,8 @@
                     </div>
                 </div>
             </div>
-            <div class="col-6 col-sm-1 col-lg-1 col-sm-1 order-sm-3 order-lg-3 order-sm-3 order-2 my-auto d-lg-block d-sm-block d-none">
+            <div
+                class="col-6 col-sm-1 col-lg-1 col-sm-1 order-sm-3 order-lg-3 order-sm-3 order-2 my-auto d-lg-block d-sm-block d-none">
                 <i class="bi bi-caret-right text-white  h5 rounded rounded-circle  p-lg-2 p-1 p-sm-2 border border-light float-start"
                     onclick="goForward() " style="cursor: pointer;"></i>
             </div>

@@ -7,12 +7,21 @@
     p {
         line-height: 25px;
     }
+
+    .imp {
+        background: var(--primary-theme);
+        padding: 0 4px;
+        border-radius: 0.2vh;
+        text-decoration: underline;
+        font-weight: normal;
+        word-spacing: 1px;
+    }
 </style>
 {% endblock link_css %}
 {%block body%}
 
 {%if state == "success" %}
-<div class="conatiner pb-5" style="min-height: 85vh;" id="box" onclick="party.confetti(this)">
+<div class="container-fluid pb-5" style="min-height: 85vh;" id="box" onclick="party.confetti(this)">
     <div class="row py-5">
         <div class="col-lg-2 col-5 mx-auto">
             <?xml version="1.0" encoding="utf-8"?><svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
@@ -38,7 +47,7 @@
             <h6>Your Slot Is Booked</h6>
             <br>
             <p class="small mx-auto py-3">Hello {{Name}}, I am glad to inform you that your booking for
-                <b>
+                <b class="imp">
                     {{tour|striptags}}
                 </b>
                 <br>
@@ -46,12 +55,12 @@
                 <br>
                 your
                 Trip ID is
-                <b>
+                <b class="imp">
                     {{TripId}}.
                 </b>
                 <br>
                 and your Payment Id is
-                <b>
+                <b class="imp">
                     {{razorpay_payment_id}}
                 </b>
             </p>
@@ -68,17 +77,13 @@
                     </a>
 
                 </div>
-                <div class="col-12 text-center mt-3">
 
-                    <span style="cursor: pointer;"><i class="bi bi-printer-fill h3 pointer"
-                            onclick="printRecipt()"></i></span>
-                </div>
             </div>
         </div>
     </div>
 </div>
 {% elif state == "PaymentIdExist" %}
-<div class="conatiner pb-5" style="min-height: 85vh;" id="box" onclick="party.confetti(this)">
+<div class="container-fluid pb-5" style="min-height: 85vh;" id="box" onclick="party.confetti(this)">
     <div class="row py-5 ">
         <div class="col-lg-2 col-5 mx-auto">
             <?xml version="1.0" encoding="utf-8"?><svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
@@ -104,16 +109,16 @@
             <h6>Your Slot Is Booked Already.</h6>
 
             <br>
-            <p class="small mx-auto">Hello <span class="text-capitalize">{{Name}}</span>, I am glad to inform you that
+            <p class="small mx-auto">Hello <span class="text-capitalize">{{Name}}</span>, We are glad to inform you that
                 your booking for
-                <b class="text-capitalize">
+                <b class="text-capitalize imp">
                     {{tour|striptags}}
                 </b>
                 <br>
-                the amount <b>Rs.{{amount}}</b> has been completed successfully.
+                the amount <b class="imp">Rs.{{amount}}</b> has been completed successfully.
 
                 and your Payment Id is
-                <b>
+                <b class="imp">
                     {{razorpay_payment_id}}
                 </b>
             </p>
@@ -129,11 +134,7 @@
                         <button class="btn1 bg-transparent px-3 py-2 ">Contact Us</button>
                     </a>
                 </div>
-                <div class="col-12 text-center mt-3">
 
-                    <span style="cursor: pointer;"><i class="bi bi-printer-fill h3 pointer"
-                            onclick="printRecipt()"></i></span>
-                </div>
 
             </div>
         </div>
@@ -141,7 +142,7 @@
 
 </div>
 {% elif state == "signatureNotMatch" %}
-<div class="conatiner pb-5" style="min-height: 85vh;">
+<div class="container-fluid pb-5" style="min-height: 85vh;">
 
     <div class="row py-5">
         <div class="col-10 col-lg-6 mx-auto text-center">
@@ -191,3 +192,4 @@
 
 </script>
 {% endblock body %}
+

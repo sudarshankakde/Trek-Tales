@@ -47,6 +47,7 @@
   .hover-opacity-100:hover {
     opacity: 1;
   }
+
 </style>
 {% endblock link_css %}
 {%block body%}
@@ -54,14 +55,14 @@
   <h1 class="whyTrekTales text-center py-5">IT’S TIME TO
     KNOW US</h1>
   <div class="row">
-    <div class="col-lg-3 col-12 py-5 text-center text-capitalize" id="section2weareMain">
+    <div class="col-lg-3 col-12 py-5 text-center text-capitalize d-lg-block d-sm-block d-none" id="section2weareMain">
       <h1 class="py-5">
         We are Trek.Tales
       </h1>
     </div>
     <div class="col-lg-9 col-12 py-5 " id="section2weare">
 
-      <p class="py-5 px-3 text-center text-lg-start">
+      <p class="py-lg-2 py-sm-2 py-0 px-3 text-center text-lg-start">
         <span class="opacity-100">Having an interest in who we are makes us happy.</span>
         <br>
         <span class="opacity-85">
@@ -86,6 +87,7 @@
     <!-- founders -->
     <div class="row ">
       <h1 class="text-center font-weight-normal whyTrekTales pt-5 pt-lg-5 "> Our Team </h1>
+     
       {%for organizer in organizer%}
       <div class="col-lg-3 col-sm-4 col-12 mx-auto my-2 my-lg-2 pb-lg-5 pb-2 d-flex align-items-stretch flex-lg-nowrap">
         <div class="card position-relative hover-opacity-100 hover-shadow-soft " style="min-height: 18rem;">

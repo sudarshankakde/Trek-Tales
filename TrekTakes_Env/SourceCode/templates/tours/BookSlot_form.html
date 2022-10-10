@@ -3,6 +3,8 @@
 
 {% block link_css %}
 <link rel="stylesheet" href="{%static 'css/bookslot.css'%}">
+<link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
 <style>
     .card {
         background-color: unset !important;
@@ -28,6 +30,16 @@
         background-repeat: no-repeat;
         background-size: cover;
     }
+
+    .card-book>div {
+        backdrop-filter: brightness(.6);
+        user-select: none;
+        transition: all 750ms;
+    }
+
+    .card-book:hover>div {
+        backdrop-filter: brightness(.25);
+    }
 </style>
 {% endblock link_css %}
 {%block body%}
@@ -38,7 +50,7 @@
             <div class="row rounded-5 card-bg position-relative">
                 <div class="col-lg-5 col-sm-5 col-12 my-auto">
                     <div class="card-book text-bg-dark rounded ">
-                        <div class=" text-center m-0  my-auto h-100 p-3 overflow-auto ">
+                        <div class="text-center m-0  my-auto h-100 p-3 overflow-auto ">
                             <small class="fw-semibold bi bi-signpost-fill h6">&nbsp;{{updates.Heading}}</small>
                             <table class="table table-sm text-light text-capitalize text-start table-borderless mt-2">
                                 <tbody>
@@ -59,69 +71,122 @@
                             <a href="{% url 'tourDetails' slug=updates.slug %}" target="_blank"
                                 rel="noopener noreferrer" class="text-decoration-underline">All Details</a>
                         </div>
+
                     </div>
+
                 </div>
                 <div class="col-lg-7 col-sm-7 col-12 mx-auto py-4 my-4 my-lg-0 my-sm-0 " id="bookComp">
                     <form class="form-control bg-transparent border-0  text-white" id="BookingForm"
                         hx-post="{% url 'confirm_booking' %}" hx-indicator=".progress" hx-target="#BookingForm"
-                        hx-trigger='confirmed' hx-swap="outerHTML">
-                        <div class="d-flex flex-row justify-content-between">
-                            <p class="my-auto">&nbsp;</p>
-                            <span>
+                        hx-trigger='confirmed' hx-swap="innerHTML">
+                        <div class="d-flex flex-row justify-content-between align-items-center">
+                            <p class="my-auto w-75 opacity-90 small">Your details should be entered according to your
+                                Aadhaar or any government papers you have</p>
+                            <span class="opacity-90 small">
                                 step 1 of 2
                             </span>
                         </div>
                         {% csrf_token %}
                         <input type="hidden" name="TourId" value="{{updates.id}}">
-                        <div class="text-capitalize pt-3 pb-1 opacity-75">Personal Details:</div>
-                        <!-- Name -->
-                        <div class="row">
-                            <!-- first name  -->
-                            <div class="col-md-6 mb-3 mt-1">
-                                <div class="form-outline form-white">
-                                    <input type="text" id="fName" class="form-control form-control-lg" name="fName"
-                                        required />
-                                    <label class="form-label" for="fName">First Name</label>
+                        <hr>
+                        <div class="pb-5 pb-lg-2">
+                            <div class="text-capitalize pb-1 opacity-75">Personal Details:</div>
+                            <!-- Name -->
+                            <div class="row d-flex  align-items-baseline">
+                                <!-- first name  -->
+                                <div class="col-md-6 mb-3 mt-1">
+                                    <div class="form-outline form-white">
+                                        <input type="text" id="fName" class="form-control form-control-lg" name="fName"
+                                            required />
+                                        <label class="form-label" for="fName">First Name</label>
+                                    </div>
                                 </div>
-                            </div>
-                            <!-- last name  -->
-                            <div class="col-md-6 mb-3">
-                                <div class="form-outline form-white">
-                                    <input type="text" id="lastName" class="form-control form-control-lg"
-                                        name="lastName" required />
-                                    <label class="form-label" for="lastName">Last Name</label>
+                                <!-- last name  -->
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-outline form-white">
+                                        <input type="text" id="lastName" class="form-control form-control-lg"
+                                            name="lastName" required />
+                                        <label class="form-label" for="lastName">Last Name</label>
+                                    </div>
                                 </div>
-                            </div>
 
-                        </div>
-                        <!-- gender -->
-                        <div class="form-check form-check-inline m-0">
-                            <input class="form-check-input" type="radio" name="gender" id="male" value="Male"
-                                required="" />
-                            <label class="form-check-label" for="male"><i class="bi bi-gender-male"></i>
-                                Male</label>
-                        </div>
-                        <div class="form-check form-check-inline mx-4">
-                            <input class="form-check-input " type="radio" name="gender" id="female" value="Female"
-                                required />
-                            <label class="form-check-label" for="female"><i class="bi bi-gender-female"></i>
-                                Female</label>
+                            </div>
+                            <!-- gender -->
+                            <div class="row d-flex align-items-center">
+                                <!-- first name  -->
+                                <div class="col-md-6 mb-3">
+                                    <!-- <div class="text-capitalize text-center opacity-65">Gender</div> -->
+                                    <div class="form-check form-check-inline m-0">
+                                        <input class="form-check-input" type="radio" name="gender" id="male"
+                                            value="Male" required="" />
+                                        <label class="form-check-label d-flex align-items-center" for="male">
+                                            <div class="material-symbols-outlined">
+                                                man_2
+                                            </div>
+                                            <div>
+                                                Male
+                                            </div>
+                                        </label>
+                                    </div>
+                                    <div class="form-check form-check-inline mx-4">
+                                        <input class="form-check-input " type="radio" name="gender" id="female"
+                                            value="Female" required />
+                                        <label class="form-check-label d-flex align-items-center" for="female">
+                                            <div class="material-symbols-outlined">
+                                                woman_2
+                                            </div>
+                                            <div>
+                                                Female
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3 ">
+                                    <div class="form-outline form-white ">
+                                        <input type="date" class="form-control form-control-lg" id="birth_of_date"
+                                            name="birth_of_date" required max="{% now 'Y-m-j' %}" />
+                                        <label class="form-label" for="birth_of_date"><i class="bi bi-balloon-fill"></i>
+                                            Birth
+                                            Date</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Aadhaar -->
+                            <div class="form-outline form-white my-2 mb-4">
+                                <input type="tel" class="form-control form-control-lg" id="aadhaar" name="aadhaar"
+                                    required data-mdb-showcounter="true" maxlength="12" inputmode="numeric"
+                                    aria-describedby="AadhaarHelper" />
+                                <!-- <input type="tel" class="form-control form-control-lg" id="aadhaar" name="aadhaar"
+                                    required data-mdb-showcounter="true" maxlength="12" inputmode="numeric"
+                                    aria-describedby="AadhaarHelper" hx-get="{url 'aadhaar_check'}?id={{updates.id}}"
+                                    hx-trigger="keyup changed delay:500ms" hx-target='#AadhaarHelper'
+                                    hx-swap="outerHTML" hx-indicator=".none" /> -->
+
+                                <label class="form-label" for="aadhaar"> <i class="bi bi-card-heading"></i>
+                                    Aadhaar
+                                    number</label>
+
+                                <div class="form-helper text-light opacity-85 my-1"></div>
+                                <small id="AadhaarHelper" class="form-helper  text-white  opacity-85 my-1 w-75"><i
+                                        class="bi bi-info-circle-fill"></i> Aadhaar details are required for insurance
+                                    purposes </small>
+                            </div>
                         </div>
                         <!-- Contact -->
-                        <div class="text-capitalize pt-3 pb-1 opacity-75">Contact Details:</div>
+                        <div class="text-capitalize  pb-1 opacity-75">Contact Details:</div>
                         <!-- email id -->
-                        <div class="form-outline form-white mt-1 " >
+                        <div class="form-outline form-white mt-1 ">
                             <input type="email" id="email_user" class="form-control form-control-lg" name='email'
                                 required inputmode="email" />
-                            <label class="form-label" for="email_user"><i class="bi bi-envelope-fill"></i> Your
+                            <label class="form-label" for="email_user"><i class="bi bi-envelope-fill"></i>
                                 Email</label>
                         </div>
                         <!-- phone no 1 -->
                         <div class="form-outline form-white  my-4">
                             <input type="tel" class="form-control form-control-lg" id="Phone_no1_user" name="Phone_no1"
                                 required data-mdb-showcounter="true" maxlength="10" inputmode="tel" />
-                            <label class="form-label" for="Phone_no1_user"><i class="bi bi-telephone-fill"></i> Your
-                                Phone
+                            <label class="form-label" for="Phone_no1_user"><i class="bi bi-whatsapp"></i>
+                                Whatsapp
                                 number</label>
                             <div class="form-helper text-light opacity-85 "></div>
                         </div>
@@ -129,8 +194,9 @@
                         <div class="form-outline form-white my-4">
                             <textarea class="form-control form-control-lg" rows="4" name="address" id="address"
                                 class="form-control required" required></textarea>
-                            <label class="form-label" for="address"><i class="bi bi-geo-alt-fill"></i> Your
+                            <label class="form-label" for="address"><i class="bi bi-geo-alt-fill"></i>
                                 Address</label>
+
                         </div>
                         <!-- hidden Values -->
                         <input type="hidden" class="" id="Payment_Status" placeholder="" name="Payment_Status" value="">
@@ -161,12 +227,11 @@
     var form = document.getElementById('BookingForm');
     document.getElementById('BookingForm').onsubmit = () => {
         event.preventDefault();
-        console.log('swal fire')
         Swal.fire({
             title: 'Proceed To Payment?',
             icon: 'question',
             html:
-                '<p class="opacity-75">Please make sure your provided details are accurate before proceeding to the payment page.</p>',
+                '<p class="opacity-75 small ">Ensure that your details are entered based on your Aadhaar or any other government documents before proceeding to the payment page.</p>',
             backdrop: '#1c233180',
             background: '#1c2331',
             color: '#ffffff',
@@ -176,9 +241,40 @@
         }).then((result) => {
             if (result.isConfirmed) {
                 htmx.trigger(htmx.find("#BookingForm"), "confirmed");
-
             }
         })
+        // for aadhaar_Validation 
+        // if (document.getElementById("aadhaar_Validate").value == 'true') {
+        //     Swal.fire({
+        //         title: 'Proceed To Payment?',
+        //         icon: 'question',
+        //         html:
+        //             '<p class="opacity-75 smal">Ensure that your details are entered based on your Aadhaar or any other government documents before proceeding to the payment page.</p>',
+        //         backdrop: '#1c233180',
+        //         background: '#1c2331',
+        //         color: '#ffffff',
+        //         showCancelButton: true,
+        //         confirmButtonText: 'Proceed',
+        //         denyButtonText: `Cancel Booking`,
+        //     }).then((result) => {
+        //         if (result.isConfirmed) {
+        //             htmx.trigger(htmx.find("#BookingForm"), "confirmed");
+        //         }
+        //     })
+        // }
+        // else {
+        //     Swal.fire({
+        //         title: ' Booking have already been made using this Aadhaar',
+        //         icon: 'error',
+        //         html: '<p class="opacity-75 small">We would like you to double check your Aadhaar details.</p>',
+        //         backdrop: '#1c233180',
+        //         background: '#1c2331',
+        //         color: '#ffffff',
+        //         showCancelButton: false,
+        //         confirmButtonText: 'OK',
+
+        //     })
+        // }
     }
 
 </script>

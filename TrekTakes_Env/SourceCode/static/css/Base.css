@@ -602,7 +602,7 @@ body {
 }
 
 #home-head-box {
-    backdrop-filter: brightness(0.8);
+    backdrop-filter: brightness(0.7);
 }
 
 #home-head-contant {
@@ -872,3 +872,15 @@ a:hover {
     padding: 0 5px;
     letter-spacing: 1px;
 }
+.rollNumber {
+    font-size: 5vh;
+    font-weight: 800;
+
+  }
+
+  .text-user-theme-primary {
+    background: -webkit-linear-gradient(var(--primary-text), var(--primary-theme));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    user-select: none;
+  }

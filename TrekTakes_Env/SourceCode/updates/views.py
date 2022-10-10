@@ -4,6 +4,7 @@ from http import client
 from django.conf import settings
 from django.shortcuts import render
 from Trek_Tales.settings import *
+
 from updates.models import *
 from django.shortcuts import render, get_object_or_404, redirect, HttpResponse
 from django.core.mail import send_mail
@@ -11,8 +12,42 @@ import random
 import razorpay
 import os
 from django.template.loader import render_to_string
+from django.template import Context
 from django.utils.html import strip_tags
 from django.core.paginator import Paginator
+from django.conf import settings
+from django.core.mail import EmailMessage
+from io import BytesIO
+from django.template.loader import get_template
+import xhtml2pdf.pisa as pisa
+
+
+def Invoice_pdf(data: dict):
+    template = get_template('MailTempletes/invoice_pdf.html')
+    html = template.render(data)
+    result = BytesIO()
+    pdf = pisa.pisaDocument(BytesIO(html.encode("ISO-8859-1")), result)
+    if not pdf.err:
+        return result.getvalue()
+    return None
+
+
+def sendMail(sub, email, html_message, data: dict, TripID):
+    subject = sub
+    emails = email
+    mail = EmailMessage(
+        subject, html_message, settings.EMAIL_HOST_USER,  emails)
+    mail.content_subtype = "html"  # this is the crucial part
+    try:
+        mail.attach(f'Invoice_#{TripID}.pdf',
+                    Invoice_pdf(data), 'application/pdf')
+    except:
+        pass
+    try:
+        mail.send(fail_silently=False)
+        print("Mail Sent")
+    except Exception as e:
+        print(e)
 
 
 def checkTourExpiry(tour):
@@ -76,10 +111,11 @@ def confirm_booking(request):
         Phone_no1 = request.POST.get('Phone_no1')
         gender = request.POST.get('gender')
         address = request.POST.get('address')
+        aadhaar = request.POST.get('aadhaar')
+        birth_of_date = request.POST.get('birth_of_date')
 
         def calculate_Payable_Amount(price):
             return (price+((price * Payment_Charges)/100))
-
         client = razorpay.Client(
             auth=(Razorpay_ApiKey, Razorpay_Api_SecretKey))
         payable_Amount = calculate_Payable_Amount(tour.price)
@@ -101,8 +137,22 @@ def confirm_booking(request):
             "Razorpay_ApiKey": Razorpay_ApiKey,
             'order_id': payment_order_id,
             'sitedata': SiteData.objects.first(),
+            'birth_of_date': birth_of_date,
+            'aadhaar': aadhaar
         }
         return render(request, 'tours/paymentCard.html', context)
+
+
+# def aadhaar_check(request):
+#     if (request.method == 'GET'):
+#         tour_id = request.GET.get('id')
+#         aadhaar = request.GET.get('aadhaar')
+#         instance = BookSlot.objects.filter(slotFor=tour_id)
+#         print(instance)
+#         if (instance.filter(aadhaar_number=aadhaar).exists()):
+#             return HttpResponse("""<small id="AadhaarHelper" class="form-helper   opacity-70 my-1 w-75 text-danger"><i class="bi bi-info-circle-fill"></i> Booking have already been made using this Aadhaar</small>  <input type="hidden" value="false" id="aadhaar_Validate">""")
+#         else:
+#             return HttpResponse("""<small id="AadhaarHelper" class="form-helper   opacity-70 my-1 w-75 text-white"><i class="bi bi-info-circle-fill"></i> Aadhaar details are required for insurance purposes</small> <input type="hidden" value="true" id="aadhaar_Validate">""")
 
 
 def Payment_Completed(request):
@@ -121,6 +171,8 @@ def Payment_Completed(request):
         razorpay_order_id = request.POST.get('razorpay_order_id')
         razorpay_payment_id = request.POST.get('razorpay_payment_id')
         razorpay_signature = request.POST.get('razorpay_signature')
+        aadhaar = request.POST.get('aadhaar')
+        birth_of_date = request.POST.get('birth_of_date')
         # uniqe trip id for each booking
         TripId = GenrateTripID(name, gender, tourId)
         client = razorpay.Client(
@@ -135,7 +187,8 @@ def Payment_Completed(request):
 
         # tour
         tour = get_object_or_404(Updates, id=tourId)
-
+        print(birth_of_date)
+        print(aadhaar)
         try:
             status = client.utility.verify_payment_signature(params_dict)
             if(razorpay_payment_id_exist == False & status):
@@ -150,13 +203,18 @@ def Payment_Completed(request):
                                 razorpay_signature=razorpay_signature,
                                 razorpay_order_id=razorpay_order_id,
                                 razorpay_payment_id=razorpay_payment_id,
-                                Payment_Status=Payment_Status)
+                                Payment_Status=Payment_Status,
+                                birth_of_date=birth_of_date,
+                                aadhaar_number=aadhaar)
                 slot.save()
                 context_dist_recipt = {
                     "name": name,
+                    "contactNumber":Phone_no1,
                     "company": {
                         "phone_no": SiteData.objects.first().SecondNumber,
-                        "email": SiteData.objects.first().Email_id
+                        "email": SiteData.objects.first().Email_id,
+                        "phone_no2": SiteData.objects.first().WPNumber,
+                        "bio_link": SiteData.objects.first().bio_link,
                     },
                     "tour_Name": tour.Heading,
                     "PaymentID": razorpay_payment_id,
@@ -164,21 +222,20 @@ def Payment_Completed(request):
                     "tour": tour,
                     "charges_Amount": int(amount)-tour.price,
                     "totalPaid": amount,
-                    'TripId': TripId}
+                    "TripId": TripId}
                 subject = f'Slot Booked Succesfully'
                 html_message = render_to_string(
                     'MailTempletes/Payment_Recipt.html', context_dist_recipt)
                 plain_message = strip_tags(html_message)
-                Mail_From = settings.EMAIL_HOST_USER
                 Mail_To = [email, tour.Organizer.mail]
-                send_mail(subject, plain_message, Mail_From, Mail_To,
-                          html_message=html_message, fail_silently=True)
-
+                # Mail_From = settings.EMAIL_HOST_USER
+                # send_mail(subject, plain_message, Mail_From, Mail_To,
+                #           html_message=html_message, fail_silently=True)
+                sendMail(sub=subject,
+                         email=Mail_To, html_message=html_message, data=context_dist_recipt, TripID=TripId)
                 # 1 slort get reserved
-
                 tour.slorts = tour.slorts - 1
                 tour.save()
-
                 return render(request, 'tours/PaymentSuccess.html', {'Payment_Status': Payment_Status, 'razorpay_payment_id': razorpay_payment_id, 'TripId': TripId, "Name": name, "amount": amount, 'tour': tour.Heading, 'state': 'success'})
             else:
                 return render(request, 'tours/PaymentSuccess.html', {'state': "PaymentIdExist", 'Payment_Status': Payment_Status, 'razorpay_payment_id': razorpay_payment_id, 'TripId': TripId, "Name": name, "amount": amount, 'tour': tour.Heading, })
@@ -264,7 +321,7 @@ def customize_tour(request):
                 send_mail(f"{name}  want customized tour", f"{name} had requested for customized tour here are details- {context}", mail_from, foundersMail,
                           fail_silently=True)
 
-                return HttpResponse("""<div class="text-center my-4">We will get back to you within a day, with a travel plan and other details as per your requested requirements.
+                return HttpResponse("""<div class="text-center my-4">Our executive will get back to you within a day, with a travel plan and other details as per your requested requirements.
                 <br>
                 <br>
                     <a href="../tours/" class=" mt-4 text-decoration-underline opacity-80 text-user-primary">
