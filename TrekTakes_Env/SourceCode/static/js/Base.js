@@ -1,10 +1,11 @@
 // // pre loader
 var loader = document.getElementById('Preloader');
-document.body.style.overflowY = "hidden";
-window.document.addEventListener('load',loaded());
+// document.body.style.overflowY = "hidden";
+window.document.addEventListener('load', loaded());
 function loaded() {
     document.body.style.overflowY = "visible";
-    loader.style.display = "none";
+    // loader.style.display = "none";
+    loader.classList.add('d-none');
 }
 document.getElementById('manuIcon').classList.remove('nav-active');
 
@@ -52,5 +53,11 @@ const app = (() => {
     init();
 })();
 
+
+
+$(function () {
+    $('.lazy').lazy({
+    });
+});
 
 

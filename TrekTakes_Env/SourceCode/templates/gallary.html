@@ -12,8 +12,8 @@
 {% endblock link_css %}
 {%block body%}
 
-<div class="container ">
-    <p class="text-center pt-2 mt-2 h2 ">Photo Gallary <i class="bi bi-images mx-2"></i></p>
+<div class="container-lg container-fluid-sm ">
+    <p class=" text-shadow h1 pt-2 mt-4 text-center"><b>Photo Gallary <i class="bi bi-images mx-2"></i></b></p>
     <div class="row my-3 pb-5" id="images">
         <p class=" text-center opacity-75 pb-1">use <a href="https://www.instagram.com/explore/tags/trektales_/"
                 target="_blank" rel="noopener noreferrer"><span class="badgeuser  fonts">#trektales_</span></a> & tag us
@@ -22,8 +22,8 @@
         <div class="col-lg-8 col-sm-8 col-12 mx-auto">
             <form hx-get="" hx-target="#gallary" hx-indicator=".progress" hx-trigger='submit' hx-swap="innerHTML"
                 id="filterForm" class="">
-                <div class="input-group ">
-                    <select class="form-control rounded-0  rounded-start " aria-placeholder="Select Tour"
+                <div class="input-group  cursor-pointer ">
+                    <select class="form-control rounded-0  rounded-start" aria-placeholder="Select Tour"
                         name='selected_tour' id="selected_tour" required>
                         <option selected value="all_tour">All Memories</option>
                         {%for tour in tours%}

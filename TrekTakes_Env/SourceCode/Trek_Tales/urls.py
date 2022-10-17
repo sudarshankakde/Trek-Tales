@@ -21,6 +21,7 @@ from Trek_Tales import settings
 from Gallary import views as gallaryViews
 from django.urls import re_path as url
 from django.views.static import serve
+from django.conf.urls import handler404, handler500
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -41,6 +42,7 @@ urlpatterns = [
     # home
     path('', views.home, name='home'),
     path('home', views.home, name='home'),
+    path('check', views.check, name='check'),
 
     # contact
     path('contact', views.contact, name='contact'),
@@ -52,6 +54,7 @@ urlpatterns = [
 
     # gallary
     path('gallary', gallaryViews.gallary, name='gallary'),
+    path('upload_images', gallaryViews.upload_images, name='upload_images'),
 
     # about us
     path('aboutUs', views.aboutUs, name='aboutUs'),
@@ -64,10 +67,10 @@ urlpatterns = [
     url(r'^DataBase/(?P<path>.*)$', serve,
         {'document_root': settings.MEDIA_ROOT}),
 
-    url(r'^static/(?P<path>.*)$', serve,
-        {'document_root': settings.STATICFILES_DIRS}),
     # url(r'^static/(?P<path>.*)$', serve,
-    #     {'document_root': settings.STATIC_ROOT}),
+    #     {'document_root': settings.STATICFILES_DIRS}),
+    url(r'^static/(?P<path>.*)$', serve,
+        {'document_root': settings.STATIC_ROOT}),
 ]
 
 handler404 = 'Trek_Tales.views.error_404_view'

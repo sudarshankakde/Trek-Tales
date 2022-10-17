@@ -4,7 +4,6 @@ from http import client
 from django.conf import settings
 from django.shortcuts import render
 from Trek_Tales.settings import *
-
 from updates.models import *
 from django.shortcuts import render, get_object_or_404, redirect, HttpResponse
 from django.core.mail import send_mail
@@ -142,7 +141,6 @@ def confirm_booking(request):
         }
         return render(request, 'tours/paymentCard.html', context)
 
-
 # def aadhaar_check(request):
 #     if (request.method == 'GET'):
 #         tour_id = request.GET.get('id')
@@ -192,24 +190,40 @@ def Payment_Completed(request):
         try:
             status = client.utility.verify_payment_signature(params_dict)
             if(razorpay_payment_id_exist == False & status):
-                slot = BookSlot(Name=name,
-                                gender=gender,
-                                Phone_no1=Phone_no1,
-                                address=address,
-                                amount=amount,
-                                slotFor=Updates(id=tourId),
-                                email=email,
-                                TripId=TripId,
-                                razorpay_signature=razorpay_signature,
-                                razorpay_order_id=razorpay_order_id,
-                                razorpay_payment_id=razorpay_payment_id,
-                                Payment_Status=Payment_Status,
-                                birth_of_date=birth_of_date,
-                                aadhaar_number=aadhaar)
+                if tour.aadhaar_required:
+                    slot = BookSlot(Name=name,
+                                    gender=gender,
+                                    Phone_no1=Phone_no1,
+                                    address=address,
+                                    amount=amount,
+                                    slotFor=Updates(id=tourId),
+                                    email=email,
+                                    TripId=TripId,
+                                    razorpay_signature=razorpay_signature,
+                                    razorpay_order_id=razorpay_order_id,
+                                    razorpay_payment_id=razorpay_payment_id,
+                                    Payment_Status=Payment_Status,
+                                    birth_of_date=birth_of_date,
+                                    aadhaar_number=aadhaar)
+                else:
+                    slot = BookSlot(Name=name,
+                                    gender=gender,
+                                    Phone_no1=Phone_no1,
+                                    address=address,
+                                    amount=amount,
+                                    slotFor=Updates(id=tourId),
+                                    email=email,
+                                    TripId=TripId,
+                                    razorpay_signature=razorpay_signature,
+                                    razorpay_order_id=razorpay_order_id,
+                                    razorpay_payment_id=razorpay_payment_id,
+                                    Payment_Status=Payment_Status,
+                                    birth_of_date=birth_of_date,
+                                    )
                 slot.save()
                 context_dist_recipt = {
                     "name": name,
-                    "contactNumber":Phone_no1,
+                    "contactNumber": Phone_no1,
                     "company": {
                         "phone_no": SiteData.objects.first().SecondNumber,
                         "email": SiteData.objects.first().Email_id,
@@ -228,9 +242,6 @@ def Payment_Completed(request):
                     'MailTempletes/Payment_Recipt.html', context_dist_recipt)
                 plain_message = strip_tags(html_message)
                 Mail_To = [email, tour.Organizer.mail]
-                # Mail_From = settings.EMAIL_HOST_USER
-                # send_mail(subject, plain_message, Mail_From, Mail_To,
-                #           html_message=html_message, fail_silently=True)
                 sendMail(sub=subject,
                          email=Mail_To, html_message=html_message, data=context_dist_recipt, TripID=TripId)
                 # 1 slort get reserved
@@ -266,7 +277,6 @@ def customize_tour(request):
             filter_data = customized_tour.objects.filter(
                 request_on_date__month=month,
                 request_on_date__year=year).order_by('-request_on_date__time')
-            print(filter_data)
             return render(request, 'customize_tour/table.html', {"data": filter_data})
         return render(request, 'customize_tour/customize_tour.html', {'data': data, })
     else:
@@ -279,13 +289,11 @@ def customize_tour(request):
             no_of_day = request.POST['no_of_day']
             trek_name = request.POST['trek_name']
             tour_explain = request.POST['tour_explain']
+            tansport_type = request.POST['tansport_type']
             # get founders mail id
             try:
                 founder_tag_id = get_object_or_404(Tags, Tag='Founder')
-                founders = Organizer.objects.filter(Tags=founder_tag_id).all()
-                foundersMail = []
-                for founder in founders:
-                    foundersMail.append(founder.mail)
+
                 trip = customized_tour(
                     name=name,
                     email=email,
@@ -294,7 +302,8 @@ def customize_tour(request):
                     start_date=start_date,
                     no_of_day=no_of_day,
                     trek_name=trek_name,
-                    tour_explain=tour_explain
+                    tour_explain=tour_explain,
+                    tansport_type=tansport_type
                 )
                 context = {
                     "name": name,
@@ -305,6 +314,7 @@ def customize_tour(request):
                     "no_of_day": no_of_day,
                     "trek_name": trek_name,
                     "tour_explain": tour_explain,
+                    'tansport_type': tansport_type,
                     'sitedata': SiteData.objects.first(),
                 }
                 trip.save()
@@ -316,12 +326,10 @@ def customize_tour(request):
                 # mail to user
                 send_mail(subject, plain_message, mail_from, [email],
                           html_message=html_message, fail_silently=True)
-
                 # mail to founders
-                send_mail(f"{name}  want customized tour", f"{name} had requested for customized tour here are details- {context}", mail_from, foundersMail,
+                send_mail(f"{name}  want customized tour", f"{name} had requested for customized tour here are details- {context}", mail_from, settings.MANAGERS,
                           fail_silently=True)
-
-                return HttpResponse("""<div class="text-center my-4">Our executive will get back to you within a day, with a travel plan and other details as per your requested requirements.
+                return HttpResponse(f"""<div class="text-center my-4">Dear {request.POST['fName']}, Our executive will get back to you within a day, with a travel plan and other details as per your requested requirements.
                 <br>
                 <br>
                     <a href="../tours/" class=" mt-4 text-decoration-underline opacity-80 text-user-primary">
@@ -336,5 +344,4 @@ def customize_tour(request):
 
 def show_person_details(request, id):
     response = get_object_or_404(customized_tour, id=id)
-
     return render(request, 'admin/show_person_Details.html', {'data': response})

@@ -59,6 +59,8 @@ class Updates(models.Model):
     googleMap = models.URLField(
         max_length=200, verbose_name="Google Map VENUE Url")
 
+    aadhaar_required = models.BooleanField(default=False, null=True)
+
     def __str__(self):
         return (f"{self.location} | {self.Heading}")
 
@@ -96,7 +98,8 @@ class BookSlot(models.Model):
     razorpay_signature = models.CharField(
         max_length=50, editable=False, null=True)
     Payment_Status = models.BooleanField(default=False)
-    aadhaar_number = models.IntegerField(editable=False, unique=False)
+    aadhaar_number = models.IntegerField(
+        editable=False, unique=False, null=True, default='00000000000')
 
     # aadhaar_number = models.IntegerField(editable=False,unique=True)
     def __str__(self):
@@ -174,4 +177,6 @@ class customized_tour(models.Model):
     start_date = models.DateField(auto_now=False, auto_now_add=False)
     trek_name = models.CharField(max_length=50)
     tour_explain = models.TextField(null=True)
+    tansport_type = models.CharField(
+        max_length=50, default='Non_Ac', null=True)
     request_on_date = models.DateTimeField(auto_created=True, auto_now=True)

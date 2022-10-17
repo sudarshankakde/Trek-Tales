@@ -31,8 +31,8 @@
 </style>
 {% endblock link_css %}
 {%block body%}
-<div class="container my-5">
 
+<div class="container my-5">
     <div class="row">
         <div class="col-12 mx-auto">
             <div class="row rounded-5 card-bg position-relative mx-auto text-center">
@@ -178,14 +178,32 @@
                                 style="fill:none;stroke:#263238;stroke-linecap:round;stroke-miterlimit:10"></path>
                         </g>
                     </svg>
+                    {%if updates.TourIsNotExpire%}
                     <p class="opacity-75">
                         We are sorry to say that all the slots for this tour have been booked.
                         <br> We can find another way if you would like us to do so.
                     <div class="opacity-70 p-2">just contact us on our socails and we will let you know</div>
                     <div class="d-flex flex-row gap-3 justify-content-center opacity-70 ">
-                        <a href="{{sitedata.bio_link}}" target="_blank" rel="noopener noreferrer" class="text-decoration-underline opacity-85 text-capitalize">socails</a>
-                        <a href="{%url 'contact'%}"  class="text-decoration-underline opacity-85 text-capitalize">contact</a>
+                        <a href="{{sitedata.bio_link}}" target="_blank" rel="noopener noreferrer"
+                            class="text-decoration-underline opacity-85 text-capitalize px-2  bg-success">socails</a>
+                        <a href="{%url 'contact'%}"
+                            class="text-decoration-underline opacity-85 text-capitalize px-2 bg-success">contact</a>
                     </div>
+                    {%else%}
+                    <p class="opacity-75">
+                        We are sorry to say that This Tour Has Been Expired.
+                        <br> We can arrange same tour for you if you would like us to do so.
+                    <div class="opacity-70 p-2">just contact us on our socails and we will let you know</div>
+                    <div class="d-flex flex-row gap-3 justify-content-center opacity-70 ">
+                        <a href="{{sitedata.bio_link}}" target="_blank" rel="noopener noreferrer"
+                            class="text-decoration-underline opacity-85 text-capitalize bg-success px-2">socails</a>
+                        <a href="{%url 'customize_tour'%}"
+                            class="text-decoration-underline opacity-85 text-capitalize bg-success px-2">customize Your tour</a>
+                        <a href="{%url 'contact'%}"
+                            class="text-decoration-underline opacity-85 text-capitalize bg-success px-2">contact</a>
+                    </div>
+
+                    {%endif%}
                     </p>
                 </div>
             </div>

@@ -11,6 +11,7 @@
   <meta name="description" content="A Trekking and Camping group, we are based in Aurangabad, Maharashtra. We organize treks, night camping🏕️, pool parties 🎉,and itinerary planners 👨‍🏫 and other recreational activities.Want adventure without the risk? Come join our crew for a weekend! 
   Join Trek Tales and let them give you a hand!">
   <title>Treak Tales</title>
+
   <!--google font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -32,32 +33,27 @@
 
   {% block link_css %}
   {% endblock link_css %}
- 
+
 </head>
 
 <body class='text-white user-bg'>
   <!-- preloader -->
-  <div id="Preloader">
-    <svg viewBox="0 0 1320 300" id="preloaderSvg">
-      <text x="50%" y="50%" dy=".35em" text-anchor="middle">
-        Trek Tales
-      </text>
-    </svg>	
+  <div id="Preloader" class="position-relative">
+    <img src="/static/images/logo.png" alt="logo" class="img-fluid  LogoGlow">
   </div>
-  
 
   <!-- navbar -->
-  <div class="menu-icon d-inline-flex align-items-baseline justify-content-between sticky-top">
+  <div class="menu-icon d-inline-flex align-items-center justify-content-between sticky-top h-auto">
     <span class="px-lg-5 px-2">
-      <a class="navbar-brand mx-auto" href="{% url 'home' %}"><img src="{%static 'images/logo.ico'%}" alt="logo" class="img-fluid" width="30px"><b id="nav-text">Trek Tales</b></a>
+      <a class="navbar-brand mx-auto" href="/home"><img src="/static/images/logo.ico" alt="logo" class="img-fluid"
+          width="36px"><b id="nav-text">Trek Tales</b></a>
     </span>
-    <span class="px-lg-4  px-2" id="manuIcon">
+    <span class="px-lg-4 px-2" id="manuIcon">
       <span class="menu-icon__line menu-icon__line-left"></span>
       <span class="menu-icon__line"></span>
       <span class="menu-icon__line menu-icon__line-right"></span>
     </span>
   </div>
-
   <div class="nav" style="z-index: 75;">
     <div class="nav__content text-center">
       <ul class="nav__list ">
@@ -124,6 +120,8 @@
 
             <a href="tel:+91{{sitedata.SecondNumber}}" class="socails"><i
                 class="bi bi-telephone p-2 rounded rounded-circle border" aria-label="Call us" role="link"></i></a>
+            <a href="{{sitedata.bio_link}}" class="socails" target="_blank"><i
+                class="bi bi-link-45deg p-2 rounded rounded-circle border" aria-label="Our Socails" role="link"></i></a>
           </div>
         </div>
         <div class="col-auto mx-auto my-2 my-lg-0 order-lg-0 order-1 order-sm-0 ">
@@ -141,14 +139,17 @@
     </div>
     <div class="container-fluid py-2" style="background-color: var(--primary-theme);">
       <div class="row text-center py-2">
-        <div class="col-10 mx-auto fw-light ">
-          <b class="float-lg-start  float-sm-start float-none fw-light ">
-           <span class="Julius-text"> Trek Tales </span>&copy; {%now 'Y'%}
+        <div class="col-11 mx-auto fw-light d-flex flex-sm-row justify-content-between flex-column-reverse ">
+          <b class="float-lg-start  float-sm-start float-none fw-bold ">
+            <span class="Julius-text fw-bold"> Trek Tales </span>&copy; {%now 'Y'%}
+            &NewLine;
+            
+            <br>
           </b>
-          <b class="float-lg-end float-sm-end float-none fw-light">
-            Designed & Developed By <a href="https://sudarshan_kakde.bio.link/"
-              class="text-decoration-underline text-white" target="_blank" rel="noopener noreferrer">Sudarshan
-              Kakde.</a>
+          <b class="float-lg-end float-sm-end float-none fw-light  bi bi-heart-pulse-fill ">
+            Designed & Developed By <a href="{{devloper.link}}" class="text-decoration-underline text-white"
+              target="_blank" rel="noopener noreferrer">{{devloper.name}}.</a>
+              <hr class="d-block d-sm-none">
           </b>
         </div>
       </div>
@@ -173,14 +174,14 @@
   <script src="{%static 'js/Base.js'%}"></script>
   <script src="{%static 'MDB/js/mdb.min.js'%}"></script>
   <script src="{%static 'MDB/js/bootstrap.bundle.min.js'%}"></script>
-
+  <script type="text/javascript" src="{%static 'js/jquery.lazy.min.js'%}"></script>
   <script>
     const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
     const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
     $(function () {
       $('[data-toggle="tooltip"]').tooltip()
     })
-    
+
   </script>
   {%block script%}
   {%endblock script%}

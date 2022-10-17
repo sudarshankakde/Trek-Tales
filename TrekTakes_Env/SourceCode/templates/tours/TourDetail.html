@@ -3,7 +3,7 @@
 {% block link_css %}
 <link rel="stylesheet" href="{%static 'css/tour_details.css'%}">
 <style>
-   
+
 </style>
 {% endblock link_css %}
 {% block body %}
@@ -103,7 +103,7 @@
                 <div class="w-100 mx-auto mt-3 rounded" id="Organizer">
                     <div class="col-12 rounded">
                         <img src={{tour.Organizer.backgroundImg.url}} alt="{{tour.Organizer.Name}}"
-                            class="w-100 rounded-top">
+                            class="w-100 rounded-top lazy" style='max-height: 40vh;height: 35vh;'>
                         <div class="row w-100 mx-auto pb-2 rounded-bottom " style="background-color: var(--card-bg);">
                             <div class="col-3 position-relative">
                                 <img src={{tour.Organizer.image.url}} alt="{{tour.Organizer.Name}}" class="rounded rounded-circle
@@ -208,7 +208,7 @@
     </div>
 </div>
 <script>
-    window.document.title += " | {{tour.Heading|striptags}}";
+    window.document.title += " | {{tour.Heading|striptags|title}}";
 
     let details = document.getElementById('details');
     const mainVal = details.clientHeight;
@@ -229,7 +229,7 @@
         }
     }
 
-   
+
 
 </script>
 

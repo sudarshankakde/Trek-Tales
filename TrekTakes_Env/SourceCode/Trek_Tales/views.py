@@ -1,6 +1,7 @@
 from django.utils.html import strip_tags
 from django.template.loader import render_to_string
 import email
+from django.forms import ModelForm
 from unicodedata import name
 from django.shortcuts import render, get_object_or_404, redirect, HttpResponse
 from updates.models import *
@@ -8,7 +9,7 @@ from Gallary.models import Memories
 from datetime import date, timedelta
 from django.contrib import messages
 from django_pandas.io import read_frame
-from django.core.mail import send_mail ,EmailMessage
+from django.core.mail import send_mail, EmailMessage
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 from django.template import RequestContext
@@ -31,12 +32,18 @@ def admin_links(request):
 
 
 def home(request):
-    gallary = Memories.objects.order_by('-photo_taken_on_tour')[0:5]
+    gallary = Memories.objects.order_by('-uploaded_on')[0:5]
     updates = Updates.objects.order_by('-tour_on_date')[0:3]
     for i in updates:
         checkTourExpiry(i)
-    testimonials = Testimonials.objects.order_by('-date_added')[:6]
-    return render(request, 'home.html', {'tours': updates, 'Testimonials': testimonials, 'gallary': gallary, 'total_Tours': total_Tours, 'total_Costumers': total_Costumers, 'total_Review': total_Review})
+    try:
+        Testimonials1 = Testimonials.objects.order_by('-date_added')[:5]
+        Testimonials2 = Testimonials.objects.order_by('-date_added')[6:10]
+    except:
+        Testimonials1 = {}
+        Testimonials2 = {}
+    return render(request, 'home.html', {'tours': updates, 'Testimonials1': Testimonials1, 'Testimonials2': Testimonials2, 'gallary': gallary, 'total_Tours': total_Tours, 'total_Costumers': total_Costumers, 'total_Review': total_Review})
+
 
 def contact(request):
     if request.method == 'POST':
@@ -166,18 +173,20 @@ def aboutUs(request):
     Founders = Organizer.objects.filter(
         Tags=Tags.objects.get(Tag='Founder').id)
     organizer = Organizer.objects.order_by('-id')
-    return render(request, 'aboutUs.html', {'total_Tours': total_Tours, 'total_Costumers': total_Costumers, 'total_Review': total_Review, 'Founders': Founders, 'organizer': organizer})
+    tags = Tags.objects.order_by('-id').all()
+    return render(request, 'aboutUs.html', {'total_Tours': total_Tours, 'total_Costumers': total_Costumers, 'total_Review': total_Review, 'Founders': Founders, 'organizer': organizer,'tags':tags})
 
 
 def error_404_view(request, exception):
-    return render(request, '404.html',)
+    return render(request, '404.html', {'error': "404"})
 
 
 def error_500_view(request, *args, **kwargs):
     context_instance = RequestContext(request)
-    return render(request, '404.html', )
+    return render(request, '404.html', {'error': "500"})
 
-
+def check(request):
+    return redirect(none)
 @login_required
 def ShowBookings(request):
     tours = Updates.objects.order_by('-tour_on_date')
@@ -206,9 +215,15 @@ def exportExcel(request, id):
         if(BookSlot.objects.filter(slotFor=id).count() < 1):
             return HttpResponse('No enterys for this tour yet')
         else:
-            rows = BookSlot.objects.filter(slotFor=id).values_list(
-                'Name', 'gender', 'Phone_no1',
-                'email', 'address', 'TripId', 'aadhaar_number', 'birth_of_date', 'razorpay_payment_id', 'Payment_Status', 'razorpay_order_id')
+            tour = get_object_or_404(Updates, id=id)
+            if tour.aadhaar_required:
+                rows = BookSlot.objects.filter(slotFor=id).values_list(
+                    'Name', 'gender', 'Phone_no1',
+                    'email', 'address', 'TripId', 'aadhaar_number', 'birth_of_date', 'razorpay_payment_id', 'Payment_Status', 'razorpay_order_id')
+            else:
+                rows = BookSlot.objects.filter(slotFor=id).values_list(
+                    'Name', 'gender', 'Phone_no1',
+                    'email', 'address', 'TripId', 'birth_of_date', 'razorpay_payment_id', 'Payment_Status', 'razorpay_order_id')
             tourIs = Updates.objects.filter(id=id).first()
             response = HttpResponse(content_type='application/ms-excel')
             response['Content-Disposition '] = f'attachment;filename={tourIs.Heading}|Rs.{tourIs.price}|DowloadedOn__' +\
@@ -218,8 +233,13 @@ def exportExcel(request, id):
             row_num = 0
             font_style = xlwt.XFStyle()
             font_style.font.bold = True
-            columns = ['Name', 'gender', 'Phone_no1',
-                       'email', 'address', 'TripId', 'aadhaar_number', 'birth_of_date', 'razorpay_payment_id', 'Payment_Status', 'razorpay_order_id']
+            if tour.aadhaar_required:
+                columns = ['Name', 'gender', 'Phone_no1',
+                           'email', 'address', 'TripId', 'aadhaar_number', 'birth_of_date', 'razorpay_payment_id', 'Payment_Status', 'razorpay_order_id']
+            else:
+                columns = ['Name', 'gender', 'Phone_no1',
+                           'email', 'address', 'TripId', 'birth_of_date', 'razorpay_payment_id', 'Payment_Status', 'razorpay_order_id']
+
             for col_num in range(len(columns)):
                 ws.write(row_num, col_num, columns[col_num], font_style)
             font_style = xlwt.XFStyle()
@@ -404,3 +424,9 @@ def contacted_data(request):
             pass
     contacted = Contact.objects.order_by('-Contact_on').all()
     return render(request, 'admin/contacted_data.html', {'data': contacted})
+
+
+class TourForm(ModelForm):
+    class Meta:
+        model = Updates
+        fields = '__all__'

@@ -1,0 +1,42 @@
+{% extends 'Base.html' %}
+{% load static %}
+{%block body%}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6 col-sm-6 col-12 mx-auto my-5">
+            <form enctype="multipart/form-data" hx-post='' hx-indicator=".progress" hx-trigger='submit'
+                hx-target="#result" hx-swap="innerHTML">
+                {% csrf_token %}
+
+                <div class="mb-3">
+                    <label for="mailTemp" class="form-label text-light">Upload Images </label>
+                    <input class="form-control" type="file" accept=".png, .jpg, .jpeg" id="mailTemp" name="Images"
+                        multiple required>
+                </div>
+                <div class="mb-3">
+                    <label for="photographer " class="form-label text-light opacity-75">Person who click
+                        pictures</label>
+                    <input class="form-control mb-4" type="text" placeholder="photographers Name " name="photographer "
+                        aria-label="photographer " id="photographer ">
+                </div>
+                <select class="form-select mb-3" aria-label="Select template" id="TourSelect" name="TourSelect"
+                    required>
+
+                    <option selected class="text-center opacity-75" value="notSeleted">Open this select menu</option>
+                    {% for tour in tours %}
+                    <option value="{{tour.id}}" class="text-center">
+                        {{tour.Heading}}&nbsp;</option>
+                    {% endfor %}
+                </select>
+                <button type="submit" class="button-primary mb-2">submit</button>
+                <br>
+                <div id="result" class="my-1 text-light opacity-75"></div>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+{% endblock body %}

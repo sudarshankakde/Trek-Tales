@@ -18,18 +18,19 @@
             <form class="text-dark" hx-post="" hx-indicator=".progress" hx-target="#output" hx-trigger='submit'
             hx-swap="outerHTML" id="contactForm">
             {%csrf_token%}
-                <div class="form-floating mb-3 ">
-                    <input type="text" class="form-control " id="name" name='name' placeholder="name@example.com">
-                    <label for="name"><i class="bi bi-person-lines-fill"></i> Your Full Name</label>
+            
+                <div class="form-outline form-white mb-3 ">
+                    <input type="text" class="form-control form-control-lg " id="name" name='name' inputmode="text" required>
+                    <label for="name" class="form-label"><i class="bi bi-person-lines-fill"></i> Your Full Name</label>
                 </div>
-                <div class="form-floating mb-3 ">
-                    <input type="email" class="form-control" id="email" name='email' placeholder="name@example.com">
-                    <label for="email"><i class="bi bi-envelope-fill"></i> Your Email address</label>
+                <div class="form-outline form-white mb-3 ">
+                    <input type="email" class="form-control form-control-lg" id="email" name='email' inputmode="email" required >
+                    <label for="email" class="form-label"><i class="bi bi-envelope-fill"></i> Your Email Address</label>
                 </div>
-                <div class="form-floating ">
-                    <textarea class="form-control" placeholder="Leave a Message here" id="message" name="message"
-                        style="height: 100px"></textarea>
-                    <label for="message"><i class="bi bi-chat-right-text-fill"></i> Your Message</label>
+                <div class="form-outline form-white ">
+                    <textarea class="form-control form-control-lg"  id="message" name="message" inputmode="text"
+                        style="height: 100px" required></textarea>
+                    <label for="message" class="form-label"><i class="bi bi-chat-right-text-fill"></i> Your Message</label>
                 </div>
                 <div class="mx-auto text-center mt-2">
                     <button class="btn1 bg-transparent px-4 py-1 my-lg-3 my-2  text-capitalize " type="submit">submit <i

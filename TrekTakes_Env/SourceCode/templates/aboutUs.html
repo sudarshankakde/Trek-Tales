@@ -15,20 +15,7 @@
   }
 
 
-  .rollNumber {
-    font-size: 5vh;
-    font-weight: 800;
-
-  }
-
-  .text-user-theme-primary {
-    background: -webkit-linear-gradient(var(--primary-text), var(--primary-theme));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    user-select: none;
-  }
-
-  .img-badge::before {
+  bg/image-badge::before {
     content: 'Founders';
     background-color: var(--primary-theme);
     padding: 2px 10px;
@@ -48,12 +35,75 @@
     opacity: 1;
   }
 
+  /* Style the tab */
+  .tab {
+    overflow: hidden;
+    border: 1px solid transparent;
+    background-color: transparent;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* Style the buttons that are used to open the tab content */
+  .tab button {
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+    margin-bottom: 2vh;
+  }
+
+  /* Change background color of buttons on hover */
+  .tab button:hover {
+    background-color: var(--card-bg);
+
+  }
+
+  /* Create an active/current tablink class */
+  .tab button.active {
+    background-color: var(--primary-theme);
+    position: relative;
+
+  }
+
+
+  /* Style the tab content */
+  .tabcontent {
+    display: none;
+    padding: 6px 12px;
+    /* border: 1px solid var(--primary-theme); */
+    border-top: none;
+    z-index: 25;
+  }
+
+  #heading {
+    background-image: url('static/images/landscape.webp');
+    z-index: -2;
+    top: 0;
+    width: 100%;
+    background-position: top;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+
+  #heading>h1 {
+    backdrop-filter: brightness(.5);
+    padding: 7.5rem 0;
+
+
+  }
 </style>
 {% endblock link_css %}
 {%block body%}
-<div class="container-fluid ">
-  <h1 class="whyTrekTales text-center py-5">IT’S TIME TO
-    KNOW US</h1>
+<div id="heading" class=" position-sticky">
+  <h1 class="whyTrekTales text-center">IT’S TIME TO KNOW US</h1>
+</div>
+<div class="container-fluid user-bg">
   <div class="row">
     <div class="col-lg-3 col-12 py-5 text-center text-capitalize d-lg-block d-sm-block d-none" id="section2weareMain">
       <h1 class="py-5">
@@ -83,36 +133,88 @@
       </p>
     </div>
   </div>
-  <div class="container ">
-    <!-- founders -->
-    <div class="row ">
-      <h1 class="text-center font-weight-normal whyTrekTales pt-5 pt-lg-5 "> Our Team </h1>
-     
-      {%for organizer in organizer%}
-      <div class="col-lg-3 col-sm-4 col-12 mx-auto my-2 my-lg-2 pb-lg-5 pb-2 d-flex align-items-stretch flex-lg-nowrap">
-        <div class="card position-relative hover-opacity-100 hover-shadow-soft " style="min-height: 18rem;">
-          <img src={{organizer.image.url}} alt="{{organizer.Name}}" class="card-img h-100 rounded-5 ">
-          <div class="card-img-overlay ">
-            <div class="position-absolute bottom-0 left-0 py-3  px-3 person-info">
-              <h5>{{organizer.Name}}</h5>
-              <h6 class="small my-2">
-                {%for tag in organizer.Tags.all%}
+  <div class="container-fluid">
 
-                <span class="ml-2 badge badge-success">#{{tag}}</span>
+    <h1 class="text-center font-weight-normal  pt-5 pt-lg-5">Meet Our Team </h1>
 
-                {%endfor%}
-              </h6>
-              <div class="Socials d-flex gap-4 ">
-                <a href="{{organizer.whatsapp}}" target="_blank"><i class="bi bi-whatsapp h5"></i></a>
-                <a href="{{organizer.instagram}}" target="_blank"><i class="bi bi-instagram h5"></i></a>
-                <a href="mailto:{{organizer.mail}}" target="_blank"><i class="bi bi-envelope h5"></i></a>
+    <!-- Tab links -->
+    <div class="tab ">
+      <button class="tablinks text-capitalize active text-white" onclick="openTag(event, 'all')">All</button>
+      {%for tag in tags.all%}
+      <button class="tablinks text-capitalize text-white" onclick="openTag(event, '{{tag}}')">{{tag}}s</button>
+      {%endfor%}
+    </div>
+
+    <!-- Tab content -->
+    <div id="all" class="tabcontent " style="display: block;">
+      <div class="row ">
+        {%for organizer in organizer.all%}
+
+        <div
+          class="col-lg-3 col-sm-3 col-12 ms-auto my-2 my-lg-2 pb-lg-5 pb-2 d-flex align-items-stretch flex-lg-nowrap ">
+          <div class="card position-relative hover-opacity-100 hover-shadow-soft rounded-0 "
+            style="min-height: 18rem;min-width: 100%;">
+            <img src={{organizer.image.url}} alt="{{organizer.Name}}" class="card-img h-100 rounded-0">
+            <div class="card-img-overlay">
+              <div class="position-absolute bottom-0 left-0 py-3  px-3 person-info">
+                <h5>{{organizer.Name}}</h5>
+                <h6 class="small my-2">
+                  {%for tag in organizer.Tags.all%}
+
+                  <span class="ml-2 badge badge-success">#{{tag}}</span>
+
+                  {%endfor%}
+                </h6>
+                <div class="Socials d-flex gap-4 ">
+                  <a href="{{organizer.whatsapp}}" target="_blank"><i class="bi bi-whatsapp h5"></i></a>
+                  <a href="{{organizer.instagram}}" target="_blank"><i class="bi bi-instagram h5"></i></a>
+                  <a href="mailto:{{organizer.mail}}" target="_blank"><i class="bi bi-envelope h5"></i></a>
+                </div>
               </div>
             </div>
           </div>
         </div>
+
+        {%endfor%}
       </div>
-      {%endfor%}
     </div>
+    {%for tag in tags.all%}
+    <div id="{{tag}}" class="tabcontent">
+      <div class="row d-flex flex-row flex-wrap justify-content-center align-items-center">
+        {%for organizer in organizer.all%}
+        {% if tag in organizer.Tags.all%}
+        <div class="col-lg-3 col-sm-3 col-12 my-2 my-lg-2 pb-lg-5 pb-2 d-flex align-items-stretch flex-lg-nowrap ">
+          <div class="card position-relative hover-opacity-100 hover-shadow-soft  rounded-0"
+            style="min-height: 18rem;min-width: 100%;">
+
+            <img src={{organizer.image.url}} alt="{{organizer.Name}}" class="card-img h-100 rounded-0">
+            <div class="card-img-overlay">
+              <div class="position-absolute bottom-0 left-0 py-3  px-3 person-info">
+                <h5>{{organizer.Name}}</h5>
+                <h6 class="small my-2">
+                  {%for tag in organizer.Tags.all%}
+
+                  <span class="ml-2 badge badge-success">#{{tag}}</span>
+
+                  {%endfor%}
+                </h6>
+                <div class="Socials d-flex gap-4 ">
+                  <a href="{{organizer.whatsapp}}" target="_blank"><i class="bi bi-whatsapp h5"></i></a>
+                  <a href="{{organizer.instagram}}" target="_blank"><i class="bi bi-instagram h5"></i></a>
+                  <a href="mailto:{{organizer.mail}}" target="_blank"><i class="bi bi-envelope h5"></i></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+
+        {%endfor%}
+      </div>
+    </div>
+    {%endfor%}
+
+
   </div>
 
   <!-- stats  -->
@@ -160,20 +262,39 @@
     </div>
   </div>
 
-  <div class="row text-capitalize text-center py-4">
+  <div class="row text-capitalize text-center py-4 overflow-hidden">
     <h1 class="whyTrekTales">Follow us On instagram</h1>
-    <div class="col-lg-4  col-12 text-user-theme-primary my-3 my-lg-0">
-      <img src="{%static 'images/bgimage2.jpg'%}" alt="trek tales instagram" class="img-fluid "
-        style="height: 35vh; width: 35vh;">
+    <div class="d-flex flex-nowrap gap-2 " id="marquee-reverse-insta" style="animation-duration: 10s;">
+      <div class="col-lg-3 col-sm-6  col-6  text-user-theme-primary my-3 my-lg-0 ">
+        <img src="{%static 'images/bg/image4.jpg'%}" alt="trek tales instagram" class="img-fluid  lazy"
+          style="height: 35vh; width: 35vh;">
 
-    </div>
-    <div class="col-lg-4  col-12 text-user-theme-primary my-3 my-lg-0">
-      <img src="{%static 'images/bgimage6.jpg'%}" alt="trek tales instagram" class="img-fluid "
-        style="height: 35vh; width: 35vh;">
-    </div>
-    <div class="col-lg-4   col-12 mx-auto text-user-theme-primary my-3 my-lg-0">
-      <img src="{%static 'images/bgimage7.jpg'%}" alt="trek tales instagram" class="img-fluid "
-        style="height: 35vh; width: 35vh;">
+      </div>
+      <div class="col-lg-3  col-sm-6 col-6  text-user-theme-primary my-3 my-lg-0 ">
+        <img src="{%static 'images/bg/image10.jpg'%}" alt="trek tales instagram" class="img-fluid   lazy"
+          style="height: 35vh; width: 35vh;">
+
+      </div>
+      <div class="col-lg-3  col-sm-6 col-6  text-user-theme-primary my-3 my-lg-0 ">
+        <img src="{%static 'images/bg/image5.jpg'%}" alt="trek tales instagram" class="img-fluid   lazy "
+          style="height: 35vh; width: 35vh;">
+      </div>
+      <div class="col-lg-3  col-sm-6  col-6  mx-auto text-user-theme-primary my-3 my-lg-0 ">
+        <img src="{%static 'images/bg/image6.jpg'%}" alt="trek tales instagram" class="img-fluid  lazy "
+          style="height: 35vh; width: 35vh;">
+      </div>
+      <div class="col-lg-3  col-sm-6  col-6  mx-auto text-user-theme-primary my-3 my-lg-0 ">
+        <img src="{%static 'images/bg/image7.jpg'%}" alt="trek tales instagram" class="img-fluid  lazy "
+          style="height: 35vh; width: 35vh;">
+      </div>
+      <div class="col-lg-3  col-sm-6  col-6  mx-auto text-user-theme-primary my-3 my-lg-0 ">
+        <img src="{%static 'images/bg/image2.jpg'%}" alt="trek tales instagram" class="img-fluid  lazy "
+          style="height: 35vh; width: 35vh;">
+      </div>
+      <div class="col-lg-3  col-sm-6  col-6  mx-auto text-user-theme-primary my-3 my-lg-0 ">
+        <img src="{%static 'images/bg/image9.jpg'%}" alt="trek tales instagram" class="img-fluid  lazy "
+          style="height: 35vh; width: 35vh;">
+      </div>
     </div>
     <div class="text-center my-5">
       <a href="https://www.instagram.com/trek.tales_/" class="text-center btn1  p-2 text-lowercase">@trek.tales_ </a>
@@ -186,7 +307,37 @@
 
 <script>
   window.document.title = "Trek Tales | About Us";
+  function openTag(evt, tag) {
+    // Declare all variables
+    var i, tabcontent, tablinks;
 
+    // Get all elements with class="tabcontent" and hide them
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = "none";
+    }
+
+    // Get all elements with class="tablinks" and remove the class "active"
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+
+    // Show the current tab, and add an "active" class to the button that opened the tab
+    document.getElementById(tag).style.display = "block";
+    evt.currentTarget.className += " active";
+    console.log(document.querySelectorAll('#' + tag))
+    if (document.getElementById(tag).innerText == "") {
+      document.getElementById(tag).innerHTML = `<h3 class="text-center my-3 text-capitalize">NO ${tag} Yet</h3>`
+    }
+
+  }
+  function Testimonial_slow() {
+    document.getElementById('marquee-reverse-insta').style.animationPlayState = 'pause';
+  }
+  function Testimonial_Play() {
+    document.getElementById('marquee-reverse-insta').style.animationPlayState = 'running';
+  }
 </script>
 
 {% endblock script %}

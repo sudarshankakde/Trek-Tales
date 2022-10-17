@@ -2,10 +2,11 @@
 
 {%for Memories in memories%}
 
-<div class="gallary-image">
+<div class="gallary-image  rounded-2">
     <a href="{{Memories.photos_taken.url}}" title="{{Memories.photo_taken_on_tour.Heading}}"
         data-lcl-txt="{{Memories.photo_taken_on_tour.tour_on_date|date:'d M Y'}}" data-lcl-author="{{Memories.author}}">
-        <img src="{{Memories.photos_taken.url}}" class="img-fluid rounded-2" id="image_{{Memories.id}}">
+        <img src="{{Memories.photos_taken.url}}" class="img-fluid rounded-2 lazy" id="image_{{Memories.id}}"
+            alt="{{Memories.author}}" loading="lazy">
     </a>
 </div>
 {% endfor %}

@@ -44,7 +44,6 @@
 {% endblock link_css %}
 {%block body%}
 <div class="container my-5">
-
     <div class="row">
         <div class="col-12 mx-auto">
             <div class="row rounded-5 card-bg position-relative">
@@ -151,6 +150,7 @@
                                     </div>
                                 </div>
                             </div>
+                            {%if updates.aadhaar_required%}
                             <!-- Aadhaar -->
                             <div class="form-outline form-white my-2 mb-4">
                                 <input type="tel" class="form-control form-control-lg" id="aadhaar" name="aadhaar"
@@ -171,6 +171,7 @@
                                         class="bi bi-info-circle-fill"></i> Aadhaar details are required for insurance
                                     purposes </small>
                             </div>
+                            {%endif%}
                         </div>
                         <!-- Contact -->
                         <div class="text-capitalize  pb-1 opacity-75">Contact Details:</div>
@@ -224,6 +225,7 @@
 <!-- RAZORPAY INTEGRATION HERE -->
 {%block script%}
 <script>
+    window.document.title = 'Trek Tales | Bookslot - {{updates.Heading|striptags|title}}'
     var form = document.getElementById('BookingForm');
     document.getElementById('BookingForm').onsubmit = () => {
         event.preventDefault();
