@@ -23,8 +23,7 @@ It is a start up based in Aurangabad, which provides trips and allows you to cus
 
 
 
-##Some Steps Should DO
-
+## Some Steps Should DO
 1- change data related Razorpay Key , Gmail etc in setting.py.
 
 2- check for stmp enable in gmail
