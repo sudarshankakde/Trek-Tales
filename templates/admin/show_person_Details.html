@@ -1,0 +1,82 @@
+{%extends 'Base.html'%}
+{%block body%}
+<div class="container">
+    <div class="row">
+        <div class="col-10 mx-auto">
+
+            <p>
+            <h5>Personal Details</h5>
+            <div class="mx-4">
+                {{data.name}} <br>
+                {{data.phone}} <br>
+                {{data.email}}
+
+            </div>
+            </p>
+            <hr>
+            <p>
+            <h5>request_on_date</h5>
+            <div class="mx-4">
+
+
+                {{data.request_on_date|date:"d-b-y"}}
+            </div>
+
+            </p>
+            <hr>
+            <p>
+            <h5>group size</h5>
+            <div class="mx-4">
+                {{data.group_size}}
+
+
+            </div>
+
+            </p>
+            <hr>
+            <p>
+            <h5>Numbers of day</h5>
+            <div class="mx-4">
+
+
+                {{data.no_of_day}}
+            </div>
+
+            </p>
+            <hr>
+            <p>
+            <h5>start on</h5>
+            <div class="mx-4">
+
+
+                {{data.start_date|date:"d-b-y"}}
+            </div>
+
+            </p>
+            <hr>
+            <p>
+            <h5>Trek Name</h5>
+            <div class="mx-4">
+
+
+                {{data.trek_name}}
+            </div>
+
+
+            </p>
+            <hr>
+            <p>
+            <h5>explained</h5>
+            <div class="mx-4">
+
+                {{data.tour_explain}}
+
+            </div>
+
+
+            </p>
+            <hr>
+        </div>
+    </div>
+</div>
+{%endblock body%}

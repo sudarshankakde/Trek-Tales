@@ -1,7 +1,6 @@
 {% extends 'Base.html' %}
 {% load static %}
 {% block link_css %}
-<link rel="stylesheet" href="{%static 'css/home.css'%}">
 {% endblock link_css %}
 {%block body%}
 <div class="container">
@@ -47,6 +46,10 @@
               <th scope="col">Phone No</th>
               <th scope="col">Email</th>
               <th scope="col">Payment Status</th>
+              {%if BookedSlotsHeading.aadhaar_required%}
+              <th scope="col">Aadhaar</th>
+              {%endif%}
+              <th scope="col">birth_of_date</th>
               <th scope="col">Address</th>
               <th scope="col">Trip Id</th>
               <th scope="col">razorpay_payment_id</th>
@@ -59,14 +62,19 @@
               <th scope="row">{{forloop.counter}}</th>
               <th>{{Slot.Name}}</th>
               <td>{{Slot.gender}}</td>
-              <td><a href="tel:+91{{Slot.Phone_no1}}">{{Slot.Phone_no1}}</a></td>
+              <td><a href="https://api.whatsapp.com/send?phone=+91{{Slot.Phone_no1}}"
+                  target="_blank">{{Slot.Phone_no1}}</a></td>
               <td><a href="mailto:{{Slot.email}}">{{Slot.email}}</a></td>
               {%if Slot.Payment_Status%}
               <td class="w-25">Paid</td>
               {%else%}
               <td class="w-25">Not Paid</td>
               {%endif%}
-              <td class="w-25 small">{{Slot.address}}</td>
+              {%if BookedSlotsHeading.aadhaar_required%}
+              <td class=" small">{{Slot.aadhaar_number}}</td>
+              {%endif%}
+              <td class=" small">{{Slot.birth_of_date}}</td>
+              <td class=" small">{{Slot.address}}</td>
               <td class="">{{Slot.TripId}}</td>
               <td class="w-25">{{Slot.razorpay_payment_id}}</td>
               <td class="w-25">{{Slot.razorpay_order_id}}</td>
@@ -77,7 +85,10 @@
         </table>
       </div>
       <hr>
-      <h3 id="ReFunds" class="opacity-75">Refunds Related To This Tour</h3>
+      <h3 id="ReFunds" class="opacity-75">Refunds Related To This Tour <a
+          href="../exportRefundExcel/{{BookedSlotsHeading.id}}"><button class="btn btn-success mx-4">Export
+            Refunds Excel</button></a></h3>
+
       <div class="table-responsive">
         <table class="table ">
           <thead>
@@ -88,6 +99,7 @@
               <th scope="col">Phone No</th>
               <th scope="col">Email</th>
               <th scope="col">Refund_Amount </th>
+              <th scope="col">cancelation_Reason</th>
               <th scope="col">Refund_Status </th>
               <th scope="col">Payment_Status</th>
               <th scope="col">Charge%</th>
@@ -110,6 +122,7 @@
               <td><a href="tel:+91{{refund.Phone_no1}}">{{refund.Phone_no1}}</a></td>
               <td><a href="mailto:{{refund.email}}">{{refund.email}}</a></td>
               <td class="">Rs.{{refund.refund_Amount}}</td>
+              <td class="">{{refund.cancelation_Reason}}</td>
               {%if refund.Refund_Status %}
               <td class="">Refunded Successfuly</td>
               {%else%}

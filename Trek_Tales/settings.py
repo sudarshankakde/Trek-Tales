@@ -11,8 +11,8 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
-from django.contrib.messages import constants as messages
 import os
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,11 +25,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-5u@ba3%-2gp00c(vn=$-!d3uc!(v@0c8vl4ta-z!185a(bozvw'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
+ALLOWED_HOSTS = ['trektales.pythonanywhere.com']
 
-ALLOWED_HOSTS = ['*']
-
-WHITENOISE_AUTOREFRESH = True
 
 # Application definition
 
@@ -43,7 +41,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'updates',
     'Gallary',
-    'captcha',
     "django_htmx",
 ]
 
@@ -147,6 +144,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'DataBase')
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
+
+# devloper defined values
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -155,21 +154,31 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'trektales.com@gmail.com'
 EMAIL_HOST_PASSWORD = 'boptqadskuycxqfi'
-
+# razorpay
 Razorpay_ApiKey = "rzp_test_jk50Ag7VxxDIV4"
 Razorpay_Api_SecretKey = "lrpU0piH4PFN7iX4EWZ0Cpas"
 # 2 = 2%
 Payment_Charges = 2
-
 Refund_Charges = {
     "More_Then_25_Days_Remain": 15,
     "More_Then_15_Days_Remain": 40,
     "Less_Then_15_Days_Remain": 50
 }
+# website devloper
+Devloper = {
+    'name': 'Sudarshan Kakde',
+    "mail": "sudarshankakde1111@gmail.com",
+    "link": 'https://sudarshan_kakde.bio.link/'
+}
+# website Manager
+MANAGERS = [Devloper["mail"]]
 
 domain = 'http://127.0.0.1:8000'
+
 SILENCED_SYSTEM_CHECKS = ['captcha.recaptcha_test_key_error']
 
+
+# admin panel
 JAZZMIN_SETTINGS = {
     # title of the window (Will default to current_admin_site.site_title if absent or None)
     "site_title": "Trek.Tales Admin",
@@ -225,9 +234,6 @@ JAZZMIN_SETTINGS = {
     "custom_js": 'js/tinyInject.js',
     # Whether to show the UI customizer on the sidebar
     "show_ui_builder": False,
-
-
-
 }
 JAZZMIN_UI_TWEAKS = {
     "navbar_small_text": False,

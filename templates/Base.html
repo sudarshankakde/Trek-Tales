@@ -7,72 +7,53 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="manifest" href="{%static 'manifest.json'%}">
+  <link rel="manifest" href="{%static 'menifest/manifest.json'%}">
+  <meta name="description" content="A Trekking and Camping group, we are based in Aurangabad, Maharashtra. We organize treks, night camping🏕️, pool parties 🎉,and itinerary planners 👨‍🏫 and other recreational activities.Want adventure without the risk? Come join our crew for a weekend! 
+  Join Trek Tales and let them give you a hand!">
   <title>Treak Tales</title>
+
   <!--google font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@900&display=swap" rel="stylesheet">
-  <!-- bootstrap -->
-  <link rel="stylesheet" href={% static 'bootstrap-5.2.1-dist/css/bootstrap.min.css' %}>
-  <link rel="stylesheet" href={% static 'bootstrap-5.2.1-dist/css/bootstrap.css' %}>
-  <link rel="stylesheet" href={% static 'bootstrap-5.2.1-dist/css/bootstrap.rtl.css' %}>
-  <link rel="stylesheet" href={% static 'bootstrap-5.2.1-dist/css/bootstrap.rtl.min.css' %}>
-  <script src={%static 'bootstrap-5.2.1-dist/js/bootstrap.bundle.min.js' %}></script>
-  <script src={%static 'bootstrap-5.2.1-dist/js/bootstrap.bundle.js' %}></script>
-
 
   <link rel="stylesheet" href="{%static 'bootstrap-icons-1.9.1/bootstrap-icons.css'%}">
   <!-- aso -->
-
-  <link rel="stylesheet" href="{%static 'css/loader.css'%}">
-  <link rel="stylesheet" href="{%static 'css/Navbar.css'%}">
+  <link rel="stylesheet" href="{%static 'css/Base.css'%}">
   <link rel="icon" href="{%static 'images/logo.png'%}" type="image/gif" sizes="20x20">
   <link rel="apple-touch-icon" href="{%static 'images/logo.png'%}">
 
-  <!-- Font Awesome -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet" />
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
   <!-- MDB -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.10.2/mdb.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="{%static 'MDB/css/mdb.min.css'%}">
   <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative&display=swap" rel="stylesheet">
 
   <script src="https://unpkg.com/htmx.org@1.8.0"></script>
+
   {% block link_css %}
   {% endblock link_css %}
+
 </head>
 
 <body class='text-white user-bg'>
-
-  <div id="Preloader">
-    <img src="{%static 'images/logo/Trek_Tales2.png'%}" alt="" class="img-fluid">
-  </div>
-  <!-- info status -->
-  <div id="status" style="visibility: hidden;">
-    <div class="alert alert-warning d-flex align-items-center" role="alert">
-      <i class="bi bi-wifi-off"> </i>
-      &nbsp;
-      <div>
-        Your Offline
-      </div>
-
-      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" style="position: absolute;
-    right: 2vw;"></button>
-    </div>
+  <!-- preloader -->
+  <div id="Preloader" class="position-relative">
+    <img src="/static/images/logo.png" alt="logo" class="img-fluid  LogoGlow">
   </div>
 
-  <div class="menu-icon d-inline-flex align-items-baseline justify-content-between sticky-top">
+  <!-- navbar -->
+  <div class="menu-icon d-inline-flex align-items-center justify-content-between sticky-top h-auto">
     <span class="px-lg-5 px-2">
-      <a class="navbar-brand mx-auto" href="{% url 'home' %}"><b id="nav-text">Trek.Tales</b></a>
+      <a class="navbar-brand mx-auto" href="/home"><img src="/static/images/logo.ico" alt="logo" class="img-fluid"
+          width="36px"><b id="nav-text">Trek Tales</b></a>
     </span>
-    <span class="px-lg-4  px-2" id="manuIcon">
+    <span class="px-lg-4 px-2" id="manuIcon">
       <span class="menu-icon__line menu-icon__line-left"></span>
       <span class="menu-icon__line"></span>
       <span class="menu-icon__line menu-icon__line-right"></span>
     </span>
   </div>
-
   <div class="nav" style="z-index: 75;">
     <div class="nav__content text-center">
       <ul class="nav__list ">
@@ -129,15 +110,18 @@
         <div class="col-auto mx-auto my-2 my-lg-0 order-lg-1 order-0 order-sm-1  ">
           <div class="d-flex flex-lg-nowrap flex-wrap gap-4 justify-content-center  ">
             <a href="{{sitedata.WP_Link}}" class="socails" target="_blank" rel="noopener noreferrer"><i
-                class="bi bi-whatsapp p-2 rounded rounded-circle border "></i></a>
+                class="bi bi-whatsapp p-2 rounded rounded-circle border " aria-label="Message Us on Whatsapp"
+                role="link"></i></a>
             <a href="{{sitedata.Instagram_Profile_Link}}" class="socails" target="_blank" rel="noopener noreferrer"><i
-                class="bi bi-instagram p-2 rounded rounded-circle border"></i></a>
+                class="bi bi-instagram p-2 rounded rounded-circle border" aria-label="Follow and see posts on instagram"
+                role="link"></i></a>
             <a href="mailto:{{sitedata.Email_id}}" class="socails" target="_blank"><i
-                class="bi bi-envelope p-2 rounded rounded-circle border"></i></a>
+                class="bi bi-envelope p-2 rounded rounded-circle border" aria-label="Mail Us" role="link"></i></a>
 
             <a href="tel:+91{{sitedata.SecondNumber}}" class="socails"><i
-                class="bi bi-telephone p-2 rounded rounded-circle border"></i></a>
-
+                class="bi bi-telephone p-2 rounded rounded-circle border" aria-label="Call us" role="link"></i></a>
+            <a href="{{sitedata.bio_link}}" class="socails" target="_blank"><i
+                class="bi bi-link-45deg p-2 rounded rounded-circle border" aria-label="Our Socails" role="link"></i></a>
           </div>
         </div>
         <div class="col-auto mx-auto my-2 my-lg-0 order-lg-0 order-1 order-sm-0 ">
@@ -155,14 +139,17 @@
     </div>
     <div class="container-fluid py-2" style="background-color: var(--primary-theme);">
       <div class="row text-center py-2">
-        <div class="col-10 mx-auto font-weight-light">
-          <b class="float-lg-start  float-sm-start float-none font-weight-light">
-            Trek Tales &copy; {%now 'Y'%}
+        <div class="col-11 mx-auto fw-light d-flex flex-sm-row justify-content-between flex-column-reverse ">
+          <b class="float-lg-start  float-sm-start float-none fw-bold ">
+            <span class="Julius-text fw-bold"> Trek Tales </span>&copy; {%now 'Y'%}
+            &NewLine;
+            
+            <br>
           </b>
-          <b class="float-lg-end float-sm-end float-none font-weight-light">
-            Designed & Developed By <a href="https://sudarshan_kakde.bio.link/"
-              class="text-decoration-underline text-white" target="_blank" rel="noopener noreferrer">Sudarshan
-              Kakde.</a>
+          <b class="float-lg-end float-sm-end float-none fw-light  bi bi-heart-pulse-fill ">
+            Designed & Developed By <a href="{{devloper.link}}" class="text-decoration-underline text-white"
+              target="_blank" rel="noopener noreferrer">{{devloper.name}}.</a>
+              <hr class="d-block d-sm-none">
           </b>
         </div>
       </div>
@@ -180,42 +167,20 @@
 
 
 
-  <!-- Option 1: Bootstrap Bundle with Popper -->
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
-    integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB"
-    crossorigin="anonymous"></script>
-  <script src="{%static 'js/other.js'%}"></script>
-  <script src="{%static 'js/navbar.js'%}"></script>
+  <!-- jquery -->
   <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
     crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
-    crossorigin="anonymous"></script>
-
-
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.10.2/mdb.min.js"></script>
+  <!-- local js -->
+  <script src="{%static 'js/Base.js'%}"></script>
+  <script src="{%static 'MDB/js/mdb.min.js'%}"></script>
+  <script src="{%static 'MDB/js/bootstrap.bundle.min.js'%}"></script>
+  <script type="text/javascript" src="{%static 'js/jquery.lazy.min.js'%}"></script>
   <script>
-    let offsetFix = () => {
-      if (window.innerWidth < 425) {
-        document.body.setAttribute("data-offset", "8")
-      }
-      else {
-        document.body.setAttribute("data-offset", "0")
-
-      }
-
-    }
-    onresize = () => {
-      offsetFix();
-    }
     const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
     const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
     $(function () {
       $('[data-toggle="tooltip"]').tooltip()
-
-
     })
-
 
   </script>
   {%block script%}

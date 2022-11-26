@@ -7,6 +7,8 @@ urlpatterns = [
     
     # slotBooking
     path('bookslot/<str:slug>',views.bookslot,name='bookslot'),
+    
+    # path('aadhaar_check',views.aadhaar_check,name='aadhaar_check'),
 
     # payment id genrate
     path('confirm_booking',views.confirm_booking,name='confirm_booking'), 
@@ -20,4 +22,6 @@ urlpatterns = [
 
     path('customize_tour',views.customize_tour,name='customize_tour'),
     
+    path('show_person_details/<int:id>',views.show_person_details,name='show_person_details'),
+
 ]

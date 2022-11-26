@@ -12,38 +12,7 @@ document.getElementById('rzp-button1').onclick = (e) => {
             document.getElementById('razorpay_order_id').value = response.razorpay_order_id;
             document.getElementById('razorpay_payment_id').value = response.razorpay_payment_id;
             document.getElementById('Payment_Status').value = "True";
-            Swal.fire({
-                title: 'Payment Successful',
-                icon: 'success',
-                html:'Your payment receipt will be emailed to you',
-                background: '#1c2331',
-                color: '#ffffff',
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    document.getElementById('paymentForm').submit();
-                    let timerInterval
-                    Swal.fire({
-                      title: 'Dont close page',
-                      html: 'Redirecting...',
-                      timer: 2000,
-                      timerProgressBar: false,
-                      background: '#1c2331',
-                      color: '#ffffff',
-                      didOpen: () => {
-                        Swal.showLoading()
-                      },
-                      willClose: () => {
-                        clearInterval(timerInterval)
-                      }
-                    }).then((result) => {
-                      /* Read more about handling dismissals below */
-                      if (result.dismiss === Swal.DismissReason.timer) {
-                        console.log('I was closed by the timer')
-                      }
-                    })
-                }
-            })
-           
+            Redirecting();
         },
         "prefill": {
             "name": document.getElementById('name').value,
@@ -70,17 +39,42 @@ document.getElementById('rzp-button1').onclick = (e) => {
         Swal.fire({
             title: 'Payment Failed',
             icon: 'error',
-            html:`We are sorry, but your payment has failed due to an issue. Please try again`+'<br><small>You will receive a refund within 48-72 hours if any amount has been debited from your account.</small>',
+            html: `We are sorry, but your payment has failed due to an issue. Please try again` + '<br><small>You will receive a refund within 48-72 hours if any amount has been debited from your account.</small>',
             background: '#1c2331',
             color: '#ffffff',
         }).then((result) => {
             if (result.isConfirmed) {
-                document.getElementById('paymentForm').action = "Payment_Failed";
-                document.getElementById('paymentForm').submit();
+
             }
         })
     });
 
     rzp1.open();
     e.preventDefault();
+}
+
+function Redirecting() {
+    let timerInterval
+    document.getElementById('paymentForm').submit();
+    Swal.fire({
+        title: "Payment Successful ",
+        icon: 'success',
+        html: "<h3>Don't close page</h3><small>Your payment receipt will be emailed to you<small>",
+        html: 'Redirecting...',
+        timer: 500000,
+        timerProgressBar: false,
+        background: '#1c2331',
+        color: '#ffffff',
+        didOpen: () => {
+            Swal.showLoading()
+        },
+        willClose: () => {
+            clearInterval(timerInterval)
+        }
+    }).then((result) => {
+        /* Read more about handling dismissals below */
+        if (result.dismiss === Swal.DismissReason.timer) {
+            console.log('I was closed by the timer')
+        }
+    })
 }

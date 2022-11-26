@@ -1,11 +1,6 @@
-
 body{
     overflow-x: hidden;
 }
-@media(max-width:500px) {
-   
-}
-
 .spanThrow {
     position: relative;
 }

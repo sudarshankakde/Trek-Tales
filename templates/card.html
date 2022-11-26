@@ -3,13 +3,16 @@
     <a href="{% url 'tourDetails' slug=updates.slug %}">
         <div class="card bg-secondary text-white overflow-hidden d-flex flex-column ">
             <div class="card-img-top rounded-top rounded-4">
-                <img src="{{updates.Tour_image.url}}" alt="{{updates.title|safe}}" class="rounded-top"
-                    style="min-height: 225px;" />
+                <img src="{{updates.Tour_image.url}}" alt="{{updates.title|safe}}" class="rounded-top lazy" width="375"
+                    height="225" />
                 <div class="position-absolute overlay-card px-2 rounded   pt-2 ">
-                    {%if updates.slorts < 1 %} {% elif updates.TourIsNotExpire %} <span class=""><i
-                            class="bi bi-person-fill"></i> {{updates.slorts}}</span>
-                        {%else%} <span class=" expired">
-
+                    {%if updates.slorts < 1 %} <span class=" expired"
+                        title="All the available slots on this tour have been filled.">All Slots Booked</span>
+                        {% elif updates.TourIsNotExpire %}
+                         <span class=""><i class="bi bi-person-fill"></i>
+                            {{updates.slorts}}</span>
+                        {%else%}
+                         <span class=" expired">
                             Booking Closed</span>
                         {%endif%}
 
@@ -30,9 +33,10 @@
 
 {%endfor%}
 {%if tours.has_next%}
-<span id="loadMoreBtn_Span" class="text-center"> 
+<span id="loadMoreBtn_Span" class="text-center">
     <button class="button-primary  htmx-request" id="loadMoreBtn" hx-get="?page={{ tours.next_page_number }}"
-        hx-target="#loadMoreBtn_Span" hx-trigger="click " hx-swap="outerHTML" hx-indicator=".progress">Load More <i class="bi bi-box-seam-fill"></i>
+        hx-target="#loadMoreBtn_Span" hx-trigger="click " hx-swap="outerHTML" hx-indicator=".progress">Load More <i
+            class="bi bi-box-seam-fill"></i>
     </button>
 </span>
 {%else%}

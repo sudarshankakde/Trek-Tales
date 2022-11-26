@@ -1,7 +1,6 @@
 {% extends 'Base.html' %}
 {% load static %}
 {% block link_css %}
-<link rel="stylesheet" href="{%static 'css/home.css'%}">
 <style>
     #main {
         min-height: 67vh;
@@ -22,8 +21,14 @@
     .card {
         background-color: var(--primary-theme) !important;
     }
-    .active{
-        background-color: var(--primary-theme)!important;
+
+    .active {
+        background-color: var(--primary-theme) !important;
+    }
+
+    .swal2-select {
+        background-color: var(--card-bg) !important;
+        color: var(--primary-text) !important;
     }
 </style>
 {% endblock link_css %}
@@ -35,13 +40,13 @@
                 <h1 class="heading">Cancelation of Trip.</h1>
                 <small id="message" style="color: var(--hover);"></small>
             </div>
-            <form hx-post="{%url 'cancelation'%}" hx-target="#message" hx-trigger="submit" id="form" hx-indicator=".progress">
+            <form hx-post="{%url 'cancelation'%}" hx-target="#message" hx-trigger="confirmed" id="form"
+                hx-indicator=".progress">
                 {% csrf_token %}
                 <div class="form-outline form-white">
                     <input type="text" id="TripId" class="form-control form-control-lg" name="TripId" required />
                     <label class="form-label" for="TripId">Enter Trip Id</label>
                 </div>
-
                 <div class="form-check pt-3 d-inline-flex flex-row">
                     <input class="form-check-input" type="checkbox" value="" id="AcceptPolicy" required>
                     <label class="form-check-label small" for="AcceptPolicy">
@@ -55,6 +60,7 @@
                     <button class="btn1 bg-transparent  my-3  text-capi0talize px-4 py-1" type="submit"
                         style="border-radius: 3px;">Cancel Trip <i class="mx-1 bi bi-x-octagon"></i>
                 </div>
+                <input type="text" name="cancelation_Reason" id="cancelation_Reason" hidden>
             </form>
         </div>
 
@@ -70,11 +76,12 @@
                 of training and planning, if we have to cancel our trip, there’s no greater disappointment than that.
                 <br>
                 <br>
-                <p class="fw-normal text-center">
-                    This is why we have a traveler-friendly cancellation policies.
-                </p>
+            <p class="fw-normal text-center">
+                This is why we have a traveler-friendly cancellation policies.
             </p>
-            <ul class="nav-pills d-flex flex-wrap flex-row justify-content-center list-unstyled" id="pills-tab" role="tablist">
+            </p>
+            <ul class="nav-pills d-flex flex-wrap flex-row justify-content-center list-unstyled" id="pills-tab"
+                role="tablist">
                 <li class="nav-item" role="presentation">
                     <button class="nav-link " id="YouCancel-tab" data-bs-toggle="pill" data-bs-target="#YouCancel"
                         type="button" role="tab" aria-controls="YouCancel" aria-selected="true">Our Cancellation Policy
@@ -90,7 +97,7 @@
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="HowTOCancel-tab" data-bs-toggle="pill" data-bs-target="#HowTOCancel"
-                        type="button" role="tab" aria-controls="HowTOCancel" aria-selected="false">HowTOCancel</button>
+                        type="button" role="tab" aria-controls="HowTOCancel" aria-selected="false">How TO Cancel</button>
                 </li>
                 <li class="visually-hidden" role="">
                     <button class="nav-link active" id="hidden-tab" data-bs-toggle="pill" data-bs-target="#hidden"
@@ -239,181 +246,103 @@
                 <div class="tab-pane fade show active" id="hidden" role="tabpanel" aria-labelledby="hidden-tab"
                     tabindex="0">
 
-                  
+
                 </div>
 
 
             </div>
-
-            <!-- <div class="col-lg-4">
-                <div class="list-group  mb-3" id="list-tab" role="tablist">
-                    <a class="list-group-item list-group-item-light list-group-item-action active bg-transparent  rounded  "
-                        id="YouCancel-list" data-bs-toggle="list" href="#YouCancel" role="tab"
-                        aria-controls="YouCancel">Our Cancellation Policy When You Cancel A
-                        Trek</a>
-
-                    <a class="list-group-item list-group-item-light list-group-item-action bg-transparent rounded  "
-                        id="WeCancel-list" data-bs-toggle="list" href="#WeCancel" role="tab" aria-controls="WeCancel">In
-                        the rare event that we cancel a
-                        trek, this is the policy we
-                        follow</a>
-                    <a class="list-group-item list-group-item-light list-group-item-action bg-transparent rounded "
-                        id="HowTOCancel-list" data-bs-toggle="list" href="#HowTOCancel" role="tab"
-                        aria-controls="HowTOCancel">How TO Cancel</a>
-                </div>
-            </div>
-            <div class="col-lg-8">
-                <div class="tab-content" id="nav-tabContent">
-                    <div class="tab-pane fade show active" id="YouCancel" role="tabpanel"
-                        aria-labelledby="YouCancel-list">
-                        <div class="card card-body  w-auto border border-light">
-                            <h5 class="font-weight-bold">Cancellation for Backpacking Expeditions and Long Treks(More
-                                than 4
-                                nights):</h5>
-                            <ol class="list_Cancellation">
-                                <li>
-                                    <span class="font-weight-light"><span class="font-weight-bold">Cancellation 25 days
-                                            before
-                                            the
-                                            starting date of the trip — </span>Get your refund with 15% cancellation
-                                        charges.</span>
-                                </li>
-
-                                <li>
-                                    <span class="font-weight-light"><span class="font-weight-bold">Cancellation between
-                                            25 days
-                                            and
-                                            15 days before the starting date of the trek — </span>Get a monetary refund
-                                        with 40%
-                                        cancellation charges.</span>
-                                </li>
-
-                                <li>
-                                    <span class="font-weight-light"><span class="font-weight-bold">Cancellation less
-                                            than 15
-                                            days
-                                            before the starting date of the trek — </span>Get a monetary refund with 50%
-                                        cancellation charges.</span>
-                                </li>
-
-                                <li>
-                                    <span class="font-weight-light"><span class="font-weight-bold">In case you would
-                                            like to
-                                            transfer the ticket to the next available batch — </span>a minimum of 20%
-                                        surcharge
-                                        will
-                                        be levied on the amount of the trek which is subject to the organizer's decision
-                                        to
-                                        provide
-                                        a transfer before 10 days of trip commencement.</span>
-                                </li>
-
-                                <li>
-                                    <span class="font-weight-light"><span class="font-weight-bold">Cancellation in case
-                                            you
-                                            don't
-                                            turn up on trek on time — </span>Not turning up for a trek is completely a
-                                        participants
-                                        concern and any kind of refund is not applicable for such cases</span>
-                                </li>
-                            </ol>
-                            <br>
-                            <p class="font-weight-light">
-                                Booking amount is not refundable at any cost
-                                <br>
-                                <br>
-                                <span class="font-weight-bold">Important note 1: </span>
-                                The Trek Insurance amount, Train Cancellation charges, Agent charges is not refundable
-                                if the trek is cancelled during the last 6 days before the start of the trek. In all
-                                other
-                                cases,
-                                the Trek Insurance amount is refunded along with the trek fee.
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="tab-pane fade" id="WeCancel" role="tabpanel" aria-labelledby="WeCancel-list">
-                        <div class="card card-body  w-auto border border-light">
-
-                            <ol class="list_Cancellation font-weight-light">
-                                <li>We almost never cancel our trips. But in case we cancel a trip because of
-                                    natural
-                                    calamities
-                                    (snowstorms, thunderstorms, floods, landslides, earthquakes) or unexpected
-                                    political
-                                    unrest,
-                                    curfews, local riots, or government orders, TrekTales <span
-                                        class="font-weight-bold">will
-                                        not be
-                                        liable for any refund if the trip schedule from first start point has
-                                        begun.</span></li>
-                                <li>
-                                    <span class="font-weight-bold">
-
-                                        Incase the trip did not commence and is cancelled prior to departure full
-                                        refund
-                                        will given
-                                        except for train and bus cancellations
-                                    </span>
-                                </li>
-                                <li>
-                                    Incase of cancellations of our treks from our end due to no minimum
-                                    participation
-                                    you can opt
-                                    for an event shift or get a full refund of the amount.
-                                </li>
-                                <li>Incase of medical emergency or covid cases or emergency issues same refund
-                                    policy
-                                    applies as
-                                    above</li>
-                                <li>
-                                    Incase the trip is cancelled due to trains cancellations by the railways
-                                    alternate
-                                    arrangements
-                                    if possible will be made incase there is no scope of any arrangements refund
-                                    will be
-                                    made based
-                                    on expensed and bookings made ahead.
-                                </li>
-                            </ol>
-
-                        </div>
-                    </div>
-                    <div class="tab-pane fade" id="HowTOCancel" role="tabpanel" aria-labelledby="HowTOCancel-list">
-                        <div class="card card-body  w-auto border border-light">
-                            <small>
-                                In case, you wish to cancel your trek, follow these steps.
-                            </small>
-                            <ol class="list_Cancellation font-weight-light">
-                                <li>Send an Whatsapp Message with name and participant details (including Trip Id,
-                                    Payment Id,
-                                    Upi
-                                    ID etc.) on your Tour Organizer's Contact Number
-                                    <span class="font-weight-bold">OR</span>
-                                    <a href="{%url 'cancelation'%}" style="text-decoration: underline;">Click here</a>
-                                    and enter
-                                    your trip id.
-                                </li>
-                                <li>You will recieve and email in 24 hours for your cancellation</li>
-                                <li>The cancellation policy will apply from the recieval of email</li>
-                                <li>It takes around 2-5 working days to get your refund back.</li>
-                            </ol>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
         </div>
 
     </div>
 
-    <script>
-        window.document.title += " | Cancelation";
-        onsubmit = () => {
-            document.getElementById('message').innerText = "Loading Please Wait..."
-        };
-        const collapseElementList = document.querySelectorAll('.collapse')
-        const collapseList = [...collapseElementList].map(collapseEl => new bootstrap.Collapse(collapseEl))
-    </script>
+
 
 </div>
 {%endblock body%}
+{%block script%}
+<script>
+
+    document.getElementById('form').onsubmit = () => {
+        event.preventDefault();
+        Swal.fire({
+            title: 'Select Reson Of Cancelation',
+            html: '<p class="text-center opacity-75">It will help us to improve our services</p>',
+            input: 'select',
+            backdrop: '#1c233180',
+            background: '#36454F',
+            color: '#ffffff',
+            inputOptions: {
+                'I have changed my mind': 'I have changed my mind',
+                'Want to book other tour': 'Want to book other tour',
+                'Unforeseen illness, injury': 'Unforeseen illness, injury',
+                'Friend/Family emergency': 'Friend/Family emergency',
+                'Other': 'Other reson',
+            },
+            inputPlaceholder: 'Select A Reson',
+            showCancelButton: false,
+            confirmButtonText: 'Proceed',
+            denyButtonText: `Cancel`,
+            inputValidator: (value) => {
+                if (value == 'Other') {
+                    otherReson();
+                }
+                else {
+                    document.getElementById('cancelation_Reason').value = value;
+                }
+            }
+        }
+        ).then((result) => {
+            if (result.isConfirmed) {
+                Procced()
+            }
+        })
+    }
+    function otherReson() {
+
+        Swal.fire({
+            input: 'textarea',
+            title: 'Your Reson',
+            inputPlaceholder: 'Type your reson here...',
+            inputAttributes: {
+                'aria-label': 'Type your reson here'
+            },
+            backdrop: '#1c233180',
+            background: '#36454F',
+            color: '#ffffff',
+            showCancelButton: true,
+            inputValidator: (value) => {
+                document.getElementById('cancelation_Reason').value = value;
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Procced()
+            }
+        })
+    }
+
+    function Procced() {
+        Swal.fire({
+            backdrop: '#1c233180',
+            background: '#36454F',
+            color: '#ffffff',
+            title: 'Proceed To Cancelation?',
+            icon: 'question',
+            html:
+                '<p class="opacity-85 text-center">Please be sure to read cancellation policies.</p>',
+            showCancelButton: true,
+            confirmButtonText: 'Proceed',
+            denyButtonText: `Cancel`,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                htmx.trigger(htmx.find("#form"), "confirmed");
+                document.getElementById('message').innerText = 'Loading Please Wait...'
+            }
+        })
+    }
+    window.document.title += " | Cancelation";
+    const collapseElementList = document.querySelectorAll('.collapse')
+    const collapseList = [...collapseElementList].map(collapseEl => new bootstrap.Collapse(collapseEl))
+</script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+{%endblock script%}

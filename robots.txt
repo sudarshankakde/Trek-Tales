@@ -2,3 +2,7 @@ user-agent:*
 Disallow:/admin/
 Disallow:/bookslot/
 Disallow:/Payment_Success
+Disallow:/admin_links
+Disallow:/contacted_data
+Disallow:/ShowBookings
+Disallow:/SendNewsletter

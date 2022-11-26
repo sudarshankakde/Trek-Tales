@@ -10,6 +10,7 @@ import uuid
 
 class Tags(models.Model):
     Tag = models.CharField(max_length=50)
+
     def __str__(self):
         return self.Tag
 
@@ -52,10 +53,13 @@ class Updates(models.Model):
     packageInfo = models.TextField()
     Tour_added = models.DateTimeField(
         auto_now=True, editable=False, auto_created=True)
-    TourIsNotExpire = models.BooleanField(default=False)
-    Organizer = models.ForeignKey(Organizer(id), on_delete=models.PROTECT,default="1")
+    TourIsNotExpire = models.BooleanField(default=True, editable=False)
+    Organizer = models.ForeignKey(
+        Organizer(id), on_delete=models.SET_DEFAULT, default="1")
     googleMap = models.URLField(
         max_length=200, verbose_name="Google Map VENUE Url")
+
+    aadhaar_required = models.BooleanField(default=False, null=True)
 
     def __str__(self):
         return (f"{self.location} | {self.Heading}")
@@ -77,14 +81,16 @@ class Testimonials(models.Model):
 
 class BookSlot(models.Model):
     slotFor = models.ForeignKey(
-        Updates(id), on_delete=models.PROTECT, blank=True,editable=False)
+        Updates(id), on_delete=models.CASCADE, blank=True, editable=False)
     Name = models.CharField(max_length=30)
     gender = models.CharField(max_length=7)
     TripId = models.CharField(unique=True, max_length=20, editable=False)
     email = models.EmailField(blank=True, null=True, default='null@gmail.com')
     Phone_no1 = models.IntegerField()
     address = models.TextField()
-    amount = models.IntegerField(default=0,editable=False)
+    amount = models.IntegerField(default=0, editable=False)
+    birth_of_date = models.DateField(auto_now=False, editable=False, null=True,
+                                     blank=True)
     razorpay_payment_id = models.CharField(
         unique=True, max_length=50, editable=False, null=True)
     razorpay_order_id = models.CharField(
@@ -92,7 +98,10 @@ class BookSlot(models.Model):
     razorpay_signature = models.CharField(
         max_length=50, editable=False, null=True)
     Payment_Status = models.BooleanField(default=False)
+    aadhaar_number = models.IntegerField(
+        editable=False, unique=False, null=True, default='00000000000')
 
+    # aadhaar_number = models.IntegerField(editable=False,unique=True)
     def __str__(self):
         return (f"{self.TripId} || {self.slotFor} || {self.Name} | {self.Phone_no1}")
 
@@ -103,8 +112,8 @@ class SiteData(models.Model):
     Instagram_Profile_Link = models.URLField(max_length=200)
     WP_Link = models.URLField(max_length=200)
     Email_id = models.EmailField(max_length=254)
-    logo = models.ImageField(upload_to='siteData/logo',null=True)
-    bio_link = models.URLField(max_length=200,null=True)
+    logo = models.ImageField(upload_to='siteData/logo', null=True)
+    bio_link = models.URLField(max_length=200, null=True)
 
     def __str__(self):
         return self.Email_id
@@ -139,7 +148,7 @@ class ReFund(models.Model):
     address = models.TextField()
     amount = models.IntegerField(default=0)
     refund_Amount = models.IntegerField(default=0)
-    cancelation_date = models.DateField(auto_created=True, auto_now=True)
+    cancelation_date = models.DateTimeField(auto_created=True, auto_now=True)
     charge_Day = models.IntegerField()
     charge_percenrate = models.IntegerField()
     razorpay_payment_id = models.CharField(
@@ -152,6 +161,8 @@ class ReFund(models.Model):
     # true == Refunded , False == Yet to Refund
     Refund_Status = models.BooleanField(default=False)
     Refund_On = models.DateField(null='true')
+    cancelation_Reason = models.CharField(
+        max_length=50, null=True, default='no reason where mentioned , default value saved')
 
     def __str__(self):
         return f"{self.Name}|Rs.{self.refund_Amount}"
@@ -166,6 +177,6 @@ class customized_tour(models.Model):
     start_date = models.DateField(auto_now=False, auto_now_add=False)
     trek_name = models.CharField(max_length=50)
     tour_explain = models.TextField(null=True)
+    tansport_type = models.CharField(
+        max_length=50, default='Non_Ac', null=True)
     request_on_date = models.DateTimeField(auto_created=True, auto_now=True)
-
-

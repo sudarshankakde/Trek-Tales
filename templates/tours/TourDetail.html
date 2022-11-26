@@ -2,6 +2,9 @@
 {% load static %}
 {% block link_css %}
 <link rel="stylesheet" href="{%static 'css/tour_details.css'%}">
+<style>
+
+</style>
 {% endblock link_css %}
 {% block body %}
 <div class="container-fluid position-static  py-sm-5 py-lg-5 py-0">
@@ -99,15 +102,16 @@
                 </div>
                 <div class="w-100 mx-auto mt-3 rounded" id="Organizer">
                     <div class="col-12 rounded">
-                        <img src={{tour.Organizer.backgroundImg.url}} alt="{{tour.Organizer.Name}}" class="w-100 rounded-top">
+                        <img src={{tour.Organizer.backgroundImg.url}} alt="{{tour.Organizer.Name}}"
+                            class="w-100 rounded-top lazy" style='max-height: 40vh;height: 35vh;'>
                         <div class="row w-100 mx-auto pb-2 rounded-bottom " style="background-color: var(--card-bg);">
                             <div class="col-3 position-relative">
                                 <img src={{tour.Organizer.image.url}} alt="{{tour.Organizer.Name}}" class="rounded rounded-circle
                                     position-absolute w-100" id="OrganizerImage">
 
                             </div>
-                            <div class="col-9">
-                                <span class="h4">
+                            <div class="col-9 ">
+                                <span class="h4 ">
                                     {{tour.Organizer.Name}}
                                 </span>
                                 <div class="aboutorganizer small my-2">
@@ -204,7 +208,7 @@
     </div>
 </div>
 <script>
-    window.document.title += " | {{tour.Heading|striptags}}";
+    window.document.title += " | {{tour.Heading|striptags|title}}";
 
     let details = document.getElementById('details');
     const mainVal = details.clientHeight;
@@ -224,6 +228,8 @@
             document.getElementById('action-text').innerText = 'Read More';
         }
     }
+
+
 
 </script>
 

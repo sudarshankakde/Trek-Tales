@@ -22,9 +22,20 @@
 It is a start up based in Aurangabad, which provides trips and allows you to customize your own journey based on themes**
 
 
+## About Us
+**Team Members**
+ 1. [Sudarshan Kakde](https://github.com/sudarshankakde) 
+ 2. Avishkar Aher
+ 3. Ankita Jadhao
+ 4. Rushali Jadhav
+ 5. Pooja Dhage
+ 6. Aniket Mahule
 
-## Some Steps Should DO
-1- change data related Razorpay Key , Gmail etc in setting.py.
+
+
+
+##Some Steps Should DO
+1- change data related Tiwilo number Gmail etc in setting folder.
 
 2- check for stmp enable in gmail
 

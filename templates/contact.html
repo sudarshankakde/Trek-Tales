@@ -2,33 +2,35 @@
 {% load static %}
 
 {% block link_css %}
-<link rel="stylesheet" href="{%static 'css/home.css'%}">
 <link rel="stylesheet" href="{%static 'css/contact.css'%}">
 {% endblock link_css %}
 {%block body%}
 <div class="container py-5">
     <div class="text-center text-capitalize my-5 ">
         <h1 class="heading">Contact us.</h1>
-        <p class="opacity-75">Do you have any questions? Please do not hesitate to contact us directly. Our team will come back to you
+        <p class="opacity-75">Do you have any questions? Please do not hesitate to contact us directly. Our team will
+            come back to you
             within a
             matter of hours to help you.</p>
     </div>
     <div class="row">
         <div class="col-lg-6 col-12 col-sm-10 mx-auto">
-            <form action="contact" method="post" class=" text-dark">
-                {% csrf_token %}
-                <div class="form-floating mb-3 ">
-                    <input type="text" class="form-control " id="name" name='name' placeholder="name@example.com">
-                    <label for="name"><i class="bi bi-person-lines-fill"></i> Your Full Name</label>
+            <form class="text-dark" hx-post="" hx-indicator=".progress" hx-target="#output" hx-trigger='submit'
+            hx-swap="outerHTML" id="contactForm">
+            {%csrf_token%}
+            
+                <div class="form-outline form-white mb-3 ">
+                    <input type="text" class="form-control form-control-lg " id="name" name='name' inputmode="text" required>
+                    <label for="name" class="form-label"><i class="bi bi-person-lines-fill"></i> Your Full Name</label>
                 </div>
-                <div class="form-floating mb-3 ">
-                    <input type="email" class="form-control" id="email" name='email' placeholder="name@example.com">
-                    <label for="email"><i class="bi bi-envelope-fill"></i> Your Email address</label>
+                <div class="form-outline form-white mb-3 ">
+                    <input type="email" class="form-control form-control-lg" id="email" name='email' inputmode="email" required >
+                    <label for="email" class="form-label"><i class="bi bi-envelope-fill"></i> Your Email Address</label>
                 </div>
-                <div class="form-floating ">
-                    <textarea class="form-control" placeholder="Leave a Message here" id="message" name="message"
-                        style="height: 100px"></textarea>
-                    <label for="message"><i class="bi bi-chat-right-text-fill"></i> Your Message</label>
+                <div class="form-outline form-white ">
+                    <textarea class="form-control form-control-lg"  id="message" name="message" inputmode="text"
+                        style="height: 100px" required></textarea>
+                    <label for="message" class="form-label"><i class="bi bi-chat-right-text-fill"></i> Your Message</label>
                 </div>
                 <div class="mx-auto text-center mt-2">
                     <button class="btn1 bg-transparent px-4 py-1 my-lg-3 my-2  text-capitalize " type="submit">submit <i
@@ -38,6 +40,7 @@
                 </div>
             </form>
         </div>
+        <p class="text-center opacity-85"><span id="output"></span></p>
         <div class="row">
             <span class="spanThrow text-center my-3">
                 <h5 class="linethrow"></h5>
@@ -72,6 +75,6 @@
 </div>
 <script>
     window.document.title += " | Contact Us";
-  
-  </script>
+   
+</script>
 {% endblock body%}

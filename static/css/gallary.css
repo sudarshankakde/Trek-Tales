@@ -12,6 +12,7 @@
     flex-wrap: wrap;
     gap: 1.5vh;
     justify-content: center;
+    align-items: center;
 }
 
 

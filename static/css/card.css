@@ -1,4 +1,6 @@
 
+/* card.css */
+/* --------------------------------------------------------------- */
 
 .card:hover {
     transform: translateY(-5px);
@@ -61,3 +63,5 @@
 #updates{
     position: relative;
 }
+
+

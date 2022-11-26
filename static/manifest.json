@@ -1,32 +1,38 @@
 {
-    "name":"Trek Tales",
-    "short_name":"TrekTales",
-    "start_url":"/home",
-    "display":"standalone",
-    "background_color":"#1c2331",
-    "theme_color":"#498553",
+    "name": "Trek Tales",
+    "short_name": "TrekTales",
+    "start_url": "/home",
+    "display": "standalone",
+    "background_color": "#1c2331",
+    "theme_color": "#498553",
     "orientation": "portrait-primary",
-    "description":"explore maharstra",
-    "icon":[
+    "description": "A Trekking and Camping group, we are based in Aurangabad, Maharashtra. We organize treks, night camping🏕️, pool parties 🎉,and itinerary planners 👨‍🏫 and other recreational activities.Want adventure without the risk? Come join our crew for a weekend!    Join Trek Tales and let them give you a hand!",
+    "icon": [
         {
-            "src": "/images/logo/icon-192x192.png",
+            "src": "normal.png",
             "sizes": "192x192",
             "type": "image/png"
         },
         {
-            "src": "/images/logo/icon-256x256.png",
+            "src": "icon-256x256.png",
             "sizes": "256x256",
             "type": "image/png"
         },
         {
-            "src": "/images/logo/icon-384x384.png",
+            "src": "icon-384x384.png",
             "sizes": "384x384",
             "type": "image/png"
         },
         {
-            "src": "/images/logo/icon-512x512.png",
-            "sizes": "512x512",
+            "src": "normal.png",
+            "sizes": "512*512",
             "type": "image/png"
+        }
+    ],
+    "protocol_handlers": [
+        {
+            "protocol": "web+tours",
+            "url": "/tours/%s"
         }
     ]
 }
